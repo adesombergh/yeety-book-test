@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  name              String
+  email             String?
+  phone             String?
+  address           String?
+  description       String?
+  settings          Json?    // Store restaurant-specific settings like opening hours, time slots, etc.
+  subscriptionStatus String  @default("inactive") // inactive, active, cancelled, past_due
+  stripeCustomerId  String?  @unique
+  stripeSubscriptionId String? @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  restaurantUsers   RestaurantUser[]
+  reservations      Reservation[]
+
+  @@map("restaurants")
+}
+
+model RestaurantUser {
+  id           String @id @default(cuid())
+  clerkUserId  String
+  restaurantId String
+  role         String @default("staff") // staff, admin, owner
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([clerkUserId, restaurantId])
+  @@map("restaurant_users")
+}
+
+model Reservation {
+  id           String   @id @default(cuid())
+  restaurantId String
+
+  // Customer information
+  firstName    String
+  lastName     String
+  email        String
+  phone        String?
+  comments     String?
+
+  // Reservation details
+  date         DateTime
+  time         String   // Store as string like "19:30"
+  guests       Int
+  status       String   @default("confirmed") // confirmed, cancelled, no_show, completed
+
+  // Metadata
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  tokens       ReservationToken[]
+
+  @@map("reservations")
+}
+
+model ReservationToken {
+  id            String   @id @default(cuid())
+  reservationId String
+  token         String   @unique
+  type          String   // "cancellation", "modification"
+  expiresAt     DateTime?
+  usedAt        DateTime?
+  createdAt     DateTime @default(now())
+
+  // Relations
+  reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+  @@map("reservation_tokens")
+}
