@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react'
+import { useParams } from 'next/navigation'
 
 interface ReservationDetails {
   id: string
@@ -20,7 +21,8 @@ interface ReservationDetails {
   }
 }
 
-export default function CancelReservationPage({ params }: { params: { token: string } }) {
+export default function CancelReservationPage() {
+  const {token} = useParams<{token: string}>()
   const [reservation, setReservation] = useState<ReservationDetails | null>(null)
   const [loading, setLoading] = useState(true)
   const [cancelling, setCancelling] = useState(false)
@@ -29,11 +31,11 @@ export default function CancelReservationPage({ params }: { params: { token: str
 
   useEffect(() => {
     fetchReservation()
-  }, [])
+  })
 
   const fetchReservation = async () => {
     try {
-      const response = await fetch(`/api/cancel/${params.token}`)
+      const response = await fetch(`/api/cancel/${token}`)
       const data = await response.json()
 
       if (response.ok) {
@@ -42,6 +44,7 @@ export default function CancelReservationPage({ params }: { params: { token: str
         setError(data.error || 'Failed to load reservation')
       }
     } catch (err) {
+      console.log("Err", err)
       setError('Failed to load reservation')
     } finally {
       setLoading(false)
@@ -51,7 +54,7 @@ export default function CancelReservationPage({ params }: { params: { token: str
   const handleCancel = async () => {
     setCancelling(true)
     try {
-      const response = await fetch(`/api/cancel/${params.token}`, {
+      const response = await fetch(`/api/cancel/${token}`, {
         method: 'POST',
       })
 
@@ -62,6 +65,7 @@ export default function CancelReservationPage({ params }: { params: { token: str
         setError(data.error || 'Failed to cancel reservation')
       }
     } catch (err) {
+      console.log("Err", err)
       setError('Failed to cancel reservation')
     } finally {
       setCancelling(false)

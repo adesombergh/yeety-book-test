@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Calendar } from '@/components/ui/calendar'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { CalendarIcon, Clock, Users } from 'lucide-react'
+import { useParams } from 'next/navigation'
 
 const reservationSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -43,7 +44,8 @@ const generateTimeSlots = () => {
 
 const timeSlots = generateTimeSlots()
 
-export default function ReservationPage({ params }: { params: { restaurantSlug: string } }) {
+export default function ReservationPage() {
+  const {restaurantSlug} = useParams<{restaurantSlug: string}>()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [selectedDate, setSelectedDate] = useState<Date>()
@@ -71,7 +73,7 @@ export default function ReservationPage({ params }: { params: { restaurantSlug: 
         },
         body: JSON.stringify({
           ...data,
-          restaurantSlug: params.restaurantSlug,
+          restaurantSlug,
         }),
       })
 
@@ -110,7 +112,7 @@ export default function ReservationPage({ params }: { params: { restaurantSlug: 
           <CardHeader>
             <CardTitle className="text-2xl">Make a Reservation</CardTitle>
             <CardDescription>
-              Book your table at {params.restaurantSlug.replace('-', ' ')}
+              Book your table at {restaurantSlug.replace('-', ' ')}
             </CardDescription>
           </CardHeader>
           <CardContent>

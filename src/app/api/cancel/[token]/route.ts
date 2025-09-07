@@ -6,12 +6,13 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { token: string } }
+  { params }: { params: Promise<{ token: string }> }
 ) {
   try {
+    const resolvedParams = await params
     const token = await prisma.reservationToken.findUnique({
       where: {
-        token: params.token,
+        token: resolvedParams.token,
         type: 'cancellation',
         usedAt: null,
       },
@@ -75,12 +76,13 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { token: string } }
+  { params }: { params: Promise<{ token: string }> }
 ) {
   try {
+    const resolvedParams = await params
     const token = await prisma.reservationToken.findUnique({
       where: {
-        token: params.token,
+        token: resolvedParams.token,
         type: 'cancellation',
         usedAt: null,
       },
