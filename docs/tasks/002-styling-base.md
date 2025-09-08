@@ -4,6 +4,8 @@
 
 Add TailwindCSS and configure base styles to enable modern, responsive styling throughout the application.
 
+**Note**: Refer to `docs/design-guidelines.md` for the complete visual direction, including brand colors, typography, and design principles that should guide the styling implementation.
+
 ## Deliverable
 
 - TailwindCSS installed and properly configured
@@ -22,7 +24,7 @@ Add TailwindCSS and configure base styles to enable modern, responsive styling t
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

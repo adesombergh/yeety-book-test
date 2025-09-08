@@ -43,6 +43,10 @@ conventions:
     - TypeScript mandatory everywhere.
     - TailwindCSS + shadcn/ui for UI.
     - Prisma for DB access.
+  ui_design:
+    - Follow design guidelines in `docs/design-guidelines.md` for all UI work.
+    - Use the defined brand colors, typography, and design principles.
+    - Maintain the playful yet trustworthy aesthetic with warm colors and rounded corners.
   commit_style: >
     Use small, focused commits with clear messages.
     Each commit should correspond to one validated step.
