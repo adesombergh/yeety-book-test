@@ -1,0 +1,55 @@
+# .clinerules – Project rules for Cline AI assistant
+
+project:
+  name: "Multi-tenant Restaurant Reservation SaaS"
+  description: >
+    SaaS platform for restaurants to manage online reservations.
+    Each restaurant has its own booking page (public) and a private dashboard.
+    Stack: Next.js, Supabase, Prisma, Clerk, Stripe, Resend, Vercel.
+  methodology: "Shape Up inspired, incremental development."
+
+workflow:
+  step_granularity: >
+    All tasks must be **small, clear, and testable**.
+    Each step should be achievable in ~10–15 minutes max.
+    Do not combine setup, features, and UI in a single step.
+    Only deliver one step at a time, wait for validation before continuing.
+
+  step_requirements:
+    - Every step must have:
+      - A clear **goal** (what is achieved).
+      - A concrete **deliverable** (code, config, migration, etc.).
+      - A simple **validation method** (how to test the step works).
+    - Never skip validation.
+    - Never jump ahead to multiple steps at once.
+
+  validation:
+    - After each step, ensure:
+      - ESLint passes (`pnpm lint`).
+      - TypeScript typecheck passes (`pnpm typecheck`).
+      - Next.js build succeeds (`pnpm build`).
+    - Only deliver code that passes these checks.
+
+tools:
+  - Context7: for broader context and long-term consistency.
+  - Github: for version control, branches, pull requests, and issues.
+  - Supabase (to be enabled later): for database migrations and testing.
+  - Clerk (to be enabled later): for authentication flows.
+  - Vercel (to be enabled later): for deployments and previews.
+
+conventions:
+  coding_style:
+    - Use Next.js App Router.
+    - TypeScript mandatory everywhere.
+    - TailwindCSS + shadcn/ui for UI.
+    - Prisma for DB access.
+  commit_style: >
+    Use small, focused commits with clear messages.
+    Each commit should correspond to one validated step.
+
+restrictions:
+  - Do not scaffold the entire project at once.
+  - Do not install or configure unrelated tools.
+  - Do not create multiple pages/features in a single step.
+  - Respect the multi-tenant architecture (restaurantSlug in URLs).
+  - Do not implement features that are not asked

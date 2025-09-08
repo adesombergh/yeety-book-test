@@ -15,11 +15,28 @@ It is designed to be multi-tenant, scalable, and fast to ship (Shape Up methodol
 - **Styling/UI**: TailwindCSS + shadcn/ui.
 - **Forms & Validation**: React Hook Form + Zod.
 - **Calendar**: FullCalendar or react-big-calendar.
+- **Internationalization (i18n)**:
+  - Integrated from day one, even if only French is active.
+  - Tooling: `next-intl` or `next-i18next`.
+  - Translation files (`fr.json`) stored in repo.
 
 ### Database
 
 - **Supabase (Postgres)** – relational database with multi-tenant schema:
-  - `restaurants` (slug, name, settings, subscription status).
+  - `restaurants`
+    - `id`
+    - `slug`
+    - `name`
+    - `email_contact`
+    - `phone_contact` (optional)
+    - `opening_hours` (JSON: daily slots)
+    - `slot_interval`
+    - `min_guests_per_reservation`
+    - `max_guests_per_reservation`
+    - `max_reservations_per_slot`
+    - `reservation_lead_time_min`
+    - `reservation_lead_time_max`
+    - `subscription_status`
   - `restaurant_user` (links Clerk user → restaurant).
   - `reservations` (customer info, date/time, status).
   - `reservation_tokens` (unique tokens for cancellation).

@@ -33,6 +33,15 @@ The platform is subscription-based (restaurants pay a monthly fee via credit car
 - Reservation details view (with customer info).
 - Actions:
   - Cancel reservation (customer notified via email).
+- Restaurant configuration:
+  - Basic info (name, slug, contact email, optional phone).
+  - Opening hours (JSON, daily slots).
+  - Reservation constraints:
+    - Slot interval (e.g. 15 min).
+    - Min/max guests per reservation.
+    - Max reservations per slot.
+    - Lead time minimum (minutes before booking).
+    - Lead time maximum (days in advance).
 
 ---
 
@@ -43,6 +52,7 @@ The platform is subscription-based (restaurants pay a monthly fee via credit car
 - Advanced dashboard features (drag & drop, filters).
 - Integration with POS or CRM.
 - Analytics (no-shows, peak hours).
+- More detailed restaurant configuration (menus, images, seating maps).
 
 ---
 
@@ -53,3 +63,11 @@ The platform is subscription-based (restaurants pay a monthly fee via credit car
 - Billing page inside dashboard with subscription status.
 - Only subscribed restaurants can access dashboard.
 - VAT support in Europe via Stripe Tax (automatic collection and invoice generation).
+
+---
+
+## Internationalization (i18n)
+
+- All UI strings handled through i18n from the start.
+- Default language: **French**.
+- Framework prepared for additional languages later.
