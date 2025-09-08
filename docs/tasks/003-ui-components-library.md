@@ -4,6 +4,8 @@
 
 Install and configure shadcn/ui to provide a comprehensive set of accessible, customizable UI components for the application.
 
+**Note**: Refer to `docs/design-guidelines.md` for the complete visual direction, including brand colors, typography, and design principles that should guide the styling implementation.
+
 ## Deliverable
 
 - shadcn/ui installed and properly configured
@@ -22,7 +24,7 @@ Install and configure shadcn/ui to provide a comprehensive set of accessible, cu
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
