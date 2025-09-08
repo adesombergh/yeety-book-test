@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-background-warm flex items-center justify-center p-8">
@@ -9,9 +11,9 @@ export default function Home() {
           Multi-tenant Restaurant Reservation SaaS Platform
         </p>
         <div className="mt-8">
-          <button className="bg-primary-orange text-white px-8 py-4 rounded-brand-lg font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg">
+          <Button size="lg" className="px-8 py-4 text-lg font-semibold">
             Get Started
-          </button>
+          </Button>
         </div>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <div className="bg-accent-green p-6 rounded-brand text-white text-center">

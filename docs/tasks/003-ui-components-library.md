@@ -28,4 +28,4 @@ Install and configure shadcn/ui to provide a comprehensive set of accessible, cu
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
