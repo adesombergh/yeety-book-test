@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id                        Int     @id @default(autoincrement())
+  slug                      String  @unique
+  name                      String
+  emailContact              String  @map("email_contact")
+  phoneContact              String? @map("phone_contact")
+  openingHours              Json    @map("opening_hours")
+  slotInterval              Int     @map("slot_interval")
+  minGuestsPerReservation   Int     @map("min_guests_per_reservation")
+  maxGuestsPerReservation   Int     @map("max_guests_per_reservation")
+  maxReservationsPerSlot    Int     @map("max_reservations_per_slot")
+  reservationLeadTimeMin    Int     @map("reservation_lead_time_min")
+  reservationLeadTimeMax    Int     @map("reservation_lead_time_max")
+  subscriptionStatus        String  @map("subscription_status")
+  createdAt                 DateTime @default(now()) @map("created_at")
+  updatedAt                 DateTime @updatedAt @map("updated_at")
+
+  @@map("restaurants")
+}

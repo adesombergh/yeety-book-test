@@ -25,4 +25,4 @@ Add Prisma ORM and establish database connection to Supabase (starting with loca
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
