@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {useTranslations} from 'next-intl';
+import Link from 'next/link';
 
 export default function Home() {
   const t = useTranslations('homepage');
@@ -13,10 +14,24 @@ export default function Home() {
         <p className="text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
           {t('subtitle')}
         </p>
-        <div className="mt-8">
-          <Button size="lg" className="px-8 py-4 text-lg font-semibold">
-            {t('getStarted')}
-          </Button>
+        <div className="mt-8 space-y-4">
+          <div>
+            <Button size="lg" className="px-8 py-4 text-lg font-semibold">
+              {t('getStarted')}
+            </Button>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/dashboard">
+              <Button variant="outline" size="lg" className="px-6 py-3">
+                🏢 Restaurant Dashboard
+              </Button>
+            </Link>
+            <Link href="/test-restaurant/reservation">
+              <Button variant="outline" size="lg" className="px-6 py-3">
+                📅 Sample Reservation
+              </Button>
+            </Link>
+          </div>
         </div>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <div className="bg-accent-green p-6 rounded-brand text-white text-center">
