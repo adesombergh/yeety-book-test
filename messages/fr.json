@@ -1,0 +1,21 @@
+{
+  "homepage": {
+    "title": "Yeety Book",
+    "subtitle": "Plateforme SaaS de Réservation de Restaurant Multi-locataire",
+    "getStarted": "Commencer",
+    "features": {
+      "easySetup": {
+        "title": "Configuration Facile",
+        "description": "Intégration rapide des restaurants"
+      },
+      "smartBooking": {
+        "title": "Réservation Intelligente",
+        "description": "Système de réservation intelligent"
+      },
+      "analytics": {
+        "title": "Analyses",
+        "description": "Informations et rapports détaillés"
+      }
+    }
+  }
+}

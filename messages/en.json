@@ -1,0 +1,21 @@
+{
+  "homepage": {
+    "title": "Yeety Book",
+    "subtitle": "Multi-tenant Restaurant Reservation SaaS Platform",
+    "getStarted": "Get Started",
+    "features": {
+      "easySetup": {
+        "title": "Easy Setup",
+        "description": "Quick restaurant onboarding"
+      },
+      "smartBooking": {
+        "title": "Smart Booking",
+        "description": "Intelligent reservation system"
+      },
+      "analytics": {
+        "title": "Analytics",
+        "description": "Detailed insights & reports"
+      }
+    }
+  }
+}
