@@ -6,6 +6,7 @@ import { Footer } from "@/components/ui/footer";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import { ClerkProvider } from '@clerk/nextjs';
+import { frFR } from '@clerk/localizations';
 
 const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
@@ -27,7 +28,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={frFR}>
       <html lang="en">
         <body
           className={`${bricolageGrotesque.variable} antialiased min-h-screen flex flex-col`}
