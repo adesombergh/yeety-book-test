@@ -10,12 +10,12 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   const { locale } = await params;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <div className="text-center mb-8">
             <div className="mb-4">
-              <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+              <Link href="/" className="inline-flex items-center text-orange-600 hover:text-orange-800 transition-colors">
                 ← Back to Home
               </Link>
             </div>
@@ -31,25 +31,25 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border border-green-200">
+            <div className="bg-orange-50 p-6 rounded-xl border border-orange-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-green-800">Today&apos;s Reservations</h3>
+                <h3 className="text-lg font-semibold text-orange-800">Today&apos;s Reservations</h3>
                 <span className="text-2xl">📅</span>
               </div>
-              <p className="text-3xl font-bold text-green-900 mb-2">12</p>
-              <p className="text-sm text-green-700">+3 from yesterday</p>
+              <p className="text-3xl font-bold text-orange-900 mb-2">12</p>
+              <p className="text-sm text-orange-700">+3 from yesterday</p>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
+            <div className="bg-orange-50 p-6 rounded-xl border border-orange-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-blue-800">Total Customers</h3>
+                <h3 className="text-lg font-semibold text-orange-800">Total Customers</h3>
                 <span className="text-2xl">👥</span>
               </div>
-              <p className="text-3xl font-bold text-blue-900 mb-2">48</p>
-              <p className="text-sm text-blue-700">Expected today</p>
+              <p className="text-3xl font-bold text-orange-900 mb-2">48</p>
+              <p className="text-sm text-orange-700">Expected today</p>
             </div>
 
-            <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl border border-orange-200">
+            <div className="bg-orange-50 p-6 rounded-xl border border-orange-200">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-orange-800">Revenue</h3>
                 <span className="text-2xl">💰</span>
@@ -66,32 +66,32 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
                   Quick Actions
                 </h2>
                 <div className="space-y-3">
-                  <button className="w-full p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-left">
+                  <button className="w-full p-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors duration-200 text-left">
                     <div className="flex items-center">
                       <span className="text-xl mr-3">📝</span>
                       <div>
                         <p className="font-semibold">View Reservations</p>
-                        <p className="text-sm text-blue-100">Manage today&apos;s bookings</p>
+                        <p className="text-sm text-orange-100">Manage today&apos;s bookings</p>
                       </div>
                     </div>
                   </button>
 
-                  <button className="w-full p-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200 text-left">
+                  <button className="w-full p-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors duration-200 text-left">
                     <div className="flex items-center">
                       <span className="text-xl mr-3">⚙️</span>
                       <div>
                         <p className="font-semibold">Restaurant Settings</p>
-                        <p className="text-sm text-green-100">Update hours, capacity, etc.</p>
+                        <p className="text-sm text-orange-100">Update hours, capacity, etc.</p>
                       </div>
                     </div>
                   </button>
 
-                  <button className="w-full p-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors duration-200 text-left">
+                  <button className="w-full p-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors duration-200 text-left">
                     <div className="flex items-center">
                       <span className="text-xl mr-3">📊</span>
                       <div>
                         <p className="font-semibold">Analytics</p>
-                        <p className="text-sm text-purple-100">View performance reports</p>
+                        <p className="text-sm text-orange-100">View performance reports</p>
                       </div>
                     </div>
                   </button>
@@ -105,7 +105,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
                   Recent Activity
                 </h2>
                 <div className="space-y-3">
-                  <div className="p-4 bg-gray-50 rounded-lg border">
+                  <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium text-gray-900">New reservation</p>
@@ -115,7 +115,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-gray-50 rounded-lg border">
+                  <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium text-gray-900">Reservation cancelled</p>
@@ -125,7 +125,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-gray-50 rounded-lg border">
+                  <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium text-gray-900">Table updated</p>
@@ -140,6 +140,12 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
           </div>
 
           <div className="mt-8 text-center">
+            <button className="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200">
+              View All Reservations
+            </button>
+          </div>
+
+          <div className="mt-6 text-center">
             <p className="text-sm text-gray-500">
               This is a placeholder dashboard. Features will be implemented in future tasks.
             </p>
