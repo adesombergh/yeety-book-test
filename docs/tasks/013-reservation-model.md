@@ -1,4 +1,4 @@
-# 009 – Reservation model
+# 013 – Reservation model
 
 ## Goal
 
@@ -18,6 +18,7 @@ Add comprehensive reservation support to the database schema to enable customers
 
 ## Validation
 
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
 - Run `pnpm prisma migrate dev` → migration applies successfully
 - Database contains new `reservations` table with all required fields
 - Foreign key relationship between restaurants and reservations works correctly

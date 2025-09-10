@@ -1,4 +1,4 @@
-# 008 – Restaurant model extension
+# 012 – Restaurant model extension
 
 ## Goal
 
@@ -17,6 +17,7 @@ Extend the Restaurant model in Prisma schema with comprehensive configuration fi
 
 ## Validation
 
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
 - Run `pnpm prisma migrate dev` → migration applies successfully
 - Database contains updated `restaurants` table with all new fields
 - Prisma Client generates without errors and includes new field types

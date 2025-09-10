@@ -1,4 +1,4 @@
-# 010 – First API route (create reservation)
+# 014 – First API route (create reservation)
 
 ## Goal
 
@@ -15,6 +15,7 @@ Enable customers to create reservations by implementing the first API endpoint t
 
 ## Validation
 
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
 - `curl` or Postman POST request to `/api/reservations` successfully creates a reservation
 - New reservation record is visible in the database
 - API returns appropriate success/error responses

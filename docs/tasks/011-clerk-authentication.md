@@ -1,4 +1,4 @@
-# 007 – Clerk authentication (staff only)
+# 011 – Clerk authentication (staff only)
 
 ## Goal
 
@@ -15,6 +15,7 @@ Add Clerk authentication system and protect the `/dashboard` route to ensure onl
 
 ## Validation
 
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
 - Logged-out user attempting to access `/dashboard` → redirected to login
 - Logged-in user can successfully access `/dashboard` and see placeholder content
 - Login and logout flows work without errors

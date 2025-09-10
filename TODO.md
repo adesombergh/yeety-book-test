@@ -152,7 +152,101 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 7 – Clerk authentication (staff only)
+## ⏳ Step 7 – Global layouts structure
+
+**Goal**: Create the foundational layout structure for both public and dashboard areas to establish consistent navigation and visual hierarchy.
+
+**Deliverable**:
+
+- Global `app/layout.tsx` with header and footer components
+- Public layout `app/(public)/layout.tsx` for customer-facing pages
+- Dashboard layout `app/(dashboard)/layout.tsx` with navigation sidebar
+- Basic header with logo, language switcher placeholder, and auth placeholders
+- Dashboard sidebar with navigation links (Calendar, Reservations, Settings, Billing)
+
+**Validation**:
+
+- Navigate to `/en/test-restaurant/reservation` → public layout renders correctly
+- Navigate to `/en/dashboard` → dashboard layout with sidebar renders correctly
+- Header appears consistently across all pages
+- All layouts use shadcn/ui components and design tokens
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 8 – Navigation and header/footer components
+
+**Goal**: Implement comprehensive navigation system with header and footer components using shadcn/ui and design tokens.
+
+**Deliverable**:
+
+- Header component with logo, language switcher, and login/logout placeholders
+- Dashboard sidebar navigation with links to main sections
+- Footer component with copyright and placeholder links
+- Responsive navigation that works on mobile and desktop
+- All components built with shadcn/ui primitives
+
+**Validation**:
+
+- Header appears on all pages with consistent styling
+- Dashboard sidebar shows navigation links (even if pages are empty)
+- Footer displays correctly across all pages
+- Navigation is responsive and accessible
+- Components follow design philosophy and use design tokens
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 9 – Public reservation flow structure
+
+**Goal**: Create the complete public-facing reservation flow with placeholder content to establish the customer journey structure.
+
+**Deliverable**:
+
+- `/[locale]/[restaurantSlug]/reservation` page with "Reservation Form" placeholder
+- `/[locale]/[restaurantSlug]/reservation/success` page with "Reservation Success" placeholder
+- `/[locale]/[restaurantSlug]/reservation/cancel/[token]` page with "Reservation Cancel" placeholder
+- Proper routing and parameter handling for restaurant slug and cancellation token
+- Internationalized placeholder content
+
+**Validation**:
+
+- Navigate to all three reservation flow pages → correct placeholders display
+- Restaurant slug parameter is properly captured and accessible
+- Cancellation token parameter works correctly
+- All pages render without errors and show translated content
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 10 – Dashboard flow structure
+
+**Goal**: Create the complete dashboard page structure with placeholder content to establish the restaurant management interface.
+
+**Deliverable**:
+
+- `/[locale]/dashboard` page with "Dashboard Home" placeholder
+- `/[locale]/dashboard/[restaurantId]/calendar` page with "Calendar" placeholder
+- `/[locale]/dashboard/[restaurantId]/day/[date]` page with "Day View" placeholder
+- `/[locale]/dashboard/[restaurantId]/reservation/[id]` page with "Reservation Detail" placeholder
+- `/[locale]/dashboard/[restaurantId]/settings` page with "Settings" placeholder
+- `/[locale]/dashboard/[restaurantId]/billing` page with "Billing" placeholder
+
+**Validation**:
+
+- Navigate to all dashboard pages → correct placeholders display
+- Restaurant ID and other parameters are properly captured
+- All pages render without errors and show translated content
+- Dashboard navigation links work correctly between pages
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 11 – Clerk authentication (staff only)
 
 **Goal**: Add Clerk authentication system and protect the `/dashboard` route to ensure only authorized restaurant staff can access management features.
 
@@ -177,7 +271,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 8 – Restaurant model extension
+## ⏳ Step 12 – Restaurant model extension
 
 **Goal**: Extend the Restaurant model in Prisma schema with comprehensive configuration fields to support restaurant-specific settings and reservation constraints.
 
@@ -204,7 +298,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 9 – Reservation model
+## ⏳ Step 13 – Reservation model
 
 **Goal**: Add comprehensive reservation support to the database schema to enable customers to book tables and restaurants to manage reservations.
 
@@ -232,7 +326,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 10 – First API route (create reservation)
+## ⏳ Step 14 – First API route (create reservation)
 
 **Goal**: Enable customers to create reservations by implementing the first API endpoint that accepts reservation data and persists it to the database.
 
