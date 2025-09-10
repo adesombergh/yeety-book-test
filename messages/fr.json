@@ -17,5 +17,24 @@
         "description": "Informations et rapports détaillés"
       }
     }
+  },
+  "reservation": {
+    "form": {
+      "title": "Faire une Réservation",
+      "subtitle": "Réservez votre table chez {restaurantName}",
+      "placeholder": "Formulaire de Réservation - Bientôt Disponible"
+    },
+    "success": {
+      "title": "Réservation Confirmée",
+      "subtitle": "Votre table a été réservée",
+      "placeholder": "Succès de la Réservation - Bientôt Disponible",
+      "message": "Merci pour votre réservation. Vous recevrez un email de confirmation sous peu."
+    },
+    "cancel": {
+      "title": "Annuler la Réservation",
+      "subtitle": "Annulez votre réservation de table",
+      "placeholder": "Annulation de Réservation - Bientôt Disponible",
+      "message": "Êtes-vous sûr de vouloir annuler votre réservation ?"
+    }
   }
 }

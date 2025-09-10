@@ -17,5 +17,24 @@
         "description": "Detailed insights & reports"
       }
     }
+  },
+  "reservation": {
+    "form": {
+      "title": "Make a Reservation",
+      "subtitle": "Book your table at {restaurantName}",
+      "placeholder": "Reservation Form - Coming Soon"
+    },
+    "success": {
+      "title": "Reservation Confirmed",
+      "subtitle": "Your table has been reserved",
+      "placeholder": "Reservation Success - Coming Soon",
+      "message": "Thank you for your reservation. You will receive a confirmation email shortly."
+    },
+    "cancel": {
+      "title": "Cancel Reservation",
+      "subtitle": "Cancel your table reservation",
+      "placeholder": "Reservation Cancellation - Coming Soon",
+      "message": "Are you sure you want to cancel your reservation?"
+    }
   }
 }

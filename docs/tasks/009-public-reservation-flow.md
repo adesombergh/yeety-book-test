@@ -6,9 +6,9 @@ Create the complete public-facing reservation flow with placeholder content to e
 
 ## Deliverable
 
-- `/[locale]/[restaurantSlug]/reservation` page with "Reservation Form" placeholder
-- `/[locale]/[restaurantSlug]/reservation/success` page with "Reservation Success" placeholder
-- `/[locale]/[restaurantSlug]/reservation/cancel/[token]` page with "Reservation Cancel" placeholder
+- `/[restaurantSlug]/reservation` page with "Reservation Form" placeholder
+- `/[restaurantSlug]/reservation/success` page with "Reservation Success" placeholder
+- `/[restaurantSlug]/reservation/cancel/[token]` page with "Reservation Cancel" placeholder
 - Proper routing and parameter handling for restaurant slug and cancellation token
 - Internationalized placeholder content
 
@@ -22,8 +22,8 @@ Create the complete public-facing reservation flow with placeholder content to e
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
