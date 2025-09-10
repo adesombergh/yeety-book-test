@@ -62,5 +62,42 @@
       "title": "Billing",
       "subtitle": "Subscription and payment management"
     }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "subtitle": "Access your restaurant dashboard",
+      "formTitle": "Welcome back",
+      "formDescription": "Enter your credentials to access your account",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submitButton": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "placeholder": "This is a placeholder page. Clerk authentication will be implemented in task 11."
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "subtitle": "Create your restaurant account",
+      "formTitle": "Create account",
+      "formDescription": "Enter your information to create a new account",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "submitButton": "Sign Up",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "placeholder": "This is a placeholder page. Clerk authentication will be implemented in task 11."
+    },
+    "signOut": "Sign Out"
   }
 }

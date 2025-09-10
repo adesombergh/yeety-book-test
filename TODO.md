@@ -246,6 +246,34 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
+## ✅ Step 10.5 – Authentication route architecture
+
+**Goal**: Define and organize the authentication route structure and protected route groups to establish a clear foundation for future authentication implementation.
+
+**Deliverable**:
+
+- Authentication route architecture documented in `docs/auth-architecture.md`
+- Route protection groups clearly defined (public vs protected routes)
+- Placeholder auth-related pages created with proper routing structure:
+  - `/sign-in` page with placeholder content
+  - `/sign-up` page with placeholder content
+- Protected route structure validated (dashboard routes remain accessible for now)
+- Internationalized placeholder content for auth pages
+- Clear documentation of which routes will require authentication
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Navigate to `/en/sign-in` → shows "Sign In" placeholder page
+- Navigate to `/en/sign-up` → shows "Sign Up" placeholder page
+- All existing routes continue to work without authentication requirements
+- Documentation clearly defines public vs protected route groups
+- Auth pages use shadcn/ui components and design tokens
+
+**Status**: ✅ **COMPLETED**
+
+---
+
 ## ⏳ Step 11 – Clerk authentication (staff only)
 
 **Goal**: Add Clerk authentication system and protect the `/dashboard` route to ensure only authorized restaurant staff can access management features.

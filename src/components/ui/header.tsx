@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from 'next-intl';
 
 export function Header() {
+  const t = useTranslations('auth');
+
   return (
     <header className="border-b bg-background">
       <div className="container mx-auto px-4 py-4">
@@ -17,13 +20,17 @@ export function Header() {
           {/* Navigation and Actions */}
           <div className="flex items-center space-x-4">
 
-            {/* Auth Placeholders */}
+            {/* Auth Links */}
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="sm">
-                Sign In
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/sign-in">
+                  {t('signIn.title')}
+                </Link>
               </Button>
-              <Button size="sm">
-                Sign Up
+              <Button size="sm" asChild>
+                <Link href="/sign-up">
+                  {t('signUp.title')}
+                </Link>
               </Button>
             </div>
           </div>

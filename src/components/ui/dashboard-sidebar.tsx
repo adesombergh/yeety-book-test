@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from 'next-intl';
 import {
   LayoutDashboard,
   Calendar,
@@ -45,6 +46,7 @@ interface DashboardSidebarProps {
 
 export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const t = useTranslations('auth');
 
   return (
     <>
@@ -97,7 +99,7 @@ export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarPr
         <div className="border-t p-4">
           <Button variant="outline" className="w-full justify-start" size="sm">
             <LogOut className="h-4 w-4 mr-2" />
-            Sign Out
+            {t('signOut')}
           </Button>
         </div>
       </div>

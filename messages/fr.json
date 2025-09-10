@@ -62,5 +62,42 @@
       "title": "Facturation",
       "subtitle": "Gestion des abonnements et paiements"
     }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Se Connecter",
+      "subtitle": "Accédez à votre tableau de bord restaurant",
+      "formTitle": "Bon retour",
+      "formDescription": "Entrez vos identifiants pour accéder à votre compte",
+      "email": "Email",
+      "emailPlaceholder": "Entrez votre email",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "submitButton": "Se Connecter",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signUpLink": "S'inscrire",
+      "placeholder": "Ceci est une page temporaire. L'authentification Clerk sera implémentée dans la tâche 11."
+    },
+    "signUp": {
+      "title": "S'inscrire",
+      "subtitle": "Créez votre compte restaurant",
+      "formTitle": "Créer un compte",
+      "formDescription": "Entrez vos informations pour créer un nouveau compte",
+      "firstName": "Prénom",
+      "firstNamePlaceholder": "Entrez votre prénom",
+      "lastName": "Nom",
+      "lastNamePlaceholder": "Entrez votre nom",
+      "email": "Email",
+      "emailPlaceholder": "Entrez votre email",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Créez un mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+      "submitButton": "S'inscrire",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "signInLink": "Se connecter",
+      "placeholder": "Ceci est une page temporaire. L'authentification Clerk sera implémentée dans la tâche 11."
+    },
+    "signOut": "Se Déconnecter"
   }
 }
