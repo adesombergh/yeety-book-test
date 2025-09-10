@@ -9,7 +9,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="h-6 w-6 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-xs">R</span>
+                <span className="text-white font-bold text-xs">Y</span>
               </div>
               <span className="font-bold text-lg text-text-dark">YeetyBook</span>
             </div>
