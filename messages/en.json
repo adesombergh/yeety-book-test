@@ -36,5 +36,31 @@
       "placeholder": "Reservation Cancellation - Coming Soon",
       "message": "Are you sure you want to cancel your reservation?"
     }
+  },
+  "dashboard": {
+    "home": {
+      "title": "Dashboard Home",
+      "subtitle": "Restaurant management overview"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "subtitle": "View and manage reservations by date"
+    },
+    "dayView": {
+      "title": "Day View",
+      "subtitle": "Detailed view for {date}"
+    },
+    "reservationDetail": {
+      "title": "Reservation Detail",
+      "subtitle": "Manage reservation #{id}"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Restaurant configuration and preferences"
+    },
+    "billing": {
+      "title": "Billing",
+      "subtitle": "Subscription and payment management"
+    }
   }
 }

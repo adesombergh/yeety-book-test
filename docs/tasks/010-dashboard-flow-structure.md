@@ -6,12 +6,12 @@ Create the complete dashboard page structure with placeholder content to establi
 
 ## Deliverable
 
-- `/[locale]/dashboard` page with "Dashboard Home" placeholder
-- `/[locale]/dashboard/[restaurantId]/calendar` page with "Calendar" placeholder
-- `/[locale]/dashboard/[restaurantId]/day/[date]` page with "Day View" placeholder
-- `/[locale]/dashboard/[restaurantId]/reservation/[id]` page with "Reservation Detail" placeholder
-- `/[locale]/dashboard/[restaurantId]/settings` page with "Settings" placeholder
-- `/[locale]/dashboard/[restaurantId]/billing` page with "Billing" placeholder
+- `/dashboard` page with "Dashboard Home" placeholder
+- `/dashboard/[restaurantId]/calendar` page with "Calendar" placeholder
+- `/dashboard/[restaurantId]/day/[date]` page with "Day View" placeholder
+- `/dashboard/[restaurantId]/reservation/[id]` page with "Reservation Detail" placeholder
+- `/dashboard/[restaurantId]/settings` page with "Settings" placeholder
+- `/dashboard/[restaurantId]/billing` page with "Billing" placeholder
 
 ## Validation
 
@@ -23,8 +23,8 @@ Create the complete dashboard page structure with placeholder content to establi
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

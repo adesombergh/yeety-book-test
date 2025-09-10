@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
   Calendar,
-  ClipboardList,
   Settings,
   CreditCard,
   LogOut
 } from "lucide-react";
+
+// For now, using a placeholder restaurant ID - this will be dynamic later
+const PLACEHOLDER_RESTAURANT_ID = "restaurant-1";
 
 const navigationItems = [
   {
@@ -21,22 +23,17 @@ const navigationItems = [
   },
   {
     name: "Calendar",
-    href: "/dashboard/calendar",
+    href: `/dashboard/${PLACEHOLDER_RESTAURANT_ID}/calendar`,
     icon: <Calendar className="h-5 w-5" />,
   },
   {
-    name: "Reservations",
-    href: "/dashboard/reservations",
-    icon: <ClipboardList className="h-5 w-5" />,
-  },
-  {
     name: "Settings",
-    href: "/dashboard/settings",
+    href: `/dashboard/${PLACEHOLDER_RESTAURANT_ID}/settings`,
     icon: <Settings className="h-5 w-5" />,
   },
   {
     name: "Billing",
-    href: "/dashboard/billing",
+    href: `/dashboard/${PLACEHOLDER_RESTAURANT_ID}/billing`,
     icon: <CreditCard className="h-5 w-5" />,
   },
 ];

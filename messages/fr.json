@@ -27,7 +27,7 @@
     "success": {
       "title": "Réservation Confirmée",
       "subtitle": "Votre table a été réservée",
-      "placeholder": "Succès de la Réservation - Bientôt Disponible",
+      "placeholder": "Succès de Réservation - Bientôt Disponible",
       "message": "Merci pour votre réservation. Vous recevrez un email de confirmation sous peu."
     },
     "cancel": {
@@ -35,6 +35,32 @@
       "subtitle": "Annulez votre réservation de table",
       "placeholder": "Annulation de Réservation - Bientôt Disponible",
       "message": "Êtes-vous sûr de vouloir annuler votre réservation ?"
+    }
+  },
+  "dashboard": {
+    "home": {
+      "title": "Tableau de Bord",
+      "subtitle": "Vue d'ensemble de la gestion du restaurant"
+    },
+    "calendar": {
+      "title": "Calendrier",
+      "subtitle": "Voir et gérer les réservations par date"
+    },
+    "dayView": {
+      "title": "Vue Journalière",
+      "subtitle": "Vue détaillée pour le {date}"
+    },
+    "reservationDetail": {
+      "title": "Détail de Réservation",
+      "subtitle": "Gérer la réservation #{id}"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Configuration et préférences du restaurant"
+    },
+    "billing": {
+      "title": "Facturation",
+      "subtitle": "Gestion des abonnements et paiements"
     }
   }
 }
