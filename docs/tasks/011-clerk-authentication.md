@@ -28,4 +28,4 @@ Add Clerk authentication system and protect the `/dashboard` route to ensure onl
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

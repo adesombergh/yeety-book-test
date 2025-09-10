@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from 'next-intl';
+import { useClerk } from '@clerk/nextjs';
 import {
   LayoutDashboard,
   Calendar,
@@ -47,6 +48,11 @@ interface DashboardSidebarProps {
 export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations('auth');
+  const { signOut } = useClerk();
+
+  const handleSignOut = async () => {
+    await signOut({ redirectUrl: '/' });
+  };
 
   return (
     <>
@@ -97,7 +103,12 @@ export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarPr
 
         {/* Sidebar Footer */}
         <div className="border-t p-4">
-          <Button variant="outline" className="w-full justify-start" size="sm">
+          <Button
+            variant="outline"
+            className="w-full justify-start"
+            size="sm"
+            onClick={handleSignOut}
+          >
             <LogOut className="h-4 w-4 mr-2" />
             {t('signOut')}
           </Button>

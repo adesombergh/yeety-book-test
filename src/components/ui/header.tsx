@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from 'next-intl';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export function Header() {
   const t = useTranslations('auth');
@@ -19,20 +22,37 @@ export function Header() {
 
           {/* Navigation and Actions */}
           <div className="flex items-center space-x-4">
-
-            {/* Auth Links */}
-            <div className="flex items-center space-x-2">
+            {/* Authenticated User */}
+            <SignedIn>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/sign-in">
-                  {t('signIn.title')}
+                <Link href="/dashboard">
+                  Dashboard
                 </Link>
               </Button>
-              <Button size="sm" asChild>
-                <Link href="/sign-up">
-                  {t('signUp.title')}
-                </Link>
-              </Button>
-            </div>
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "h-8 w-8"
+                  }
+                }}
+              />
+            </SignedIn>
+
+            {/* Unauthenticated User */}
+            <SignedOut>
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="/sign-in">
+                    {t('signIn.title')}
+                  </Link>
+                </Button>
+                <Button size="sm" asChild>
+                  <Link href="/sign-up">
+                    {t('signUp.title')}
+                  </Link>
+                </Button>
+              </div>
+            </SignedOut>
           </div>
         </div>
       </div>
