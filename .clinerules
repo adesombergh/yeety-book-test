@@ -1,5 +1,3 @@
-# .clinerules – Project rules for Cline AI assistant
-
 project:
   name: "Multi-tenant Restaurant Reservation SaaS"
   description: >
@@ -11,31 +9,32 @@ project:
 workflow:
   step_granularity: >
     All tasks must be **small, clear, and testable**.
-    Each step should be achievable in ~10–15 minutes max.
-    Do not combine setup, features, and UI in a single step.
-    Only deliver one step at a time, wait for validation before continuing.
+    Aim for ~10–30 minutes per step; if a task cannot be completed in that time, break it into sub-steps and list them.
+    Do not combine setup, feature work, and UI work in a single step.
+    Only deliver one step at a time and do not proceed without explicit validation (PR approval or reviewer acknowledgement).
 
   step_requirements:
-    - Every step must have:
-      - A clear **goal** (what is achieved).
-      - A concrete **deliverable** (code, config, migration, etc.).
-      - A simple **validation method** (how to test the step works).
-    - Never skip validation.
-    - Never jump ahead to multiple steps at once.
+    - Every step must include:
+      - **Goal:** one-sentence description of the outcome.
+      - **Deliverable(s):** exact files/changes to be produced (path + short description).
+      - **Validation method:** exact command(s) or manual checks required to confirm success.
+      - **Preview link or visual evidence** for UI changes (Vercel preview URL or screenshots).
+    - Never skip validation or omit the preview evidence for UI changes.
 
   validation:
-    - After each step, ensure:
-      - ESLint passes (`pnpm lint`).
-      - TypeScript typecheck passes (`pnpm typecheck`).
-      - Next.js build succeeds (`pnpm build`).
-    - Only deliver code that passes these checks.
+    - After each step, ensure the following pass locally and in CI:
+      - `pnpm lint` (ESLint)
+      - `pnpm typecheck` (TypeScript)
+      - `pnpm build` (Next.js production build)
+      - `pnpm test` (if tests exist for the changed area)
+    - For UI changes include a Vercel preview URL in the PR or attach screenshots and the device/viewport used.
 
 tools:
   - Context7: for broader context and long-term consistency.
-  - Github: for version control, branches, pull requests, and issues.
-  - Supabase (to be enabled later): for database migrations and testing.
-  - Clerk (to be enabled later): for authentication flows.
-  - Vercel (to be enabled later): for deployments and previews.
+  - Github: version control, branches, PRs, issues.
+  - Supabase: DB (to be enabled when requested).
+  - Clerk: auth (to be enabled when requested).
+  - Vercel: deployments & previews.
 
 conventions:
   coding_style:
@@ -43,17 +42,48 @@ conventions:
     - TypeScript mandatory everywhere.
     - TailwindCSS + shadcn/ui for UI.
     - Prisma for DB access.
+    - Keep functions small and pure; prefer composition over inheritance.
+
   ui_design:
-    - Follow design guidelines in `docs/design-guidelines.md` for all UI work.
-    - Use the defined brand colors, typography, and design principles.
-    - Maintain the playful yet trustworthy aesthetic with warm colors and rounded corners.
+    - Primary source of truth for tokens: `design-tokens.yml`, `tailwind.config.js`, and `globals.css` (CSS variables).
+    - Always compose UI from `shadcn/ui` components or shadcn primitives.
+    - If custom styles are required, wrap shadcn primitives into a component under `components/ui/*` and export from there.
+    - Do not create full UI components by copying raw Tailwind classes throughout the app; if you must, move them into a `components/ui` wrapper first.
+    - Use the design philosophy in `docs/design-philosophy.md` for intent; use token files for exact values.
+
+  naming_and_locations:
+    - UI wrappers/components: `components/ui/*`.
+    - Atomic tokens: `design-tokens.yml` (JSON/YAML) + `tailwind.config.js`.
+    - Pages: `app/(routes)` following multi-tenant routing using `restaurantSlug`.
+
   commit_style: >
-    Use small, focused commits with clear messages.
-    Each commit should correspond to one validated step.
+    Small, focused commits with clear messages. Each commit should map to one validated step.
+
+ai_guidelines:
+  - primary_rule: >
+      Use shadcn/ui components as the foundation for all UI. Treat shadcn primitives as the "source of truth" and only extend via well-scoped wrappers in `components/ui`.
+  - tokens_enforcement: >
+      Always use values from `design-tokens.yml` and `tailwind.config.js`. Do not invent new colors, radii, or shadows. If a missing token is needed, propose it as a PR to the tokens file rather than hardcoding a new value.
+  - code_style_rules: >
+      Generated code must be idiomatic Next + TypeScript, follow App Router conventions, and include `"use client"` only where interactive behavior requires it. Prefer server components where applicable.
+  - ui_generation_template: >
+      When asked to generate UI, produce: (1) the minimal shadcn-based component(s) under `components/ui`, (2) the composed page or slot under `app/...`, and (3) a short `how to preview` section with the exact commands and expected preview URL pattern.
+  - pr_requirements: >
+      Every PR created by or for Cline must include a checklist with: lint & typecheck results, build result, Vercel preview link (or screenshots), component usage examples, and a short QA checklist for accessibility (contrast checks, focus states for keyboard navigation).
 
 restrictions:
   - Do not scaffold the entire project at once.
-  - Do not install or configure unrelated tools.
+  - Do not install or configure unrelated tools without permission.
   - Do not create multiple pages/features in a single step.
   - Respect the multi-tenant architecture (restaurantSlug in URLs).
-  - Do not implement features that are not asked
+  - Do not implement features that were not explicitly requested.
+
+examples_and_prompts:
+  - example_prompt: >
+      "Generate a shadcn-based `ReservationCard` component (TSX) that uses tokens from `design-tokens.yml`. Put the wrapper in `components/ui/reservation-card.tsx` and export it. Also produce a small page at `app/restaurant/[restaurantSlug]/reservations/page.tsx` that uses the card. Include commands to lint, typecheck, and build, and a Vercel preview expectation. Return only the files to be added/changed and a one-line commit message."
+
+pr_template:
+  - "Run `pnpm lint`, `pnpm typecheck`, `pnpm build` locally and paste results."
+  - "Include Vercel preview URL or attach screenshots."
+  - "List changed files with short rationale."
+  - "Accessibility checklist: keyboard nav, aria labels, color contrast checks."

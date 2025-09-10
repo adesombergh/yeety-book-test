@@ -1,0 +1,20 @@
+colors:
+  primary: "#FE6C3B"
+  background: "#F8F2EB"
+  text-dark: "#02201F"
+  text-secondary: "#464646"
+  success: "#46B865"
+  accent-pink: "#F2C7F2"
+  accent-yellow: "#DEBF56"
+
+typography:
+  font: "Bricolage Grotesque"
+  heading: "text-2xl font-bold leading-tight"
+  body: "text-base leading-relaxed"
+
+radius:
+  default: "rounded-xl"
+
+spacing:
+  padding: "p-4"
+  margin: "m-4"
