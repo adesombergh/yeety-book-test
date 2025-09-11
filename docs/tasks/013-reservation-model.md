@@ -6,13 +6,16 @@ Add comprehensive reservation support to the database schema to enable customers
 
 ## Deliverable
 
-- `Reservation` model added to Prisma schema with essential fields:
-  - `id` (unique identifier)
-  - `restaurant_id` (foreign key to Restaurant)
-  - Customer information: `firstName`, `lastName`, `email`, `phone`
-  - Reservation details: `date`, `time`, `guests` (number of people)
-  - `status` (pending, confirmed, cancelled, completed)
-  - Timestamps: `createdAt`, `updatedAt`
+- Reservation model added to Prisma schema with essential fields:
+  - id (unique identifier)
+  - restaurant_id (foreign key to Restaurant)
+  - Customer information: firstName, lastName, email, phone
+  - Reservation details: date, guests (number of people)
+  - notes (special requests / comments)
+  - depositAmount (optional deposit to secure booking)
+  - status (pending, confirmed, cancelled, completed)
+  - cancelledAt (timestamp when cancellation occurred, nullable)
+- Timestamps: createdAt, updatedAt
 - Database migration created and applied successfully
 - Proper relationships established between Restaurant and Reservation models
 
@@ -27,7 +30,7 @@ Add comprehensive reservation support to the database schema to enable customers
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

@@ -42,7 +42,37 @@ model Restaurant {
   updatedAt               DateTime  @updatedAt @map("updated_at")
   deletedAt               DateTime? @map("deleted_at")
 
-  owners User[] @relation("RestaurantOwners")
+  owners       User[]        @relation("RestaurantOwners")
+  reservations Reservation[]
 
   @@map("restaurants")
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Reservation {
+  id            Int               @id @default(autoincrement())
+  restaurantId  Int               @map("restaurant_id")
+  firstName     String            @map("first_name")
+  lastName      String            @map("last_name")
+  email         String
+  phone         String?
+  date          DateTime
+  guests        Int
+  notes         String?
+  depositAmount Decimal?          @map("deposit_amount") @db.Decimal(10, 2)
+  status        ReservationStatus @default(PENDING)
+  cancelToken   String?           @unique @map("cancel_token") // secure token for email cancellation links
+  cancelledAt   DateTime?         @map("cancelled_at")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("reservations")
 }
