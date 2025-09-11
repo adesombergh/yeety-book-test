@@ -15,29 +15,33 @@ datasource db {
 }
 
 model User {
-  id           String       @id // Clerk userId
-  email        String       @unique
-  restaurants  Restaurant[]  @relation("RestaurantOwners")
+  id          String       @id // Clerk userId
+  email       String       @unique
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @default(now()) @updatedAt @map("updated_at")
+  deletedAt   DateTime?    @map("deleted_at")
+  restaurants Restaurant[] @relation("RestaurantOwners")
 }
 
 model Restaurant {
-  id                        Int     @id @default(autoincrement())
-  slug                      String  @unique
-  name                      String
-  emailContact              String  @map("email_contact")
-  phoneContact              String? @map("phone_contact")
-  openingHours              Json    @map("opening_hours")
-  slotInterval              Int     @map("slot_interval")
-  minGuestsPerReservation   Int     @map("min_guests_per_reservation")
-  maxGuestsPerReservation   Int     @map("max_guests_per_reservation")
-  maxReservationsPerSlot    Int     @map("max_reservations_per_slot")
-  reservationLeadTimeMin    Int     @map("reservation_lead_time_min")
-  reservationLeadTimeMax    Int     @map("reservation_lead_time_max")
-  subscriptionStatus        String  @map("subscription_status")
-  createdAt                 DateTime @default(now()) @map("created_at")
-  updatedAt                 DateTime @updatedAt @map("updated_at")
+  id                      Int       @id @default(autoincrement())
+  slug                    String    @unique
+  name                    String
+  emailContact            String    @map("email_contact")
+  phoneContact            String?   @map("phone_contact")
+  openingHours            Json      @map("opening_hours")
+  slotInterval            Int       @map("slot_interval")
+  minGuestsPerReservation Int       @map("min_guests_per_reservation")
+  maxGuestsPerReservation Int       @map("max_guests_per_reservation")
+  maxReservationsPerSlot  Int       @map("max_reservations_per_slot")
+  reservationLeadTimeMin  Int       @map("reservation_lead_time_min")
+  reservationLeadTimeMax  Int       @map("reservation_lead_time_max")
+  subscriptionStatus      String    @map("subscription_status")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @updatedAt @map("updated_at")
+  deletedAt               DateTime? @map("deleted_at")
 
-  owners                    User[]   @relation("RestaurantOwners")
+  owners User[] @relation("RestaurantOwners")
 
   @@map("restaurants")
 }
