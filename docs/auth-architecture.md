@@ -49,6 +49,132 @@ These routes require user authentication and will be protected by Clerk middlewa
 2. **Multi-tenant Support**: Users can manage multiple restaurants if authorized
 3. **Session Management**: Persistent sessions across page refreshes
 
+## User Lifecycle Management (Netflix-like Pattern)
+
+### Overview
+
+The platform implements a "Netflix-like" user lifecycle pattern that allows users to:
+
+- **Cancel anytime**: Delete their account while preserving business data
+- **Return later**: Sign up again with the same email address
+- **Continue where they left off**: Access their restaurants and reservations seamlessly
+
+### Technical Flow
+
+#### 1. Initial Signup
+
+```
+User signs up → Clerk creates account → Webhook creates User record
+```
+
+- Clerk provides a unique `clerkId`
+- User record created with `clerkId` and `email`
+- `deletedAt` remains `null`
+
+#### 2. Account Deletion (Soft Delete)
+
+```
+User deletes account → Clerk removes account → Webhook soft-deletes User
+```
+
+- `deletedAt` is set to current timestamp
+- `clerkId` is cleared (set to `null`)
+- `email` remains as stable identifier
+- **All restaurants and reservations are preserved**
+
+#### 3. Account Restoration (Re-signup)
+
+```
+User re-signs up → Clerk creates new account → Webhook restores existing User
+```
+
+- Clerk provides a new `clerkId` (different from original)
+- Existing User record found by `email`
+- `clerkId` updated to new value
+- `deletedAt` cleared (set to `null`)
+- **User regains access to all previous restaurants and reservations**
+
+### Database Schema Design
+
+The User model supports this pattern through three key fields:
+
+```prisma
+model User {
+  id        Int       @id @default(autoincrement()) // Stable internal ID
+  clerkId   String?   @unique                       // Nullable, changes on re-signup
+  email     String    @unique                       // Stable identifier across lifecycle
+  deletedAt DateTime? @map("deleted_at")            // Soft delete timestamp
+  // ... other fields
+}
+```
+
+**Design Decisions:**
+
+- **`email`**: Permanent identifier, never changes
+- **`clerkId`**: Nullable and mutable, allows for account unlinking/relinking
+- **`deletedAt`**: Soft delete pattern preserves all related data
+- **`id`**: Internal stable primary key for foreign key relationships
+
+### Webhook Implementation
+
+The Clerk webhook handles both account creation and deletion:
+
+```typescript
+// User Creation/Restoration
+if (payload.type === 'user.created') {
+  const existing = await prisma.user.findUnique({ where: { email } })
+
+  if (existing) {
+    // Restore soft-deleted account
+    await prisma.user.update({
+      where: { email },
+      data: { clerkId, deletedAt: null }
+    })
+  } else {
+    // Create new account
+    await prisma.user.create({ data: { clerkId, email } })
+  }
+}
+
+// User Deletion (Soft Delete)
+if (payload.type === 'user.deleted') {
+  await prisma.user.updateMany({
+    where: { clerkId },
+    data: { deletedAt: new Date(), clerkId: null }
+  })
+}
+```
+
+### Data Preservation Strategy
+
+**What's Preserved:**
+
+- User account record (soft deleted)
+- All owned restaurants
+- All restaurant reservations
+- Restaurant settings and configuration
+- Historical business data
+
+**What's Reset:**
+
+- Clerk authentication session
+- `clerkId` (new one assigned on re-signup)
+- Active authentication state
+
+### Business Benefits
+
+1. **Reduced Churn**: Users can easily return without losing their data
+2. **Data Continuity**: Business operations continue seamlessly
+3. **Customer Trust**: Users know their data is safe even after account deletion
+4. **Compliance**: Supports "right to be forgotten" while preserving business records
+
+### Security Considerations
+
+- **Account Isolation**: Deleted accounts cannot be accessed until re-signup
+- **Email Verification**: Clerk handles email verification on re-signup
+- **Data Access**: Only the original email owner can restore their account
+- **Audit Trail**: `deletedAt` timestamp provides deletion history
+
 ## Implementation Strategy
 
 ### Phase 1: Route Structure (Current Task 10.5)
