@@ -34,3 +34,34 @@ export async function getRestaurantBySlug(slug: string): Promise<RestaurantQuery
     };
   }
 }
+
+export async function getAllRestaurants(): Promise<{
+  restaurants: RestaurantWithTypedHours[];
+  error: string | null;
+}> {
+  try {
+    const restaurants = await prisma.restaurant.findMany({
+      orderBy: {
+        updatedAt: 'desc',
+      },
+      take: 20,
+    });
+
+    // Cast all restaurants with typed opening hours
+    const typedRestaurants: RestaurantWithTypedHours[] = restaurants.map(restaurant => ({
+      ...restaurant,
+      openingHours: restaurant.openingHours as unknown as OpeningHours,
+    }));
+
+    return {
+      restaurants: typedRestaurants,
+      error: null,
+    };
+  } catch (error) {
+    console.error('Error fetching restaurants:', error);
+    return {
+      restaurants: [],
+      error: 'Failed to fetch restaurants data',
+    };
+  }
+}
