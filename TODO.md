@@ -299,7 +299,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 12 – Restaurant model extension
+## ✅ Step 12 – Restaurant model extension
 
 **Goal**: Extend the Restaurant model in Prisma schema with comprehensive configuration fields to support restaurant-specific settings and reservation constraints.
 
@@ -322,7 +322,7 @@ This backlog follows the rules from `.clinerules`:
 - Schema validation passes for all new field constraints
 - JSON fields are properly typed and accessible
 
-**Status**: ⏳ **PENDING**
+**Status**: ✅ **COMPLETED**
 
 ---
 

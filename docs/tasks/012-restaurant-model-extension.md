@@ -30,4 +30,4 @@ Extend the Restaurant model in Prisma schema with comprehensive configuration fi
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
