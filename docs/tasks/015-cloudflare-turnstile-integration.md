@@ -27,8 +27,8 @@ Add CloudFlare Turnstile spam protection to the reservation API to prevent autom
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

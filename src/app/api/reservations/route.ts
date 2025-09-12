@@ -13,7 +13,40 @@ const createReservationSchema = z.object({
   date: z.string().datetime('Invalid date format'),
   guests: z.number().int().min(1, 'At least 1 guest is required').max(20),
   notes: z.string().optional(),
+  turnstileToken: z.string().min(1, 'Turnstile verification is required'),
 })
+
+// Function to verify Turnstile token with CloudFlare
+async function verifyTurnstileToken(token: string): Promise<boolean> {
+  const secretKey = process.env.TURNSTYLE_SECRET_KEY
+
+  if (!secretKey) {
+    console.error('TURNSTYLE_SECRET_KEY is not configured')
+    return false
+  }
+
+  try {
+    const response = await fetch(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          secret: secretKey,
+          response: token,
+        }),
+      }
+    )
+
+    const result = await response.json()
+    return result.success === true
+  } catch (error) {
+    console.error('Error verifying Turnstile token:', error)
+    return false
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,7 +75,17 @@ export async function POST(request: NextRequest) {
       date,
       guests,
       notes,
+      turnstileToken,
     } = validationResult.data
+
+    // Verify Turnstile token
+    const isTurnstileValid = await verifyTurnstileToken(turnstileToken)
+    if (!isTurnstileValid) {
+      return NextResponse.json(
+        { error: 'Turnstile verification failed. Please try again.' },
+        { status: 400 }
+      )
+    }
 
     // Verify restaurant exists
     const restaurant = await prisma.restaurant.findUnique({
