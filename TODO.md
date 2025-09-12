@@ -354,14 +354,131 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
+## ⏳ Step 14 – Basic Reservation API
+
+**Goal**: Create the foundational reservation API endpoint with database integration to enable customers to submit reservation requests.
+
+**Deliverable**:
+
+- `POST /api/reservations` route created in `src/app/api/reservations/route.ts`
+- Zod validation schema for reservation data (firstName, lastName, email, phone, date, guests, notes)
+- Prisma database insertion logic with proper error handling
+- JSON response format with success/error states
+- Basic request validation and sanitization
+- Proper HTTP status codes (200, 400, 500)
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- API endpoint accepts valid reservation data via curl/Postman
+- New reservation record appears in database with correct data
+- API returns 400 error for invalid/missing required fields
+- API returns 500 error for database connection issues
+- Response format is consistent JSON with proper error messages
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 15 – CloudFlare Turnstile Integration
+
+**Goal**: Add CloudFlare Turnstile spam protection to the reservation API to prevent automated bot submissions while maintaining a frictionless user experience.
+
+**Deliverable**:
+
+- CloudFlare account setup documentation in task comments
+- Turnstile site configuration with site key and secret key
+- Environment variables added to `.env.local` and `.env.example`
+- Server-side Turnstile token verification in reservation API
+- `@cloudflare/turnstile` package installed and configured
+- Error handling for failed Turnstile verification
+- API middleware to validate Turnstile tokens before processing reservations
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- CloudFlare Turnstile site created with valid keys
+- Environment variables properly configured
+- API rejects requests without Turnstile token (400 error)
+- API rejects requests with invalid Turnstile token (400 error)
+- API accepts requests with valid Turnstile token
+- Proper error messages returned for Turnstile verification failures
+- Test with curl using Turnstile test keys for development
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 16 – Reservation Form Components
+
+**Goal**: Create functional reservation form components with CloudFlare Turnstile widget integration using shadcn/ui and proper form validation.
+
+**Deliverable**:
+
+- Reservation form components in `src/components/ui/reservation-form.tsx`
+- Date/time picker component using shadcn/ui calendar
+- Guest count selector with min/max validation
+- Customer information fields (firstName, lastName, email, phone, notes)
+- CloudFlare Turnstile widget integration (client-side)
+- React Hook Form setup with Zod validation schema
+- Form loading states and error message display
+- Responsive design following design tokens
+- Form components exported and ready for page integration
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Reservation form renders correctly on test page
+- CloudFlare Turnstile widget appears and functions properly
+- Date picker shows available dates and times
+- Guest count selector enforces min/max limits
+- All form fields validate according to Zod schema
+- Form shows appropriate loading states during interaction
+- Error messages display clearly for validation failures
+- Form is responsive and follows design system tokens
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 17 – Complete Reservation Flow
+
+**Goal**: Connect the reservation form to the protected API and complete the end-to-end booking flow with proper success/error handling.
+
+**Deliverable**:
+
+- Integration of reservation form with `POST /api/reservations` endpoint
+- Form submission handling with Turnstile token inclusion
+- Success state management with redirect to success page
+- Error state handling with user-friendly error messages
+- Loading states during API submission
+- Success page updated with actual reservation details
+- Form reset after successful submission
+- Proper error recovery and retry mechanisms
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Complete reservation flow works end-to-end from form to database
+- Successful reservations redirect to `/[restaurantSlug]/reservation/success`
+- Success page displays correct reservation details
+- Failed submissions show appropriate error messages to user
+- Form shows loading spinner during submission
+- Turnstile verification works seamlessly in the flow
+- New reservations appear in database with correct data and status
+- Form handles network errors gracefully with retry options
+
+**Status**: ⏳ **PENDING**
+
+---
+
 ## Next Steps (Future Tasks)
 
-After completing the above foundational steps, continue with:
+After completing the above core reservation functionality, continue with:
 
-- Reservation cancellation API
-- Email notifications with Resend
+- Email notifications with Resend (confirmation emails)
 - Dashboard UI for managing reservations
-- Customer-facing reservation form
+- Reservation cancellation flow
 - Stripe billing integration
 - Advanced reservation management features
 - Multi-restaurant support
