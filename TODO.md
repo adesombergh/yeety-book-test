@@ -409,26 +409,27 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 16 – Reservation Form Components
+## ✅ Step 16 – Reservation Form Components
 
 **Goal**: Create functional reservation form components with CloudFlare Turnstile widget integration using shadcn/ui and proper form validation.
 
 **Deliverable**:
 
-- Reservation form components in `src/components/ui/reservation-form.tsx`
+- Reservation form components in `src/components/reservation/form.tsx`
+- Reservation card component in `src/components/reservation/card.tsx`
 - Date/time picker component using shadcn/ui calendar
 - Guest count selector with min/max validation
 - Customer information fields (firstName, lastName, email, phone, notes)
-- CloudFlare Turnstile widget integration (client-side)
+- CloudFlare Turnstile widget integration using @marsidev/react-turnstile
 - React Hook Form setup with Zod validation schema
 - Form loading states and error message display
 - Responsive design following design tokens
-- Form components exported and ready for page integration
+- Form components exported and integrated into reservation page
 
 **Validation**:
 
 - `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
-- Reservation form renders correctly on test page
+- Reservation form renders correctly and is fully functional
 - CloudFlare Turnstile widget appears and functions properly
 - Date picker shows available dates and times
 - Guest count selector enforces min/max limits
@@ -436,39 +437,9 @@ This backlog follows the rules from `.clinerules`:
 - Form shows appropriate loading states during interaction
 - Error messages display clearly for validation failures
 - Form is responsive and follows design system tokens
+- Complete end-to-end reservation flow working from form to database
 
-**Status**: ⏳ **PENDING**
-
----
-
-## ⏳ Step 17 – Complete Reservation Flow
-
-**Goal**: Connect the reservation form to the protected API and complete the end-to-end booking flow with proper success/error handling.
-
-**Deliverable**:
-
-- Integration of reservation form with `POST /api/reservations` endpoint
-- Form submission handling with Turnstile token inclusion
-- Success state management with redirect to success page
-- Error state handling with user-friendly error messages
-- Loading states during API submission
-- Success page updated with actual reservation details
-- Form reset after successful submission
-- Proper error recovery and retry mechanisms
-
-**Validation**:
-
-- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
-- Complete reservation flow works end-to-end from form to database
-- Successful reservations redirect to `/[restaurantSlug]/reservation/success`
-- Success page displays correct reservation details
-- Failed submissions show appropriate error messages to user
-- Form shows loading spinner during submission
-- Turnstile verification works seamlessly in the flow
-- New reservations appear in database with correct data and status
-- Form handles network errors gracefully with retry options
-
-**Status**: ⏳ **PENDING**
+**Status**: ✅ **COMPLETED**
 
 ---
 
