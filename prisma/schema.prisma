@@ -61,7 +61,7 @@ model Reservation {
   firstName     String            @map("first_name")
   lastName      String            @map("last_name")
   email         String
-  phone         String?
+  phone         String
   date          DateTime
   guests        Int
   notes         String?
