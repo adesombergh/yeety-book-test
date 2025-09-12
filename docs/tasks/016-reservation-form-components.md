@@ -30,8 +30,8 @@ Create functional reservation form components with CloudFlare Turnstile widget i
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

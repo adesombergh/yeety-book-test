@@ -1,8 +1,8 @@
 'use server';
 
-import { getTranslations } from 'next-intl/server';
 import { getRestaurantBySlug } from '@/lib/queries/restaurant';
 import { formatOpeningHours, formatTimeRange, isRestaurantOpen } from '@/lib/utils/opening-hours';
+import { ReservationForm } from '@/components/reservation/form';
 
 interface ReservationPageProps {
   params: Promise<{
@@ -12,7 +12,6 @@ interface ReservationPageProps {
 
 export default async function ReservationPage({ params }: ReservationPageProps) {
   const { restaurantSlug } = await params;
-  const t = await getTranslations('reservation.form');
 
   // Fetch restaurant data
   const { restaurant, error } = await getRestaurantBySlug(restaurantSlug);
@@ -119,13 +118,19 @@ export default async function ReservationPage({ params }: ReservationPageProps) 
         </div>
       </div>
 
-      {/* Reservation Form Placeholder */}
+      {/* Reservation Form */}
       <div className="bg-surface-light rounded-lg p-8 border border-border-light">
-        <div className="text-center py-12">
-          <p className="text-lg text-text-secondary">
-            {t('placeholder')}
-          </p>
-        </div>
+        <ReservationForm
+          restaurantId={restaurant.id}
+          restaurantSlug={restaurant.slug}
+          minGuests={restaurant.minGuestsPerReservation}
+          maxGuests={restaurant.maxGuestsPerReservation}
+          slotInterval={restaurant.slotInterval}
+          openingHours={restaurant.openingHours}
+          leadTimeMin={restaurant.reservationLeadTimeMin}
+          leadTimeMax={restaurant.reservationLeadTimeMax}
+          turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTYLE_SITE_KEY || ''}
+        />
       </div>
     </div>
   );
