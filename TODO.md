@@ -152,7 +152,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 7 – Global layouts structure
+## ✅ Step 7 – Global layouts structure
 
 **Goal**: Create the foundational layout structure for both public and dashboard areas to establish consistent navigation and visual hierarchy.
 
@@ -175,7 +175,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 8 – Navigation and header/footer components
+## ✅ Step 8 – Navigation and header/footer components
 
 **Goal**: Implement comprehensive navigation system with header and footer components using shadcn/ui and design tokens.
 
@@ -199,7 +199,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 9 – Public reservation flow structure
+## ✅ Step 9 – Public reservation flow structure
 
 **Goal**: Create the complete public-facing reservation flow with placeholder content to establish the customer journey structure.
 
@@ -222,7 +222,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 10 – Dashboard flow structure
+## ✅ Step 10 – Dashboard flow structure
 
 **Goal**: Create the complete dashboard page structure with placeholder content to establish the restaurant management interface.
 
@@ -274,7 +274,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 11 – Clerk authentication (staff only)
+## ✅ Step 11 – Clerk authentication (staff only)
 
 **Goal**: Add Clerk authentication system and protect the `/dashboard` route to ensure only authorized restaurant staff can access management features.
 
@@ -295,7 +295,7 @@ This backlog follows the rules from `.clinerules`:
 - User authentication state persists across page refreshes
 - Protected routes are properly secured
 
-**Status**: ⏳ **PENDING**
+**Status**: ✅ **COMPLETED**
 
 ---
 
@@ -326,7 +326,7 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
-## ⏳ Step 13 – Reservation model
+## ✅ Step 13 – Reservation model
 
 **Goal**: Add comprehensive reservation support to the database schema to enable customers to book tables and restaurants to manage reservations.
 
@@ -350,39 +350,13 @@ This backlog follows the rules from `.clinerules`:
 - Prisma Client generates with proper TypeScript types for reservations
 - Schema relationships are properly defined and accessible
 
-**Status**: ⏳ **PENDING**
-
----
-
-## ⏳ Step 14 – First API route (create reservation)
-
-**Goal**: Enable customers to create reservations by implementing the first API endpoint that accepts reservation data and persists it to the database.
-
-**Deliverable**:
-
-- API route `POST /api/reservations` created and functional
-- Request validation using Zod or similar validation library
-- Database insertion logic using Prisma Client
-- Proper error handling and HTTP status codes
-- JSON response format established
-- Basic reservation creation workflow complete
-
-**Validation**:
-
-- `curl` or Postman POST request to `/api/reservations` successfully creates a reservation
-- New reservation record is visible in the database
-- API returns appropriate success/error responses
-- Request validation works for required fields
-- Database constraints are properly enforced
-- API endpoint handles edge cases gracefully
-
-**Status**: ⏳ **PENDING**
+**Status**: ✅ **COMPLETED**
 
 ---
 
 ## Next Steps (Future Tasks)
 
-After completing the above 10 foundational steps, continue with:
+After completing the above foundational steps, continue with:
 
 - Reservation cancellation API
 - Email notifications with Resend
