@@ -26,7 +26,7 @@ Create the basic calendar component structure for the dashboard using a weekly v
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

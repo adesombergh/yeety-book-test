@@ -26,7 +26,7 @@ Create database query functions to retrieve user-restaurant relationships, enabl
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

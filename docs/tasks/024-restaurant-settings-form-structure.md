@@ -26,7 +26,7 @@ Create the restaurant settings form structure with all configuration fields, pre
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

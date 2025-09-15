@@ -25,7 +25,7 @@ Create middleware to verify that authenticated users have access to specific res
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

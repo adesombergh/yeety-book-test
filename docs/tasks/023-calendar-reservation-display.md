@@ -26,7 +26,7 @@ Add reservation data display functionality to the dashboard calendar, showing ex
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

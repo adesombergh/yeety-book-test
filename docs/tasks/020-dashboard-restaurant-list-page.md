@@ -26,7 +26,7 @@ Create the main dashboard page that displays a list of restaurants owned by the 
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

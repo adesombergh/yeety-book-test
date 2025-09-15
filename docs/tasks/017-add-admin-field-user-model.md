@@ -22,8 +22,8 @@ Add an `isAdmin` boolean field to the User model to enable admin users to access
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

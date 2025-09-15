@@ -9,7 +9,7 @@ Create a restaurant switcher component in the dashboard header that allows users
 - Restaurant switcher component in `src/components/ui/restaurant-switcher.tsx`
 - Integration into dashboard layout header
 - "My restaurants" link that redirects to `/dashboard`
-- Current restaurant name display in header
+- Current restaurant name display in header (only if logged in)
 - Dropdown menu for users with multiple restaurants (future enhancement placeholder)
 - Responsive design using shadcn/ui components
 
@@ -26,7 +26,7 @@ Create a restaurant switcher component in the dashboard header that allows users
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

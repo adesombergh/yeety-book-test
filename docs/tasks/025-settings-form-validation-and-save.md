@@ -27,7 +27,7 @@ Add form validation, data loading, and save functionality to the restaurant sett
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

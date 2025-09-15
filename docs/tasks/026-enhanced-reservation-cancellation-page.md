@@ -28,7 +28,7 @@ Improve the reservation cancellation page with better UX, confirmation flow, and
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
