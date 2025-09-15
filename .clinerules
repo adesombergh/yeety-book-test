@@ -25,9 +25,6 @@ workflow:
     - After each step, ensure the following pass locally:
       - `pnpm lint` (ESLint)
       - `pnpm typecheck` (TypeScript)
-    - All manual testing will be performed by the user with the dev server running
-    - Do not run dev servers or use browser automation tools
-    - Focus on code quality and TypeScript correctness only
 
 tools:
 
