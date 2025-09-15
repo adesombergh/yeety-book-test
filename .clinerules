@@ -22,19 +22,20 @@ workflow:
     - Never skip validation or omit the preview evidence for UI changes.
 
   validation:
-    - After each step, ensure the following pass locally and in CI:
+    - After each step, ensure the following pass locally:
       - `pnpm lint` (ESLint)
       - `pnpm typecheck` (TypeScript)
-      - `pnpm build` (Next.js production build)
-      - `pnpm test` (if tests exist for the changed area)
-    - For UI changes include a Vercel preview URL in the PR or attach screenshots and the device/viewport used.
+    - All manual testing will be performed by the user with the dev server running
+    - Do not run dev servers or use browser automation tools
+    - Focus on code quality and TypeScript correctness only
 
 tools:
-  - Context7: for broader context and long-term consistency.
-  - Github: version control, branches, PRs, issues.
-  - Supabase: DB (to be enabled when requested).
-  - Clerk: auth (to be enabled when requested).
-  - Vercel: deployments & previews.
+
+- Context7: for broader context and long-term consistency.
+- Github: version control, branches, PRs, issues.
+- Supabase: DB (to be enabled when requested).
+- Clerk: auth (to be enabled when requested).
+- Vercel: deployments & previews.
 
 conventions:
   coding_style:
@@ -58,32 +59,37 @@ conventions:
 
   commit_style: >
     Small, focused commits with clear messages. Each commit should map to one validated step.
+    After completing each task, ask the user if they want to commit the changes before proceeding to the next task.
 
 ai_guidelines:
-  - primary_rule: >
+
+- primary_rule: >
       Use shadcn/ui components as the foundation for all UI. Treat shadcn primitives as the "source of truth" and only extend via well-scoped wrappers in `components/ui`.
-  - tokens_enforcement: >
+- tokens_enforcement: >
       Always use values from `design-tokens.yml` and `tailwind.config.js`. Do not invent new colors, radii, or shadows. If a missing token is needed, propose it as a PR to the tokens file rather than hardcoding a new value.
-  - code_style_rules: >
+- code_style_rules: >
       Generated code must be idiomatic Next + TypeScript, follow App Router conventions, and include `"use client"` only where interactive behavior requires it. Prefer server components where applicable.
-  - ui_generation_template: >
+- ui_generation_template: >
       When asked to generate UI, produce: (1) the minimal shadcn-based component(s) under `components/ui`, (2) the composed page or slot under `app/...`, and (3) a short `how to preview` section with the exact commands and expected preview URL pattern.
-  - pr_requirements: >
+- pr_requirements: >
       Every PR created by or for Cline must include a checklist with: lint & typecheck results, build result, Vercel preview link (or screenshots), component usage examples, and a short QA checklist for accessibility (contrast checks, focus states for keyboard navigation).
 
 restrictions:
-  - Do not scaffold the entire project at once.
-  - Do not install or configure unrelated tools without permission.
-  - Do not create multiple pages/features in a single step.
-  - Respect the multi-tenant architecture (restaurantSlug in URLs).
-  - Do not implement features that were not explicitly requested.
+
+- Do not scaffold the entire project at once.
+- Do not install or configure unrelated tools without permission.
+- Do not create multiple pages/features in a single step.
+- Respect the multi-tenant architecture (restaurantSlug in URLs).
+- Do not implement features that were not explicitly requested.
 
 examples_and_prompts:
-  - example_prompt: >
+
+- example_prompt: >
       "Generate a shadcn-based `ReservationCard` component (TSX) that uses tokens from `design-tokens.yml`. Put the wrapper in `components/ui/reservation-card.tsx` and export it. Also produce a small page at `app/restaurant/[restaurantSlug]/reservations/page.tsx` that uses the card. Include commands to lint, typecheck, and build, and a Vercel preview expectation. Return only the files to be added/changed and a one-line commit message."
 
 pr_template:
-  - "Run `pnpm lint`, `pnpm typecheck`, `pnpm build` locally and paste results."
-  - "Include Vercel preview URL or attach screenshots."
-  - "List changed files with short rationale."
-  - "Accessibility checklist: keyboard nav, aria labels, color contrast checks."
+
+- "Run `pnpm lint`, `pnpm typecheck`, `pnpm build` locally and paste results."
+- "Include Vercel preview URL or attach screenshots."
+- "List changed files with short rationale."
+- "Accessibility checklist: keyboard nav, aria labels, color contrast checks."

@@ -443,14 +443,270 @@ This backlog follows the rules from `.clinerules`:
 
 ---
 
+## ⏳ Step 17 – Add isAdmin field to User model
+
+**Goal**: Add an `isAdmin` boolean field to the User model to enable admin users to access all restaurants in the system.
+
+**Deliverable**:
+
+- Updated Prisma schema with `isAdmin` boolean field in User model (default: false)
+- Database migration created and applied successfully
+- Prisma Client regenerated with new field type
+- Updated User type definitions to include isAdmin field
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Run `pnpm prisma migrate dev` → migration applies successfully
+- Database contains updated `users` table with `is_admin` boolean column
+- Prisma Client generates without errors and includes isAdmin field
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 18 – Dashboard restaurant access middleware
+
+**Goal**: Create middleware to verify that authenticated users have access to specific restaurants in dashboard routes, preventing unauthorized access to restaurant data.
+
+**Deliverable**:
+
+- Restaurant access verification function in `src/lib/auth/restaurant-access.ts`
+- Middleware function that checks user-restaurant relationship
+- 403 Forbidden response for unauthorized access attempts
+- 404 Not Found response for non-existent restaurants
+- Integration with Clerk user authentication
+- TypeScript types for access verification results
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Authenticated user can access restaurants they own
+- Authenticated user receives 403 when accessing restaurants they don't own
+- Non-existent restaurant slugs return 404 error
+- Admin users can access all restaurants (when isAdmin is true)
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 19 – User-restaurant relationship queries
+
+**Goal**: Create database query functions to retrieve user-restaurant relationships, enabling the dashboard to display restaurants owned by authenticated users.
+
+**Deliverable**:
+
+- Query function `getUserRestaurants(userId)` in `src/lib/queries/user-restaurant.ts`
+- Query function `getUserRestaurantBySlug(userId, restaurantSlug)` for single restaurant access
+- Admin query function `getAllRestaurantsForAdmin()` for admin users
+- Proper TypeScript types for query results
+- Error handling for database connection issues
+- Integration with existing restaurant query patterns
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- `getUserRestaurants()` returns array of restaurants for valid user
+- `getUserRestaurantBySlug()` returns single restaurant or null
+- `getAllRestaurantsForAdmin()` returns all restaurants in system
+- Query functions handle database errors gracefully
+- TypeScript types are properly exported and usable
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 20 – Dashboard restaurant list page
+
+**Goal**: Create the main dashboard page that displays a list of restaurants owned by the authenticated user, with automatic redirection for single-restaurant users.
+
+**Deliverable**:
+
+- Updated `/dashboard` page in `src/app/(dashboard)/dashboard/page.tsx`
+- Restaurant list component displaying user's restaurants
+- "Go to dashboard" button for each restaurant linking to calendar
+- Auto-redirect logic for users with only one restaurant
+- Loading states and error handling for restaurant queries
+- Responsive design using shadcn/ui components and design tokens
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- User with multiple restaurants sees list with "Go to dashboard" buttons
+- User with single restaurant auto-redirects to `/dashboard/[restaurantSlug]/calendar`
+- User with no restaurants sees appropriate empty state message
+- Restaurant list displays restaurant names and basic info correctly
+- Navigation links work and redirect to correct calendar pages
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 21 – Restaurant switcher component
+
+**Goal**: Create a restaurant switcher component in the dashboard header that allows users to navigate between their restaurants and return to the restaurant list.
+
+**Deliverable**:
+
+- Restaurant switcher component in `src/components/ui/restaurant-switcher.tsx`
+- Integration into dashboard layout header
+- "My restaurants" link that redirects to `/dashboard`
+- Current restaurant name display in header
+- Dropdown menu for users with multiple restaurants (future enhancement placeholder)
+- Responsive design using shadcn/ui components
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Restaurant switcher appears in dashboard header on all restaurant pages
+- "My restaurants" link redirects to `/dashboard` page correctly
+- Current restaurant name displays correctly in header
+- Component is responsive and follows design tokens
+- Component integrates seamlessly with existing dashboard layout
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 22 – Dashboard calendar basic structure
+
+**Goal**: Create the basic calendar component structure for the dashboard using a weekly view layout, preparing the foundation for displaying reservation data.
+
+**Deliverable**:
+
+- Calendar component in `src/components/ui/dashboard-calendar.tsx`
+- Weekly view layout with 7-day grid
+- Time slot structure (configurable intervals)
+- Integration with restaurant opening hours
+- Basic calendar navigation (previous/next week)
+- Updated calendar page in `src/app/(dashboard)/dashboard/[restaurantSlug]/calendar/page.tsx`
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Calendar displays current week with 7 days
+- Time slots are visible and properly structured
+- Week navigation buttons work (previous/next week)
+- Calendar respects restaurant opening hours configuration
+- Calendar page loads without errors and displays calendar component
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 23 – Calendar reservation display
+
+**Goal**: Add reservation data display functionality to the dashboard calendar, showing existing reservations in their appropriate time slots.
+
+**Deliverable**:
+
+- Reservation query function for calendar date range in `src/lib/queries/reservation-calendar.ts`
+- Reservation display logic integrated into dashboard calendar component
+- Reservation cards/blocks showing basic info (customer name, guests, time)
+- Color coding for reservation status (pending, confirmed, cancelled)
+- Click handler for reservation details (placeholder for future enhancement)
+- Loading states for reservation data fetching
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Calendar displays existing reservations in correct time slots
+- Reservation blocks show customer name, guest count, and time
+- Different reservation statuses have distinct visual styling
+- Calendar loads reservation data without errors
+- Clicking on reservations shows placeholder interaction (console log or alert)
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 24 – Restaurant settings form structure
+
+**Goal**: Create the restaurant settings form structure with all configuration fields, preparing the foundation for restaurant management functionality.
+
+**Deliverable**:
+
+- Settings form component in `src/components/ui/restaurant-settings-form.tsx`
+- Form fields for basic info (name, slug, contact email, phone)
+- Opening hours configuration section (7-day weekly structure)
+- Reservation constraints fields (min/max guests, lead times, slot intervals)
+- Form layout using shadcn/ui components and design tokens
+- Updated settings page in `src/app/(dashboard)/dashboard/[restaurantSlug]/settings/page.tsx`
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Settings form displays all required fields correctly
+- Opening hours section shows 7-day weekly structure
+- Reservation constraint fields are properly labeled and organized
+- Form uses shadcn/ui components and follows design system
+- Settings page loads and displays form without errors
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 25 – Settings form validation and save
+
+**Goal**: Add form validation, data loading, and save functionality to the restaurant settings form, enabling complete restaurant configuration management.
+
+**Deliverable**:
+
+- React Hook Form integration with Zod validation schema
+- Form data loading from existing restaurant configuration
+- Save functionality with API endpoint `PATCH /api/restaurants/[restaurantSlug]`
+- Form validation for all fields (required fields, format validation, constraints)
+- Success/error feedback messages and loading states
+- Proper handling of opening hours JSON structure
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Form loads existing restaurant data correctly
+- Form validation prevents invalid submissions
+- Save functionality updates restaurant data in database
+- Success message displays after successful save
+- Error messages display for validation failures and save errors
+- Opening hours configuration saves and loads properly
+
+**Status**: ⏳ **PENDING**
+
+---
+
+## ⏳ Step 26 – Enhanced reservation cancellation page
+
+**Goal**: Improve the reservation cancellation page with better UX, confirmation flow, and proper feedback messages for customers cancelling their reservations.
+
+**Deliverable**:
+
+- Enhanced cancellation page in `src/app/(public)/[restaurantSlug]/reservation/cancel/[token]/page.tsx`
+- Confirmation dialog with reservation details display
+- "Confirm Cancellation" button with loading states
+- Optional cancellation reason collection (textarea field)
+- Success/error feedback messages
+- Proper token validation and security handling
+- Responsive design using shadcn/ui components
+
+**Validation**:
+
+- `pnpm lint`, `pnpm typecheck`, `pnpm build` all succeed
+- Cancellation page displays reservation details correctly
+- Confirmation dialog prevents accidental cancellations
+- Cancellation process works with valid tokens
+- Invalid/expired tokens show appropriate error messages
+- Success message displays after successful cancellation
+- Page is responsive and follows design system
+
+**Status**: ⏳ **PENDING**
+
+---
+
 ## Next Steps (Future Tasks)
 
-After completing the above core reservation functionality, continue with:
+After completing the above dashboard functionality, continue with:
 
 - Email notifications with Resend (confirmation emails)
-- Dashboard UI for managing reservations
-- Reservation cancellation flow
-- Stripe billing integration
 - Advanced reservation management features
-- Multi-restaurant support
+- Stripe billing integration
 - Analytics and reporting
+- Multi-language support expansion
