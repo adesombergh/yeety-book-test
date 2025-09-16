@@ -86,6 +86,85 @@ export async function getUserRestaurants(
 }
 
 /**
+ * Get a specific restaurant by ID for a user (checks ownership)
+ * @param userId - The Clerk user ID
+ * @param restaurantId - The restaurant ID
+ * @returns Promise<UserRestaurantResult>
+ */
+export async function getUserRestaurantById(
+  userId: string,
+  restaurantId: string
+): Promise<UserRestaurantResult> {
+  try {
+    // Find the user first to check if they exist
+    const user = await prisma.user.findUnique({
+      where: {
+        clerkId: userId,
+      },
+      select: {
+        id: true,
+        isAdmin: true,
+      },
+    })
+
+    if (!user) {
+      return {
+        restaurant: null,
+        error: 'User not found',
+      }
+    }
+
+    // Find the restaurant by ID
+    const restaurant = await prisma.restaurant.findUnique({
+      where: {
+        id: parseInt(restaurantId),
+      },
+      include: {
+        owners: {
+          select: {
+            clerkId: true,
+          },
+        },
+      },
+    })
+
+    if (!restaurant) {
+      return {
+        restaurant: null,
+        error: 'Restaurant not found',
+      }
+    }
+
+    // Check if user has access (is owner or admin)
+    const isOwner = restaurant.owners.some((owner) => owner.clerkId === userId)
+
+    if (!isOwner && !user.isAdmin) {
+      return {
+        restaurant: null,
+        error: 'Access denied: You do not own this restaurant',
+      }
+    }
+
+    // Cast the restaurant with typed opening hours
+    const typedRestaurant: RestaurantWithTypedHours = {
+      ...restaurant,
+      openingHours: restaurant.openingHours as unknown as OpeningHours,
+    }
+
+    return {
+      restaurant: typedRestaurant,
+      error: null,
+    }
+  } catch (error) {
+    console.error('Error fetching user restaurant by ID:', error)
+    return {
+      restaurant: null,
+      error: 'Failed to fetch restaurant data',
+    }
+  }
+}
+
+/**
  * Get a specific restaurant by slug for a user (checks ownership)
  * @param userId - The Clerk user ID
  * @param restaurantSlug - The restaurant slug

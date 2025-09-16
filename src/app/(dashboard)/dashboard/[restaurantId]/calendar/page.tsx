@@ -1,27 +1,55 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from 'next-intl/server'
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+import { DashboardCalendar } from '@/components/ui/dashboard-calendar'
+import { getUserRestaurantById } from '@/lib/queries/user-restaurant'
 
 interface CalendarPageProps {
-  params: {
-    restaurantId: string;
-  };
+  params: Promise<{
+    restaurantId: string
+  }>
 }
 
-export default function CalendarPage({ params }: CalendarPageProps) {
-  const t = useTranslations("dashboard.calendar");
+export default async function CalendarPage({ params }: CalendarPageProps) {
+  const t = await getTranslations('dashboard.calendar')
+  const { userId } = await auth()
+  const { restaurantId } = await params
+
+  if (!userId) {
+    redirect('/sign-in')
+  }
+
+  // Fetch restaurant data
+  const { restaurant, error } = await getUserRestaurantById(
+    userId,
+    restaurantId
+  )
+
+  if (error || !restaurant) {
+    return (
+      <div>
+        <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
+        <p className="text-text-secondary mt-2">{t('subtitle')}</p>
+
+        <div className="mt-8 p-6 border border-border rounded-lg bg-background">
+          <p className="text-red-600">{error || 'Restaurant not found'}</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-text-dark">{t("title")}</h1>
-      <p className="text-text-secondary mt-2">{t("subtitle")}</p>
+      <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
+      <p className="text-text-secondary mt-2">{t('subtitle')}</p>
 
-      <div className="mt-8 p-6 border border-border rounded-lg bg-background">
-        <p className="text-text-secondary">
-          Calendar view for restaurant: <span className="font-mono text-primary">{params.restaurantId}</span>
-        </p>
-        <p className="text-text-secondary mt-2">
-          This page will display a calendar interface for managing reservations by date.
-        </p>
+      <div className="mt-8">
+        <DashboardCalendar
+          restaurantId={restaurantId}
+          openingHours={restaurant.openingHours}
+          timeSlotInterval={restaurant.slotInterval}
+        />
       </div>
     </div>
-  );
+  )
 }

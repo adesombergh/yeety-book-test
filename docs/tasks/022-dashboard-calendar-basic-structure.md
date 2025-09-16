@@ -30,4 +30,4 @@ Create the basic calendar component structure for the dashboard using a weekly v
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
