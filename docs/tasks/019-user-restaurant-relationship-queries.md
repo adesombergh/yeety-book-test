@@ -30,4 +30,4 @@ Create database query functions to retrieve user-restaurant relationships, enabl
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
