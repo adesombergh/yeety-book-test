@@ -1,17 +1,17 @@
-"use client";
+"use client"
+import { DashboardSidebar } from '@/components/ui/dashboard-sidebar'
+import { Button } from '@/components/ui/button'
+import { Menu } from 'lucide-react'
+import { ReactNode, useState } from 'react'
 
-import { useState } from "react";
-import { DashboardSidebar } from "@/components/ui/dashboard-sidebar";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+interface DashboardLayoutProps {
+  children: ReactNode
+}
 
-export default function DashboardLayout({
+export const DashboardLayout = ({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
+}: DashboardLayoutProps): ReactNode | Promise<ReactNode> => {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   return (
     <div className="flex h-full min-h-screen">
       {/* Sidebar */}
@@ -37,10 +37,8 @@ export default function DashboardLayout({
           <div className="w-10" /> {/* Spacer for centering */}
         </div>
 
-        <div className="flex-1 p-8">
-          {children}
-        </div>
+        <div className="flex-1 p-8">{children}</div>
       </div>
     </div>
-  );
+  )
 }
