@@ -1,15 +1,19 @@
-"use client"
+'use client'
 import { DashboardSidebar } from '@/components/ui/dashboard-sidebar'
+import { RestaurantSwitcher } from '@/components/ui/restaurant-switcher'
 import { Button } from '@/components/ui/button'
 import { Menu } from 'lucide-react'
 import { ReactNode, useState } from 'react'
+import { Restaurant } from '@prisma/client'
 
 interface DashboardLayoutProps {
   children: ReactNode
+  currentRestaurant?: Restaurant | null
 }
 
 export const DashboardLayout = ({
   children,
+  currentRestaurant,
 }: DashboardLayoutProps): ReactNode | Promise<ReactNode> => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   return (
@@ -18,6 +22,7 @@ export const DashboardLayout = ({
       <DashboardSidebar
         isOpen={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
+        currentRestaurantId={currentRestaurant?.id.toString() || null}
       />
 
       {/* Main Content */}
@@ -33,7 +38,10 @@ export const DashboardLayout = ({
             <Menu className="h-6 w-6" />
             <span className="sr-only">Open sidebar</span>
           </Button>
-          <span className="font-bold text-lg text-text-dark">Dashboard</span>
+          <RestaurantSwitcher
+            currentRestaurant={currentRestaurant}
+            className="flex-1 flex justify-center"
+          />
           <div className="w-10" /> {/* Spacer for centering */}
         </div>
 

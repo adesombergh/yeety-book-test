@@ -1,58 +1,65 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from 'next-intl';
-import { useClerk } from '@clerk/nextjs';
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
+import { useClerk } from '@clerk/nextjs'
 import {
   LayoutDashboard,
   Calendar,
   Settings,
   CreditCard,
-  LogOut
-} from "lucide-react";
-
-// For now, using a placeholder restaurant ID - this will be dynamic later
-const PLACEHOLDER_RESTAURANT_ID = "restaurant-1";
-
-const navigationItems = [
-  {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: <LayoutDashboard className="h-5 w-5" />,
-  },
-  {
-    name: "Calendar",
-    href: `/dashboard/${PLACEHOLDER_RESTAURANT_ID}/calendar`,
-    icon: <Calendar className="h-5 w-5" />,
-  },
-  {
-    name: "Settings",
-    href: `/dashboard/${PLACEHOLDER_RESTAURANT_ID}/settings`,
-    icon: <Settings className="h-5 w-5" />,
-  },
-  {
-    name: "Billing",
-    href: `/dashboard/${PLACEHOLDER_RESTAURANT_ID}/billing`,
-    icon: <CreditCard className="h-5 w-5" />,
-  },
-];
+  LogOut,
+} from 'lucide-react'
 
 interface DashboardSidebarProps {
-  isOpen?: boolean;
-  onToggle?: () => void;
+  isOpen?: boolean
+  onToggle?: () => void
+  currentRestaurantId?: string | null
 }
 
-export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarProps) {
-  const pathname = usePathname();
-  const t = useTranslations('auth');
-  const { signOut } = useClerk();
+export function DashboardSidebar({
+  isOpen = true,
+  onToggle,
+  currentRestaurantId,
+}: DashboardSidebarProps) {
+  const pathname = usePathname()
+  const t = useTranslations('auth')
+  const { signOut } = useClerk()
 
   const handleSignOut = async () => {
-    await signOut({ redirectUrl: '/' });
-  };
+    await signOut({ redirectUrl: '/' })
+  }
+
+  // Create navigation items dynamically based on current restaurant
+  const navigationItems = [
+    {
+      name: 'My Restaurants',
+      href: '/dashboard',
+      icon: <LayoutDashboard className="h-5 w-5" />,
+    },
+    ...(currentRestaurantId
+      ? [
+          {
+            name: 'Calendar',
+            href: `/dashboard/${currentRestaurantId}/calendar`,
+            icon: <Calendar className="h-5 w-5" />,
+          },
+          {
+            name: 'Settings',
+            href: `/dashboard/${currentRestaurantId}/settings`,
+            icon: <Settings className="h-5 w-5" />,
+          },
+          {
+            name: 'Billing',
+            href: `/dashboard/${currentRestaurantId}/billing`,
+            icon: <CreditCard className="h-5 w-5" />,
+          },
+        ]
+      : []),
+  ]
 
   return (
     <>
@@ -65,10 +72,12 @@ export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarPr
       )}
 
       {/* Sidebar */}
-      <div className={cn(
-        "fixed inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-background border-r transition-transform duration-300 ease-in-out lg:static lg:translate-x-0",
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
+      <div
+        className={cn(
+          'fixed inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-background border-r transition-transform duration-300 ease-in-out lg:static lg:translate-x-0',
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
+      >
         {/* Sidebar Header */}
         <div className="flex h-16 items-center border-b px-6">
           <Link href="/dashboard" className="flex items-center space-x-2">
@@ -82,22 +91,22 @@ export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarPr
         {/* Navigation */}
         <nav className="flex-1 space-y-1 px-4 py-6">
           {navigationItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href
             return (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  'flex items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                   isActive
-                    ? "bg-primary text-white"
-                    : "text-text-secondary hover:bg-accent-pink/20 hover:text-text-dark"
+                    ? 'bg-primary text-white'
+                    : 'text-text-secondary hover:bg-accent-pink/20 hover:text-text-dark'
                 )}
               >
                 {item.icon}
                 <span>{item.name}</span>
               </Link>
-            );
+            )
           })}
         </nav>
 
@@ -115,5 +124,5 @@ export function DashboardSidebar({ isOpen = true, onToggle }: DashboardSidebarPr
         </div>
       </div>
     </>
-  );
+  )
 }

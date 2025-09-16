@@ -34,5 +34,9 @@ export default async function RestaurantLayout({
     }
   }
 
-  return <DashboardLayout>{children}</DashboardLayout>
+  return (
+    <DashboardLayout currentRestaurant={accessResult.restaurant}>
+      {children}
+    </DashboardLayout>
+  )
 }

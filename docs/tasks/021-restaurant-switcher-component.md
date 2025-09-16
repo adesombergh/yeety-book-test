@@ -30,4 +30,4 @@ Create a restaurant switcher component in the dashboard header that allows users
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
