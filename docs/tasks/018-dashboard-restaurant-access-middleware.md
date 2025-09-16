@@ -29,4 +29,4 @@ Create middleware to verify that authenticated users have access to specific res
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

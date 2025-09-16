@@ -4,7 +4,6 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 export async function POST(request: Request) {
   try {
     const payload: WebhookEvent = await request.json()
-    console.log({ payload })
 
     if (payload.type === 'user.created') {
       const { id: clerkId, email_addresses } = payload.data

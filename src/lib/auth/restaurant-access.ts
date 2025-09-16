@@ -77,10 +77,10 @@ export async function verifyRestaurantAccess(
  * @param pathname - The request pathname
  * @returns string | null - The restaurant ID or null if not found
  */
-export function extractRestaurantId(pathname: string): string | null {
-  const dashboardRouteMatch = pathname.match(/^\/dashboard\/([^\/]+)/)
-  return dashboardRouteMatch ? dashboardRouteMatch[1] : null
-}
+// export function extractRestaurantId(pathname: string): string | null {
+//   const dashboardRouteMatch = pathname.match(/^\/dashboard\/([^\/]+)/)
+//   return dashboardRouteMatch ? dashboardRouteMatch[1] : null
+// }
 
 /**
  * Helper function for API routes to verify restaurant access
@@ -89,37 +89,37 @@ export function extractRestaurantId(pathname: string): string | null {
  * @param restaurantId - The restaurant ID to check access for
  * @returns Promise<{ success: true; restaurant: Restaurant } | { success: false; response: Response }>
  */
-export async function verifyRestaurantAccessForAPI(
-  clerkUserId: string,
-  restaurantId: string
-): Promise<
-  | { success: true; restaurant: Restaurant }
-  | { success: false; response: Response }
-> {
-  const accessResult = await verifyRestaurantAccess(clerkUserId, restaurantId)
+// export async function verifyRestaurantAccessForAPI(
+//   clerkUserId: string,
+//   restaurantId: string
+// ): Promise<
+//   | { success: true; restaurant: Restaurant }
+//   | { success: false; response: Response }
+// > {
+//   const accessResult = await verifyRestaurantAccess(clerkUserId, restaurantId)
 
-  if (!accessResult.hasAccess) {
-    if (accessResult.error === 'NOT_FOUND') {
-      return {
-        success: false,
-        response: Response.json(
-          { error: 'Restaurant not found' },
-          { status: 404 }
-        ),
-      }
-    } else {
-      return {
-        success: false,
-        response: Response.json(
-          { error: 'Forbidden: You do not have access to this restaurant' },
-          { status: 403 }
-        ),
-      }
-    }
-  }
+//   if (!accessResult.hasAccess) {
+//     if (accessResult.error === 'NOT_FOUND') {
+//       return {
+//         success: false,
+//         response: Response.json(
+//           { error: 'Restaurant not found' },
+//           { status: 404 }
+//         ),
+//       }
+//     } else {
+//       return {
+//         success: false,
+//         response: Response.json(
+//           { error: 'Forbidden: You do not have access to this restaurant' },
+//           { status: 403 }
+//         ),
+//       }
+//     }
+//   }
 
-  return {
-    success: true,
-    restaurant: accessResult.restaurant,
-  }
-}
+//   return {
+//     success: true,
+//     restaurant: accessResult.restaurant,
+//   }
+// }
