@@ -13,7 +13,7 @@ export interface UserRestaurantResult {
 }
 
 /**
- * Get all restaurants owned by a specific user
+ * Get all restaurants owned by a specific user, or all restaurants if user is admin
  * @param userId - The Clerk user ID
  * @returns Promise<UserRestaurantsResult>
  */
@@ -21,8 +21,31 @@ export async function getUserRestaurants(
   userId: string
 ): Promise<UserRestaurantsResult> {
   try {
-    // Find the user and their restaurants
+    // Find the user first to check if they are admin
     const user = await prisma.user.findUnique({
+      where: {
+        clerkId: userId,
+      },
+      select: {
+        id: true,
+        isAdmin: true,
+      },
+    })
+
+    if (!user) {
+      return {
+        restaurants: [],
+        error: 'User not found',
+      }
+    }
+
+    // If user is admin, return all restaurants
+    if (user.isAdmin) {
+      return await getAllRestaurantsForAdmin()
+    }
+
+    // Otherwise, get user's owned restaurants
+    const userWithRestaurants = await prisma.user.findUnique({
       where: {
         clerkId: userId,
       },
@@ -35,7 +58,7 @@ export async function getUserRestaurants(
       },
     })
 
-    if (!user) {
+    if (!userWithRestaurants) {
       return {
         restaurants: [],
         error: 'User not found',
@@ -43,12 +66,11 @@ export async function getUserRestaurants(
     }
 
     // Cast restaurants with typed opening hours
-    const typedRestaurants: RestaurantWithTypedHours[] = user.restaurants.map(
-      (restaurant) => ({
+    const typedRestaurants: RestaurantWithTypedHours[] =
+      userWithRestaurants.restaurants.map((restaurant) => ({
         ...restaurant,
         openingHours: restaurant.openingHours as unknown as OpeningHours,
-      })
-    )
+      }))
 
     return {
       restaurants: typedRestaurants,

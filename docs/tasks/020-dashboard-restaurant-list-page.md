@@ -30,4 +30,4 @@ Create the main dashboard page that displays a list of restaurants owned by the 
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

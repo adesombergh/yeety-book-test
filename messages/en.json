@@ -39,8 +39,13 @@
   },
   "dashboard": {
     "home": {
-      "title": "Dashboard Home",
-      "subtitle": "Restaurant management overview"
+      "title": "My Restaurants",
+      "subtitle": "Manage your restaurant dashboards",
+      "goToDashboard": "Go to Dashboard",
+      "noRestaurants": "No restaurants found",
+      "noRestaurantsDescription": "You don't have access to any restaurants yet. Contact support if you believe this is an error.",
+      "loadingRestaurants": "Loading your restaurants...",
+      "errorLoadingRestaurants": "Failed to load restaurants"
     },
     "calendar": {
       "title": "Calendar",
