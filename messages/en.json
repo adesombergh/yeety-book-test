@@ -34,7 +34,33 @@
       "title": "Cancel Reservation",
       "subtitle": "Cancel your table reservation",
       "placeholder": "Reservation Cancellation - Coming Soon",
-      "message": "Are you sure you want to cancel your reservation?"
+      "message": "Are you sure you want to cancel your reservation?",
+      "loading": "Loading reservation details...",
+      "confirmTitle": "Confirm Cancellation",
+      "confirmMessage": "Are you sure you want to cancel this reservation? This action cannot be undone.",
+      "reasonLabel": "Cancellation Reason (Optional)",
+      "reasonPlaceholder": "Please let us know why you're cancelling...",
+      "confirmButton": "Confirm Cancellation",
+      "cancelButton": "Keep Reservation",
+      "cancelling": "Cancelling...",
+      "success": {
+        "title": "Reservation Cancelled",
+        "message": "Your reservation has been successfully cancelled. You should receive a confirmation email shortly."
+      },
+      "error": {
+        "invalidToken": "Invalid or expired cancellation link",
+        "alreadyCancelled": "This reservation has already been cancelled",
+        "pastReservation": "Cannot cancel a reservation that has already passed",
+        "failed": "Failed to cancel reservation. Please try again or contact the restaurant directly."
+      },
+      "details": {
+        "reservationFor": "Reservation for {name}",
+        "date": "Date",
+        "time": "Time",
+        "guests": "Guests",
+        "restaurant": "Restaurant",
+        "contact": "Contact"
+      }
     }
   },
   "dashboard": {

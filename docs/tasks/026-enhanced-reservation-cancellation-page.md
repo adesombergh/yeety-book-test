@@ -32,4 +32,4 @@ Improve the reservation cancellation page with better UX, confirmation flow, and
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
