@@ -19,11 +19,13 @@ export const DashboardLayout = ({
   return (
     <div className="flex h-full min-h-screen">
       {/* Sidebar */}
-      <DashboardSidebar
-        isOpen={sidebarOpen}
-        onToggle={() => setSidebarOpen(!sidebarOpen)}
-        currentRestaurantId={currentRestaurant?.id.toString() || null}
-      />
+      <div className="min-h-full w-64">
+        <DashboardSidebar
+          isOpen={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
+          currentRestaurantId={currentRestaurant?.id.toString() || null}
+        />
+      </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:ml-0">

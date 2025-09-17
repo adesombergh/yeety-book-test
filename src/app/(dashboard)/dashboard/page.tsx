@@ -34,9 +34,11 @@ function DashboardContent({
   const t = useTranslations('dashboard.home')
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
-      <p className="text-text-secondary mt-2">{t('subtitle')}</p>
+    <div className="container mx-auto px-4 py-8">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
+        <p className="text-text-secondary mt-2">{t('subtitle')}</p>
+      </div>
 
       <div className="mt-8">
         {error ? (

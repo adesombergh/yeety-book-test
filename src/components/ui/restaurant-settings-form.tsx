@@ -211,17 +211,14 @@ export function RestaurantSettingsForm({
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-2">
             {DAYS_OF_WEEK.map((day) => {
               const dayKey =
                 day.key as keyof RestaurantSettingsFormData['openingHours']
               const isClosed = watch(`openingHours.${dayKey}.closed`)
 
               return (
-                <div
-                  key={day.key}
-                  className="flex items-center gap-4 p-4 border border-border rounded-lg"
-                >
+                <div key={day.key} className="flex items-center gap-4 h-9">
                   <div className="w-24">
                     <Label className="font-medium">{day.label}</Label>
                   </div>

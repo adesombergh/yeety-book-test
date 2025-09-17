@@ -1,17 +1,21 @@
-'use server';
+'use server'
 
-import { getAllRestaurants } from '@/lib/queries/restaurant';
-import { RestaurantCard } from '@/components/ui/restaurant-card';
+import { getAllRestaurants } from '@/lib/queries/restaurant'
+import { RestaurantCard } from '@/components/ui/restaurant-card'
 
 export default async function HomePage() {
-  const { restaurants, error } = await getAllRestaurants();
+  const { restaurants, error } = await getAllRestaurants()
 
   if (error) {
     return (
-      <div className="max-w-6xl mx-auto">
+      <div className="container mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-text-dark">Welcome to YeetyBook</h1>
-          <p className="text-text-secondary mt-2">Find and book restaurant reservations</p>
+          <h1 className="text-3xl font-bold text-text-dark">
+            Welcome to YeetyBook
+          </h1>
+          <p className="text-text-secondary mt-2">
+            Find and book restaurant reservations
+          </p>
         </div>
         <div className="text-center py-12">
           <p className="text-lg text-text-secondary">
@@ -19,14 +23,18 @@ export default async function HomePage() {
           </p>
         </div>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="container mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-text-dark">Welcome to YeetyBook</h1>
-        <p className="text-text-secondary mt-2">Find and book restaurant reservations</p>
+        <h1 className="text-3xl font-bold text-text-dark">
+          Welcome to YeetyBook
+        </h1>
+        <p className="text-text-secondary mt-2">
+          Find and book restaurant reservations
+        </p>
       </div>
 
       {restaurants.length === 0 ? (
@@ -43,5 +51,5 @@ export default async function HomePage() {
         </div>
       )}
     </div>
-  );
+  )
 }
