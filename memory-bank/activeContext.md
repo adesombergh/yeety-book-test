@@ -1,0 +1,230 @@
+# Active Context - Current Work Focus
+
+## Current Task Focus
+
+### Task 26: Enhanced Reservation Cancellation Page
+
+**Status**: In Progress
+**Goal**: Improve the reservation cancellation page with better UX, confirmation flow, and proper feedback messages
+
+**Current State**:
+
+- Task 25 (Settings form validation and save) completed ✅
+- Task 24 (Restaurant settings form structure) completed ✅
+- Basic cancellation page structure exists
+- Need to enhance with confirmation dialog and better UX
+
+**Next Immediate Steps**:
+
+1. Add confirmation dialog with reservation details display
+2. Implement "Confirm Cancellation" button with loading states
+3. Add optional cancellation reason collection (textarea field)
+4. Implement proper token validation and security handling
+5. Add success/error feedback messages
+
+## Recent Completed Work
+
+### Task 24: Restaurant Settings Form Structure ✅
+
+**Completed**: Form structure with all configuration fields
+
+- Settings form component created with basic info fields
+- Opening hours configuration section (7-day structure)
+- Reservation constraints fields (min/max guests, lead times, slot intervals)
+- Form uses shadcn/ui components and design tokens
+- Settings page loads and displays form correctly
+
+### Task 16: Reservation Form Components ✅
+
+**Completed**: Functional reservation form with CloudFlare Turnstile
+
+- Reservation form and card components created
+- Date/time picker with shadcn/ui calendar
+- Guest count selector with validation
+- Customer information fields with React Hook Form + Zod
+- CloudFlare Turnstile integration working
+- Complete end-to-end reservation flow functional
+
+### Task 15: CloudFlare Turnstile Integration ✅
+
+**Completed**: Spam protection for reservation API
+
+- CloudFlare Turnstile configured with site and secret keys
+- Server-side token verification in reservation API
+- Proper error handling for failed verification
+- API rejects requests without valid Turnstile tokens
+
+## Current Architecture State
+
+### Database Schema
+
+**Models in Use**:
+
+- `User`: With `isAdmin` field, Clerk integration, soft delete pattern
+- `Restaurant`: Full configuration fields (opening hours, constraints, contact info)
+- `Reservation`: Complete reservation lifecycle with status management
+
+**Key Relationships**:
+
+- User ←→ Restaurant (Many-to-Many via RestaurantOwners relation)
+- Restaurant → Reservations (One-to-Many)
+- Secure cancellation tokens for email-based cancellation
+
+### Authentication & Access Control
+
+**Current Implementation**:
+
+- Clerk authentication fully integrated
+- Route protection middleware working
+- Dashboard routes require authentication
+- User-restaurant ownership validation in place
+- Netflix-style user lifecycle (soft delete/restore) implemented
+
+### Component System
+
+**Current State**:
+
+- shadcn/ui foundation established
+- Custom components in `src/components/ui/*`
+- Design tokens system working (`design-tokens.yml` + `tailwind.config.js`)
+- Form patterns established with React Hook Form + Zod
+- Consistent styling across all components
+
+## Active Development Patterns
+
+### Form Development Pattern
+
+**Established Pattern** (from reservation form):
+
+```typescript
+// 1. Zod schema definition
+const schema = z.object({...})
+
+// 2. React Hook Form setup
+const form = useForm<z.infer<typeof schema>>({
+  resolver: zodResolver(schema)
+})
+
+// 3. shadcn/ui Form components
+<Form>
+  <FormField>
+    <FormItem>
+      <FormLabel />
+      <FormControl>
+        <Input />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  </FormField>
+</Form>
+```
+
+### API Endpoint Pattern
+
+**Established Pattern**:
+
+```typescript
+// Response format
+{ success: true, data: T } | { success: false, error: string }
+
+// Validation with Zod
+const result = schema.safeParse(body)
+if (!result.success) {
+  return NextResponse.json({ success: false, error: "Validation failed" }, { status: 400 })
+}
+
+// Database operations with Prisma
+const updated = await prisma.restaurant.update({...})
+```
+
+## Key Learnings & Insights
+
+### Server-Side Data Architecture
+
+**Critical Pattern**: Prisma client ONLY on server-side
+
+- Server components: Direct Prisma queries work perfectly
+- Client components: Must use fetch() to API routes
+- Database queries: Organized in `src/lib/queries/*` for reusability
+- This pattern prevents hydration issues and ensures security
+
+### Multi-Tenant Security
+
+**Access Control Pattern**:
+
+- Always validate user-restaurant ownership before data access
+- Use restaurant ID consistently in URLs and database queries
+- Admin users (`isAdmin: true`) can access all restaurants
+- Middleware handles authentication, components handle authorization
+
+### Design System Integration
+
+**Component Development**:
+
+- Always start with shadcn/ui primitives
+- Wrap in custom components in `src/components/ui/*` when needed
+- Use design tokens from `design-tokens.yml` - never hardcode values
+- Maintain consistent spacing, colors, and typography
+
+### Form Validation Strategy
+
+**Dual Validation**:
+
+- Client-side: React Hook Form + Zod for immediate feedback
+- Server-side: Same Zod schemas for security and consistency
+- Error handling: Clear, user-friendly messages
+- Loading states: Proper feedback during async operations
+
+## Current Challenges & Considerations
+
+### Restaurant Settings Complexity
+
+**Challenge**: Opening hours configuration is complex JSON structure
+**Approach**: Use Zod for type-safe validation of nested JSON structure
+**Pattern**: `{ "monday": [{"start": "09:00", "end": "17:00"}], ... }`
+
+### Form State Management
+
+**Challenge**: Loading existing restaurant data into form
+**Approach**: Use React Hook Form's `reset()` method after data fetch
+**Pattern**: Server component loads data, passes to client form component
+
+### API Route Organization
+
+**Current**: `/api/restaurants/[restaurantId]/route.ts` exists
+**Need**: PATCH method for updating restaurant settings
+**Pattern**: Validate ownership, parse body with Zod, update with Prisma
+
+## Testing Credentials
+
+**Dashboard Access**:
+
+- Email: `aldebaran.desombergh@yeety.be`
+- Password: `.G?u+>8d7C&xiy*`
+- Role: Restaurant owner with access to test restaurant
+
+## Next Session Priorities
+
+1. **Complete Task 25**: Settings form validation and save functionality
+2. **Validate Implementation**: Ensure all validation steps pass
+3. **Test End-to-End**: Use test credentials to verify complete flow
+4. **Move to Task 26**: Enhanced reservation cancellation page
+
+## Important Context for Memory Resets
+
+**Critical Files to Check**:
+
+- `src/components/ui/restaurant-settings-form.tsx` - Current form structure
+- `src/app/api/restaurants/[restaurantId]/route.ts` - API endpoint for updates
+- `src/lib/schemas/restaurant-settings.ts` - Zod validation schema
+- `docs/tasks/025-settings-form-validation-and-save.md` - Task requirements
+
+**Key Patterns to Remember**:
+
+- Server-side Prisma queries only
+- shadcn/ui component foundation
+- React Hook Form + Zod validation
+- Design tokens for all styling
+- Multi-tenant security validation
+
+This active context ensures continuity across memory resets and maintains focus on current development priorities.
