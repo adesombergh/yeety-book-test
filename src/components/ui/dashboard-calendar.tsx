@@ -1,9 +1,15 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { OpeningHours } from '@/lib/types/restaurant'
+import { ReservationSlot } from '@/components/ui/reservation-block'
+import {
+  getReservationsForTimeSlot,
+  CalendarReservation,
+  CalendarReservationsByDate,
+} from '@/lib/queries/reservation-calendar'
 
 interface DashboardCalendarProps {
   restaurantId: string
@@ -27,11 +33,81 @@ interface WeekDay {
 }
 
 export function DashboardCalendar({
+  restaurantId,
   openingHours,
   timeSlotInterval = 30,
   currentWeek,
 }: DashboardCalendarProps) {
   const [selectedWeek, setSelectedWeek] = useState(currentWeek || new Date())
+  const [reservationsByDate, setReservationsByDate] =
+    useState<CalendarReservationsByDate>({})
+  const [isLoadingReservations, setIsLoadingReservations] = useState(false)
+  const [reservationError, setReservationError] = useState<string | null>(null)
+
+  // Fetch reservations for the current week
+  useEffect(() => {
+    const fetchReservations = async () => {
+      setIsLoadingReservations(true)
+      setReservationError(null)
+
+      const weekStart = getWeekStart(selectedWeek)
+      const weekEnd = new Date(weekStart)
+      weekEnd.setDate(weekStart.getDate() + 6)
+      weekEnd.setHours(23, 59, 59, 999) // End of day
+
+      try {
+        const params = new URLSearchParams({
+          restaurantId,
+          startDate: weekStart.toISOString(),
+          endDate: weekEnd.toISOString(),
+        })
+
+        const response = await fetch(`/api/reservations/calendar?${params}`)
+        const data = await response.json()
+
+        if (!response.ok) {
+          setReservationError(data.error || 'Failed to load reservations')
+        } else if (data.success) {
+          // Convert date strings back to Date objects
+          const processedReservationsByDate: CalendarReservationsByDate = {}
+          Object.entries(data.reservationsByDate).forEach(
+            ([dateKey, reservations]) => {
+              processedReservationsByDate[dateKey] = (
+                reservations as Array<
+                  Omit<CalendarReservation, 'date'> & { date: string }
+                >
+              ).map((reservation) => ({
+                ...reservation,
+                date: new Date(reservation.date),
+              }))
+            }
+          )
+          setReservationsByDate(processedReservationsByDate)
+        } else {
+          setReservationError('Failed to load reservations')
+        }
+      } catch (err) {
+        console.error('Error fetching reservations:', err)
+        setReservationError('Failed to load reservations')
+      } finally {
+        setIsLoadingReservations(false)
+      }
+    }
+
+    fetchReservations()
+  }, [restaurantId, selectedWeek])
+
+  // Handle reservation click
+  const handleReservationClick = (reservation: CalendarReservation) => {
+    // Placeholder for future navigation to reservation details
+    console.log('Reservation clicked:', {
+      id: reservation.id,
+      customer: `${reservation.firstName} ${reservation.lastName}`,
+      guests: reservation.guests,
+      status: reservation.status,
+      date: reservation.date.toLocaleString(),
+    })
+  }
 
   // Get the start of the week (Monday)
   const getWeekStart = (date: Date): Date => {
@@ -264,9 +340,16 @@ export function DashboardCalendar({
                         </div>
                       )}
                       {hasSlot && !daySchedule.closed && (
-                        <div className="text-xs text-text-secondary">
-                          {/* Placeholder for future reservation data */}
-                        </div>
+                        <ReservationSlot
+                          reservations={getReservationsForTimeSlot(
+                            reservationsByDate,
+                            day.date,
+                            timeSlot
+                          )}
+                          onReservationClick={handleReservationClick}
+                          isLoading={isLoadingReservations}
+                          maxVisible={2}
+                        />
                       )}
                     </div>
                   )
@@ -276,8 +359,15 @@ export function DashboardCalendar({
           })()}
         </div>
 
+        {/* Error Display */}
+        {reservationError && (
+          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-600 text-sm">{reservationError}</p>
+          </div>
+        )}
+
         {/* Legend */}
-        <div className="mt-4 flex items-center gap-4 text-xs text-text-secondary">
+        <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-text-secondary">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-primary/10 rounded"></div>
             <span>Today</span>
@@ -289,6 +379,19 @@ export function DashboardCalendar({
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-background border border-border rounded"></div>
             <span>Available</span>
+          </div>
+          {/* Reservation Status Legend */}
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-[#DEBF56] rounded"></div>
+            <span>Pending</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-[#46B865] rounded"></div>
+            <span>Confirmed</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-[#FE6C3B] rounded"></div>
+            <span>Completed</span>
           </div>
         </div>
       </Card>

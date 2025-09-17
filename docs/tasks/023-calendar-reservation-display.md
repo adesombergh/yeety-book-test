@@ -30,4 +30,4 @@ Add reservation data display functionality to the dashboard calendar, showing ex
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
