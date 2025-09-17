@@ -31,4 +31,4 @@ Add form validation, data loading, and save functionality to the restaurant sett
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

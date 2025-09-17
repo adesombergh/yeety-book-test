@@ -41,6 +41,42 @@ export async function getRestaurantBySlug(
   }
 }
 
+export async function getRestaurantById(
+  id: number
+): Promise<RestaurantQueryResult> {
+  try {
+    const restaurant = await prisma.restaurant.findUnique({
+      where: {
+        id: id,
+      },
+    })
+
+    if (!restaurant) {
+      return {
+        restaurant: null,
+        error: 'Restaurant not found',
+      }
+    }
+
+    // Cast the restaurant with typed opening hours
+    const typedRestaurant: RestaurantWithTypedHours = {
+      ...restaurant,
+      openingHours: restaurant.openingHours as unknown as OpeningHours,
+    }
+
+    return {
+      restaurant: typedRestaurant,
+      error: null,
+    }
+  } catch (error) {
+    console.error('Error fetching restaurant:', error)
+    return {
+      restaurant: null,
+      error: 'Failed to fetch restaurant data',
+    }
+  }
+}
+
 export async function getAllRestaurants(): Promise<{
   restaurants: RestaurantWithTypedHours[]
   error: string | null

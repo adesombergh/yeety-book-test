@@ -1,13 +1,28 @@
 'use client'
 
+import { useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
+  restaurantSettingsSchema,
+  type RestaurantSettingsFormData,
+} from '@/lib/schemas/restaurant-settings'
+import type { RestaurantWithTypedHours } from '@/lib/types/restaurant'
 
 interface RestaurantSettingsFormProps {
   restaurantId: string
+  initialData: RestaurantWithTypedHours
 }
 
 const DAYS_OF_WEEK = [
@@ -27,10 +42,85 @@ const SLOT_INTERVALS = [
 ]
 
 export function RestaurantSettingsForm({
-  restaurantId, // eslint-disable-line @typescript-eslint/no-unused-vars -- Will be used in task 025 for form validation and save
+  restaurantId,
+  initialData,
 }: RestaurantSettingsFormProps) {
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState<{
+    type: 'success' | 'error'
+    text: string
+  } | null>(null)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    control,
+  } = useForm<RestaurantSettingsFormData>({
+    resolver: zodResolver(restaurantSettingsSchema),
+    defaultValues: {
+      name: initialData.name,
+      slug: initialData.slug,
+      emailContact: initialData.emailContact,
+      phoneContact: initialData.phoneContact || '',
+      openingHours: initialData.openingHours,
+      slotInterval: initialData.slotInterval.toString(),
+      minGuestsPerReservation: initialData.minGuestsPerReservation,
+      maxGuestsPerReservation: initialData.maxGuestsPerReservation,
+      maxReservationsPerSlot: initialData.maxReservationsPerSlot,
+      reservationLeadTimeMin: initialData.reservationLeadTimeMin,
+      reservationLeadTimeMax: initialData.reservationLeadTimeMax,
+    },
+  })
+
+  const onSubmit = async (data: RestaurantSettingsFormData) => {
+    setIsSaving(true)
+    setSaveMessage(null)
+
+    try {
+      const response = await fetch(`/api/restaurants/${restaurantId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to save settings')
+      }
+
+      setSaveMessage({ type: 'success', text: 'Settings saved successfully!' })
+    } catch (error) {
+      console.error('Error saving settings:', error)
+      setSaveMessage({
+        type: 'error',
+        text:
+          error instanceof Error ? error.message : 'Failed to save settings',
+      })
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
   return (
-    <div className="space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      {/* Save Message */}
+      {saveMessage && (
+        <div
+          className={`p-4 rounded-lg ${
+            saveMessage.type === 'success'
+              ? 'bg-green-50 text-green-800 border border-green-200'
+              : 'bg-red-50 text-red-800 border border-red-200'
+          }`}
+        >
+          {saveMessage.text}
+        </div>
+      )}
+
       {/* Basic Information Section */}
       <Card className="p-6">
         <div className="space-y-6">
@@ -42,21 +132,29 @@ export function RestaurantSettingsForm({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="restaurant-name">Restaurant Name</Label>
+              <Label htmlFor="name">Restaurant Name</Label>
               <Input
-                id="restaurant-name"
+                id="name"
+                {...register('name')}
                 placeholder="Enter restaurant name"
                 className="w-full"
               />
+              {errors.name && (
+                <p className="text-sm text-red-600">{errors.name.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="restaurant-slug">URL Slug</Label>
+              <Label htmlFor="slug">URL Slug</Label>
               <Input
-                id="restaurant-slug"
+                id="slug"
+                {...register('slug')}
                 placeholder="restaurant-slug"
                 className="w-full"
               />
+              {errors.slug && (
+                <p className="text-sm text-red-600">{errors.slug.message}</p>
+              )}
               <p className="text-sm text-text-secondary">
                 This will be used in your booking URL:
                 yoursite.com/restaurant-slug
@@ -66,23 +164,35 @@ export function RestaurantSettingsForm({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="contact-email">Contact Email</Label>
+              <Label htmlFor="emailContact">Contact Email</Label>
               <Input
-                id="contact-email"
+                id="emailContact"
+                {...register('emailContact')}
                 type="email"
                 placeholder="contact@restaurant.com"
                 className="w-full"
               />
+              {errors.emailContact && (
+                <p className="text-sm text-red-600">
+                  {errors.emailContact.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="contact-phone">Contact Phone</Label>
+              <Label htmlFor="phoneContact">Contact Phone</Label>
               <Input
-                id="contact-phone"
+                id="phoneContact"
+                {...register('phoneContact')}
                 type="tel"
                 placeholder="+1 (555) 123-4567"
                 className="w-full"
               />
+              {errors.phoneContact && (
+                <p className="text-sm text-red-600">
+                  {errors.phoneContact.message}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -102,52 +212,68 @@ export function RestaurantSettingsForm({
           </div>
 
           <div className="space-y-4">
-            {DAYS_OF_WEEK.map((day) => (
-              <div
-                key={day.key}
-                className="flex items-center gap-4 p-4 border border-border rounded-lg"
-              >
-                <div className="w-24">
-                  <Label className="font-medium">{day.label}</Label>
-                </div>
+            {DAYS_OF_WEEK.map((day) => {
+              const dayKey =
+                day.key as keyof RestaurantSettingsFormData['openingHours']
+              const isClosed = watch(`openingHours.${dayKey}.closed`)
 
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id={`${day.key}-closed`}
-                    className="rounded border-border"
-                  />
-                  <Label htmlFor={`${day.key}-closed`} className="text-sm">
-                    Closed
-                  </Label>
-                </div>
+              return (
+                <div
+                  key={day.key}
+                  className="flex items-center gap-4 p-4 border border-border rounded-lg"
+                >
+                  <div className="w-24">
+                    <Label className="font-medium">{day.label}</Label>
+                  </div>
 
-                <div className="flex items-center gap-2">
-                  <Label htmlFor={`${day.key}-open`} className="text-sm">
-                    Open:
-                  </Label>
-                  <Input
-                    id={`${day.key}-open`}
-                    type="time"
-                    className="w-32"
-                    defaultValue="09:00"
-                  />
-                </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      {...register(`openingHours.${dayKey}.closed`)}
+                      id={`${day.key}-closed`}
+                      className="rounded border-border"
+                    />
+                    <Label htmlFor={`${day.key}-closed`} className="text-sm">
+                      Closed
+                    </Label>
+                  </div>
 
-                <div className="flex items-center gap-2">
-                  <Label htmlFor={`${day.key}-close`} className="text-sm">
-                    Close:
-                  </Label>
-                  <Input
-                    id={`${day.key}-close`}
-                    type="time"
-                    className="w-32"
-                    defaultValue="22:00"
-                  />
+                  {!isClosed && (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor={`${day.key}-open`} className="text-sm">
+                          Open:
+                        </Label>
+                        <Input
+                          id={`${day.key}-open`}
+                          {...register(`openingHours.${dayKey}.open`)}
+                          type="time"
+                          className="w-32"
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor={`${day.key}-close`} className="text-sm">
+                          Close:
+                        </Label>
+                        <Input
+                          id={`${day.key}-close`}
+                          {...register(`openingHours.${dayKey}.close`)}
+                          type="time"
+                          className="w-32"
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
+          {errors.openingHours && (
+            <p className="text-sm text-red-600">
+              Please check your opening hours configuration
+            </p>
+          )}
         </div>
       </Card>
 
@@ -165,77 +291,125 @@ export function RestaurantSettingsForm({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="min-guests">Minimum Guests</Label>
+              <Label htmlFor="minGuestsPerReservation">Minimum Guests</Label>
               <Input
-                id="min-guests"
+                id="minGuestsPerReservation"
+                {...register('minGuestsPerReservation', {
+                  valueAsNumber: true,
+                })}
                 type="number"
                 min="1"
-                defaultValue="1"
                 className="w-full"
               />
+              {errors.minGuestsPerReservation && (
+                <p className="text-sm text-red-600">
+                  {errors.minGuestsPerReservation.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="max-guests">Maximum Guests</Label>
+              <Label htmlFor="maxGuestsPerReservation">Maximum Guests</Label>
               <Input
-                id="max-guests"
+                id="maxGuestsPerReservation"
+                {...register('maxGuestsPerReservation', {
+                  valueAsNumber: true,
+                })}
                 type="number"
                 min="1"
-                defaultValue="8"
                 className="w-full"
               />
+              {errors.maxGuestsPerReservation && (
+                <p className="text-sm text-red-600">
+                  {errors.maxGuestsPerReservation.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="max-reservations-per-slot">
+              <Label htmlFor="maxReservationsPerSlot">
                 Max Reservations per Slot
               </Label>
               <Input
-                id="max-reservations-per-slot"
+                id="maxReservationsPerSlot"
+                {...register('maxReservationsPerSlot', { valueAsNumber: true })}
                 type="number"
                 min="1"
-                defaultValue="5"
                 className="w-full"
               />
+              {errors.maxReservationsPerSlot && (
+                <p className="text-sm text-red-600">
+                  {errors.maxReservationsPerSlot.message}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="slot-interval">Time Slot Interval</Label>
-              <Select>
-                <option value="">Select interval</option>
-                {SLOT_INTERVALS.map((interval) => (
-                  <option key={interval.value} value={interval.value}>
-                    {interval.label}
-                  </option>
-                ))}
-              </Select>
+              <Label htmlFor="slotInterval">Time Slot Interval</Label>
+              <Controller
+                name="slotInterval"
+                control={control}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select interval" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SLOT_INTERVALS.map((interval) => (
+                        <SelectItem key={interval.value} value={interval.value}>
+                          {interval.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.slotInterval && (
+                <p className="text-sm text-red-600">
+                  {errors.slotInterval.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="lead-time-min">Minimum Lead Time (hours)</Label>
+              <Label htmlFor="reservationLeadTimeMin">
+                Minimum Lead Time (hours)
+              </Label>
               <Input
-                id="lead-time-min"
+                id="reservationLeadTimeMin"
+                {...register('reservationLeadTimeMin', { valueAsNumber: true })}
                 type="number"
                 min="0"
-                defaultValue="2"
                 className="w-full"
               />
+              {errors.reservationLeadTimeMin && (
+                <p className="text-sm text-red-600">
+                  {errors.reservationLeadTimeMin.message}
+                </p>
+              )}
               <p className="text-xs text-text-secondary">
                 How far in advance customers must book
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="lead-time-max">Maximum Lead Time (days)</Label>
+              <Label htmlFor="reservationLeadTimeMax">
+                Maximum Lead Time (days)
+              </Label>
               <Input
-                id="lead-time-max"
+                id="reservationLeadTimeMax"
+                {...register('reservationLeadTimeMax', { valueAsNumber: true })}
                 type="number"
                 min="1"
-                defaultValue="30"
                 className="w-full"
               />
+              {errors.reservationLeadTimeMax && (
+                <p className="text-sm text-red-600">
+                  {errors.reservationLeadTimeMax.message}
+                </p>
+              )}
               <p className="text-xs text-text-secondary">
                 How far in advance customers can book
               </p>
@@ -246,11 +420,17 @@ export function RestaurantSettingsForm({
 
       {/* Form Actions */}
       <div className="flex justify-end gap-4">
-        <Button variant="outline">Cancel</Button>
-        <Button className="bg-primary hover:bg-primary/90 text-white">
-          Save Settings
+        <Button type="button" variant="outline" disabled={isSaving}>
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          className="bg-primary hover:bg-primary/90 text-white"
+          disabled={isSaving}
+        >
+          {isSaving ? 'Saving...' : 'Save Settings'}
         </Button>
       </div>
-    </div>
+    </form>
   )
 }
