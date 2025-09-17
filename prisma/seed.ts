@@ -225,6 +225,38 @@ function getReservationStatus(date: Date): ReservationStatus {
 async function main() {
   console.log('🌱 Seeding database...')
 
+  // Check if users already exist
+  const existingUserCount = await prisma.user.count()
+  console.log(`Found ${existingUserCount} existing users`)
+
+  if (existingUserCount > 0) {
+    console.log('🧹 Clearing existing users...')
+    await prisma.user.deleteMany({})
+  }
+
+  console.log('👤 Creating users...')
+
+  // Create admin user
+  const adminUser = await prisma.user.create({
+    data: {
+      clerkId: 'user_32ZGKoTscBA26GgPABlCCsoAVZx',
+      email: 'aldebaran.desombergh@gmail.com',
+      isAdmin: true,
+    },
+  })
+
+  // Create test user
+  const testUser = await prisma.user.create({
+    data: {
+      clerkId: 'user_32p9CgFG9e6XmK4CXA9R5R4JHuV',
+      email: 'aldebaran.desombergh@yeety.be',
+      isAdmin: false,
+    },
+  })
+
+  console.log(`✅ Created admin user: ${adminUser.email}`)
+  console.log(`✅ Created test user: ${testUser.email}`)
+
   // Check if restaurants already exist
   const existingCount = await prisma.restaurant.count()
   console.log(`Found ${existingCount} existing restaurants`)
@@ -331,6 +363,23 @@ async function main() {
   })
 
   console.log(`✅ Created ${restaurants.count} restaurants`)
+
+  // Connect test user to the first restaurant as owner
+  const firstRestaurant = await prisma.restaurant.findFirst({
+    orderBy: { id: 'asc' },
+  })
+
+  if (firstRestaurant) {
+    await prisma.restaurant.update({
+      where: { id: firstRestaurant.id },
+      data: {
+        owners: {
+          connect: { id: testUser.id },
+        },
+      },
+    })
+    console.log(`✅ Connected test user to restaurant: ${firstRestaurant.name}`)
+  }
 
   // Fetch the created restaurants to get their IDs
   console.log('📅 Creating mock reservations...')
