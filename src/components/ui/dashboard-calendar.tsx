@@ -271,7 +271,7 @@ export function DashboardCalendar({
 
       {/* Calendar Grid */}
       <Card className="p-4">
-        <div className="grid grid-cols-8 gap-px bg-border rounded-lg overflow-hidden">
+        <div className="grid grid-cols-8 rounded-lg overflow-hidden">
           {/* Time column header */}
           <div className="bg-background p-3 font-medium text-text-secondary text-sm">
             Time
@@ -281,8 +281,8 @@ export function DashboardCalendar({
           {weekData.map((day) => (
             <div
               key={day.dayKey}
-              className={`bg-background p-3 text-center ${
-                day.isToday ? 'bg-primary/10' : ''
+              className={` p-3 text-center ${
+                day.isToday ? 'bg-neutral-200' : 'bg-background'
               }`}
             >
               <div className="font-medium text-text-dark text-sm">
@@ -327,10 +327,10 @@ export function DashboardCalendar({
                     <div
                       key={`${day.dayKey}-${timeSlot}`}
                       className={`bg-background p-3 border-t border-border min-h-[60px] ${
-                        day.isToday ? 'bg-primary/5' : ''
+                        day.isToday ? 'bg-neutral-200' : 'bg-background'
                       } ${
                         hasSlot
-                          ? 'hover:bg-primary/10 cursor-pointer'
+                          ? 'hover:bg-neutral-300 cursor-pointer'
                           : 'bg-gray-50'
                       } ${daySchedule.closed ? 'bg-gray-100' : ''}`}
                     >

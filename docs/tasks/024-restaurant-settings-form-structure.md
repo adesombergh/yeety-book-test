@@ -30,4 +30,4 @@ Create the restaurant settings form structure with all configuration fields, pre
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

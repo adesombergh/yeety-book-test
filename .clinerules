@@ -34,6 +34,16 @@ tools:
 - Clerk: auth (to be enabled when requested).
 - Vercel: deployments & previews.
 
+testing:
+  dashboard_credentials:
+    email: "<aldebaran.desombergh@yeety.be>"
+    password: ".G?u+>8d7C&xiy*"
+    role: "Restaurant owner"
+
+  browser_testing_guidelines: >
+    When testing dashboard features in the browser, use the provided test credentials to authenticate.
+    This test user owns a restaurant and has access to all dashboard functionality.
+
 conventions:
   coding_style:
     - Use Next.js App Router.

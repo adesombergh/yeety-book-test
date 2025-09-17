@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server'
+import { RestaurantSettingsForm } from '@/components/ui/restaurant-settings-form'
 
 interface SettingsPageProps {
   params: Promise<{
@@ -15,15 +16,8 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
       <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
       <p className="text-text-secondary mt-2">{t('subtitle')}</p>
 
-      <div className="mt-8 p-6 border border-border rounded-lg bg-background">
-        <p className="text-text-secondary">
-          Settings for restaurant:{' '}
-          <span className="font-mono text-primary">{restaurantId}</span>
-        </p>
-        <p className="text-text-secondary mt-2">
-          This page will contain restaurant configuration options, business
-          hours, table management, and other preferences.
-        </p>
+      <div className="mt-8">
+        <RestaurantSettingsForm restaurantId={restaurantId} />
       </div>
     </div>
   )
