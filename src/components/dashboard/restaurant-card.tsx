@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { RestaurantWithTypedHours } from '@/lib/types/restaurant'
+import { cn } from '@/lib/utils'
 import { isRestaurantOpen } from '@/lib/utils/opening-hours'
 import Link from 'next/link'
 
@@ -23,11 +24,11 @@ export function DashboardRestaurantCard({
         <CardContent>
           <div className="flex flex-wrap gap-2">
             <span
-              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                isOpen
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-red-100 text-red-800'
-              }`}
+              className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+                {
+                  'bg-green-100 text-green-800': isOpen,
+                  'bg-red-100 text-red-800': !isOpen,
+                })}
             >
               {isOpen ? 'Open Now' : 'Closed'}
             </span>

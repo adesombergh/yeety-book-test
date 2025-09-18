@@ -453,12 +453,13 @@ export function RestaurantSettingsForm({
 
         {/* Form Actions */}
         <div className="flex justify-end gap-4">
-          <Button type="button" variant="outline" disabled={isSaving}>
+          <Button type="button" variant="input" disabled={isSaving} onClick={() => form.reset()}>
             Cancel
           </Button>
           <Button
             type="submit"
-            className="bg-primary hover:bg-primary/90 text-white"
+            variant="default"
+            // className="bg-primary hover:bg-primary/90 text-white"
             disabled={isSaving}
           >
             {isSaving ? 'Saving...' : 'Save Settings'}

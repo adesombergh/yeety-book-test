@@ -10,6 +10,7 @@ import {
   CalendarReservation,
   CalendarReservationsByDate,
 } from '@/lib/queries/reservation-calendar'
+import { cn } from '@/lib/utils'
 
 interface DashboardCalendarProps {
   restaurantId: string
@@ -243,7 +244,7 @@ export function DashboardCalendar({
         </div>
         <div className="flex items-center gap-2">
           <Button
-            variant="outline"
+            variant="input"
             size="sm"
             onClick={goToPreviousWeek}
             className="px-3"
@@ -251,7 +252,7 @@ export function DashboardCalendar({
             ← Previous
           </Button>
           <Button
-            variant="outline"
+            variant="input"
             size="sm"
             onClick={goToCurrentWeek}
             className="px-3"
@@ -259,7 +260,7 @@ export function DashboardCalendar({
             Today
           </Button>
           <Button
-            variant="outline"
+            variant="input"
             size="sm"
             onClick={goToNextWeek}
             className="px-3"
@@ -271,9 +272,9 @@ export function DashboardCalendar({
 
       {/* Calendar Grid */}
       <Card className="p-4">
-        <div className="grid grid-cols-8 rounded-lg overflow-hidden">
+        <div className="grid grid-cols-8 rounded-lg overflow-clip">
           {/* Time column header */}
-          <div className="bg-background p-3 font-medium text-text-secondary text-sm">
+          <div className="p-3 font-medium text-text-secondary text-sm sticky top-0 bg-white">
             Time
           </div>
 
@@ -281,9 +282,9 @@ export function DashboardCalendar({
           {weekData.map((day) => (
             <div
               key={day.dayKey}
-              className={` p-3 text-center ${
-                day.isToday ? 'bg-neutral-200' : 'bg-background'
-              }`}
+              className={cn('p-3 text-center sticky top-0 bg-white', {
+                'bg-neutral-200': day.isToday,
+              })}
             >
               <div className="font-medium text-text-dark text-sm">
                 {day.dayName}
@@ -312,7 +313,7 @@ export function DashboardCalendar({
             return sortedTimeSlots.map((timeSlot) => (
               <div key={timeSlot} className="contents">
                 {/* Time label */}
-                <div className="bg-background p-3 text-xs text-text-secondary border-t border-border">
+                <div className="p-3 text-xs text-text-secondary border-t border-border">
                   {timeSlot}
                 </div>
 
@@ -326,13 +327,13 @@ export function DashboardCalendar({
                   return (
                     <div
                       key={`${day.dayKey}-${timeSlot}`}
-                      className={`bg-background p-3 border-t border-border min-h-[60px] ${
-                        day.isToday ? 'bg-neutral-200' : 'bg-background'
-                      } ${
-                        hasSlot
-                          ? 'hover:bg-neutral-300 cursor-pointer'
-                          : 'bg-gray-50'
-                      } ${daySchedule.closed ? 'bg-gray-100' : ''}`}
+                      className={cn('p-3 border-t border-border min-h-[60px]',
+                        {
+                          'bg-neutral-200': day.isToday,
+                          'bg-gray-100': daySchedule.closed,
+                          'hover:bg-neutral-300 cursor-pointer': !daySchedule.closed,
+                        }
+                      )}
                     >
                       {daySchedule.closed && (
                         <div className="text-xs text-text-secondary text-center">
@@ -369,29 +370,12 @@ export function DashboardCalendar({
         {/* Legend */}
         <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-text-secondary">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-primary/10 rounded"></div>
+            <div className="w-3 h-3 bg-neutral-200 rounded"></div>
             <span>Today</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-gray-100 rounded"></div>
             <span>Closed</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-background border border-border rounded"></div>
-            <span>Available</span>
-          </div>
-          {/* Reservation Status Legend */}
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-[#DEBF56] rounded"></div>
-            <span>Pending</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-[#46B865] rounded"></div>
-            <span>Confirmed</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-[#FE6C3B] rounded"></div>
-            <span>Completed</span>
           </div>
         </div>
       </Card>

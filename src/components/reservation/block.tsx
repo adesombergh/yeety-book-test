@@ -2,6 +2,7 @@
 
 import { CalendarReservation } from '@/lib/queries/reservation-calendar'
 import { ReservationStatus } from '@prisma/client'
+import { Users } from 'lucide-react'
 
 interface ReservationBlockProps {
   reservation: CalendarReservation
@@ -11,37 +12,6 @@ interface ReservationBlockProps {
 
 interface ReservationBlockSkeletonProps {
   count?: number
-}
-
-// Status color mapping using design tokens
-const getStatusColor = (status: ReservationStatus): string => {
-  switch (status) {
-    case 'PENDING':
-      return 'bg-[#DEBF56] text-text-dark' // accent-yellow
-    case 'CONFIRMED':
-      return 'bg-[#46B865] text-white' // success
-    case 'CANCELLED':
-      return 'bg-[#464646] text-white' // text-secondary
-    case 'COMPLETED':
-      return 'bg-[#FE6C3B] text-white' // primary
-    default:
-      return 'bg-[#464646] text-white' // fallback to text-secondary
-  }
-}
-
-const getStatusLabel = (status: ReservationStatus): string => {
-  switch (status) {
-    case 'PENDING':
-      return 'Pending'
-    case 'CONFIRMED':
-      return 'Confirmed'
-    case 'CANCELLED':
-      return 'Cancelled'
-    case 'COMPLETED':
-      return 'Completed'
-    default:
-      return status
-  }
 }
 
 export function ReservationBlock({
@@ -72,17 +42,10 @@ export function ReservationBlock({
     }
   }
 
-  const statusColor = getStatusColor(reservation.status)
-  const statusLabel = getStatusLabel(reservation.status)
 
   return (
     <div
-      className={`
-        ${statusColor}
-        rounded-lg p-2 mb-1 cursor-pointer
-        hover:opacity-80 transition-opacity
-        text-xs border border-opacity-20 border-white
-      `}
+      className="bg-accent-green text-white rounded-lg p-2 mb-1 cursor-pointer hover:opacity-80 transition-opacity text-xs border border-opacity-20 border-white"
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -92,28 +55,16 @@ export function ReservationBlock({
           handleClick()
         }
       }}
-      aria-label={`Reservation for ${reservation.firstName} ${reservation.lastName}, ${reservation.guests} guests, ${statusLabel}`}
+      aria-label={`Reservation for ${reservation.firstName} ${reservation.lastName}, ${reservation.guests} guests`}
     >
       <div className="font-medium truncate">
         {reservation.firstName} {reservation.lastName}
       </div>
       <div className="flex items-center justify-between mt-1">
         <span className="flex items-center gap-1">
-          <svg
-            className="w-3 h-3"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <Users className="h-3 w-3 " />
           {reservation.guests}
         </span>
-        <span className="text-xs opacity-75">{statusLabel}</span>
       </div>
     </div>
   )
