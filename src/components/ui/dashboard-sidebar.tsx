@@ -19,32 +19,25 @@ export function DashboardSidebar({
   const pathname = usePathname()
 
   // Create navigation items dynamically based on current restaurant
-  const navigationItems = [
-    {
-      name: 'My Restaurants',
-      href: '/dashboard',
-      icon: <LayoutDashboard className="h-5 w-5" />,
-    },
-    ...(currentRestaurantId
-      ? [
-          {
-            name: 'Calendar',
-            href: `/dashboard/${currentRestaurantId}/calendar`,
-            icon: <Calendar className="h-5 w-5" />,
-          },
-          {
-            name: 'Settings',
-            href: `/dashboard/${currentRestaurantId}/settings`,
-            icon: <Settings className="h-5 w-5" />,
-          },
-          {
-            name: 'Billing',
-            href: `/dashboard/${currentRestaurantId}/billing`,
-            icon: <CreditCard className="h-5 w-5" />,
-          },
-        ]
-      : []),
-  ]
+  const navigationItems = currentRestaurantId
+    ? [
+        {
+          name: 'Calendar',
+          href: `/dashboard/${currentRestaurantId}/calendar`,
+          icon: <Calendar className="h-5 w-5" />,
+        },
+        {
+          name: 'Settings',
+          href: `/dashboard/${currentRestaurantId}/settings`,
+          icon: <Settings className="h-5 w-5" />,
+        },
+        {
+          name: 'Billing',
+          href: `/dashboard/${currentRestaurantId}/billing`,
+          icon: <CreditCard className="h-5 w-5" />,
+        },
+      ]
+    : []
 
   return (
     <>

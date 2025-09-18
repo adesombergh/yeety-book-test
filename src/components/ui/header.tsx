@@ -25,7 +25,7 @@ export function Header() {
             {/* Authenticated User */}
             <SignedIn>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/dashboard">My restaurants</Link>
               </Button>
               <UserButton
                 appearance={{
