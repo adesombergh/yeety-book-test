@@ -1,15 +1,24 @@
 import { Restaurant } from '@prisma/client'
 
 // Opening hours JSON structure (since Prisma treats JSON as any)
-export interface OpeningHours {
-  monday: DaySchedule
-  tuesday: DaySchedule
-  wednesday: DaySchedule
-  thursday: DaySchedule
-  friday: DaySchedule
-  saturday: DaySchedule
-  sunday: DaySchedule
-}
+export type DaysOfWeek =
+  | 'sunday'
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday'
+export const daysOfWeek = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+] satisfies DaysOfWeek[]
+export type OpeningHours = Record<DaysOfWeek, DaySchedule>
 
 export interface DaySchedule {
   open?: string

@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Select,
   SelectContent,
@@ -14,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { toast } from 'sonner'
 import {
   restaurantSettingsSchema,
   type RestaurantSettingsFormData,
@@ -46,10 +48,6 @@ export function RestaurantSettingsForm({
   initialData,
 }: RestaurantSettingsFormProps) {
   const [isSaving, setIsSaving] = useState(false)
-  const [saveMessage, setSaveMessage] = useState<{
-    type: 'success' | 'error'
-    text: string
-  } | null>(null)
 
   const {
     register,
@@ -76,7 +74,6 @@ export function RestaurantSettingsForm({
 
   const onSubmit = async (data: RestaurantSettingsFormData) => {
     setIsSaving(true)
-    setSaveMessage(null)
 
     try {
       const response = await fetch(`/api/restaurants/${restaurantId}`, {
@@ -93,14 +90,12 @@ export function RestaurantSettingsForm({
         throw new Error(result.error || 'Failed to save settings')
       }
 
-      setSaveMessage({ type: 'success', text: 'Settings saved successfully!' })
+      toast.success('Settings saved successfully!')
     } catch (error) {
       console.error('Error saving settings:', error)
-      setSaveMessage({
-        type: 'error',
-        text:
-          error instanceof Error ? error.message : 'Failed to save settings',
-      })
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to save settings'
+      )
     } finally {
       setIsSaving(false)
     }
@@ -108,19 +103,6 @@ export function RestaurantSettingsForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-      {/* Save Message */}
-      {saveMessage && (
-        <div
-          className={`p-4 rounded-lg ${
-            saveMessage.type === 'success'
-              ? 'bg-green-50 text-green-800 border border-green-200'
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}
-        >
-          {saveMessage.text}
-        </div>
-      )}
-
       {/* Basic Information Section */}
       <Card className="p-6">
         <div className="space-y-6">
@@ -224,15 +206,25 @@ export function RestaurantSettingsForm({
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      {...register(`openingHours.${dayKey}.closed`)}
-                      id={`${day.key}-closed`}
-                      className="rounded border-border"
+                    <Controller
+                      name={`openingHours.${dayKey}.closed`}
+                      control={control}
+                      render={({ field }) => (
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`${day.key}-closed`}
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                          <Label
+                            htmlFor={`${day.key}-closed`}
+                            className="text-sm"
+                          >
+                            Closed
+                          </Label>
+                        </div>
+                      )}
                     />
-                    <Label htmlFor={`${day.key}-closed`} className="text-sm">
-                      Closed
-                    </Label>
                   </div>
 
                   {!isClosed && (

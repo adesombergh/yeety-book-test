@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { Calendar, CreditCard, LayoutDashboard, Settings } from 'lucide-react'
+import { Calendar, CreditCard, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 

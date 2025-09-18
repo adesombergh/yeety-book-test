@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { OpeningHours } from '@/lib/types/restaurant'
-import { ReservationSlot } from '@/components/ui/reservation-block'
+import { ReservationSlot } from '@/components/reservation/block'
 import {
   getReservationsForTimeSlot,
   CalendarReservation,

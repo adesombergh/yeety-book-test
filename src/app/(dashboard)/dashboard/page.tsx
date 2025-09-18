@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { currentUser } from '@clerk/nextjs/server'
 import { useTranslations } from 'next-intl'
 import { getUserRestaurants } from '@/lib/queries/user-restaurant'
-import { DashboardRestaurantCard } from '@/components/ui/dashboard-restaurant-card'
+import { DashboardRestaurantCard } from '@/components/dashboard/restaurant-card'
 import { RestaurantWithTypedHours } from '@/lib/types/restaurant'
 
 export default async function DashboardPage() {

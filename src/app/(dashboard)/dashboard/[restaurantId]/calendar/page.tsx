@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
-import { DashboardCalendar } from '@/components/ui/dashboard-calendar'
+import { DashboardCalendar } from '@/components/dashboard/calendar'
 import { getUserRestaurantById } from '@/lib/queries/user-restaurant'
 
 interface CalendarPageProps {

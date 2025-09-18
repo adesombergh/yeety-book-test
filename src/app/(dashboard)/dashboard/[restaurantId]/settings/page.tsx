@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server'
-import { RestaurantSettingsForm } from '@/components/ui/restaurant-settings-form'
+import { RestaurantSettingsForm } from '@/components/restaurant/settings-form'
 import { getRestaurantById } from '@/lib/queries/restaurant'
 import { notFound } from 'next/navigation'
 

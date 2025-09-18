@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { getReservationByCancelToken } from '@/lib/queries/reservation-cancel'
-import { ReservationCancelForm } from '@/components/ui/reservation-cancel-form'
+import { ReservationCancelForm } from '@/components/reservation/cancel-form'
 import {
   Card,
   CardContent,

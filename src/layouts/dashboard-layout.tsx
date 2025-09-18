@@ -1,6 +1,6 @@
 'use client'
-import { DashboardSidebar } from '@/components/ui/dashboard-sidebar'
-import { RestaurantSwitcher } from '@/components/ui/restaurant-switcher'
+import { DashboardSidebar } from '@/components/dashboard/sidebar'
+import { RestaurantSwitcher } from '@/components/restaurant/switcher'
 import { Button } from '@/components/ui/button'
 import { Menu } from 'lucide-react'
 import { ReactNode, useState } from 'react'

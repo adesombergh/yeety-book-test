@@ -1,7 +1,7 @@
 'use server'
 
 import { getAllRestaurants } from '@/lib/queries/restaurant'
-import { RestaurantCard } from '@/components/ui/restaurant-card'
+import { RestaurantCard } from '@/components/restaurant/card'
 
 export default async function HomePage() {
   const { restaurants, error } = await getAllRestaurants()

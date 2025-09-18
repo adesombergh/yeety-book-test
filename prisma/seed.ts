@@ -1,3 +1,4 @@
+import { daysOfWeek, OpeningHours } from '@/lib/types/restaurant'
 import { PrismaClient, ReservationStatus } from '@prisma/client'
 import { randomBytes } from 'crypto'
 
@@ -127,26 +128,22 @@ function generateCustomerData() {
 // Helper function to generate reservation time within opening hours
 function generateReservationTime(
   date: Date,
-  openingHours: any,
+  openingHours: OpeningHours,
   slotInterval: number
 ) {
-  const dayOfWeek = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-  ][date.getDay()]
+  const dayOfWeek = daysOfWeek[date.getDay()]
   const daySchedule = openingHours[dayOfWeek]
 
   if (daySchedule.closed) {
     return null
   }
 
-  const [openHour, openMinute] = daySchedule.open.split(':').map(Number)
-  const [closeHour, closeMinute] = daySchedule.close.split(':').map(Number)
+  const [openHour, openMinute] = daySchedule.open?.split(':').map(Number) ?? [
+    0, 0,
+  ]
+  const [closeHour, closeMinute] = daySchedule.close
+    ?.split(':')
+    .map(Number) ?? [0, 0]
 
   // Calculate available time slots
   const openTime = openHour * 60 + openMinute
@@ -420,7 +417,7 @@ async function main() {
       for (let i = 0; i < reservationsPerDay; i++) {
         const reservationTime = generateReservationTime(
           date,
-          restaurant.openingHours,
+          restaurant.openingHours as unknown as OpeningHours,
           restaurant.slotInterval
         )
 
