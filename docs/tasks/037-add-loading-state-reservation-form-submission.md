@@ -24,7 +24,7 @@ Enhance reservation form user experience by adding proper loading state after su
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

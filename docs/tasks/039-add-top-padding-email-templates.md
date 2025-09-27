@@ -24,7 +24,7 @@ Improve email template visual design by adding padding before the white rounded 
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

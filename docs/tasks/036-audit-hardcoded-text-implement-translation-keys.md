@@ -8,7 +8,7 @@ Replace all hardcoded text throughout the application with proper translation ke
 
 - Audit all components, pages, and API responses for hardcoded French/English text
 - Add missing translation keys to `messages/fr.json`
-- Update components to use `useTranslations()` hook from next-intl
+- Update components to use `useTranslations()` hook from next-intl, or getTranslations on server side.
 - Replace hardcoded strings in forms, error messages, buttons, and user-facing text
 - Ensure API error messages use translation keys where appropriate
 - Update email templates to use translation keys consistently
@@ -24,7 +24,7 @@ Replace all hardcoded text throughout the application with proper translation ke
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
