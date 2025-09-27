@@ -31,4 +31,4 @@ Integrate cancellation confirmation email sending into the reservation cancellat
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

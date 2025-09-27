@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import prisma from '@/lib/prisma'
+import { EmailService } from '@/lib/services/email'
 
 // Zod validation schema for cancellation request
 const cancelReservationSchema = z.object({
@@ -38,6 +39,7 @@ export async function PATCH(request: NextRequest) {
             name: true,
             slug: true,
             emailContact: true,
+            phoneContact: true,
           },
         },
       },
@@ -76,6 +78,21 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
+    // Get full restaurant object for email service
+    const restaurant = await prisma.restaurant.findUnique({
+      where: { id: reservation.restaurantId },
+    })
+
+    if (!restaurant) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Restaurant not found',
+        },
+        { status: 404 }
+      )
+    }
+
     // Update reservation status to cancelled
     const updatedReservation = await prisma.reservation.update({
       where: { id: reservation.id },
@@ -94,10 +111,35 @@ export async function PATCH(request: NextRequest) {
             name: true,
             slug: true,
             emailContact: true,
+            phoneContact: true,
           },
         },
       },
     })
+
+    // Send cancellation confirmation email (non-blocking - email failures should not prevent cancellation success)
+    EmailService.sendCancellationConfirmation(
+      updatedReservation,
+      restaurant,
+      updatedReservation.email
+    )
+      .then((emailResult) => {
+        if (emailResult.success) {
+          console.log('Cancellation confirmation email sent successfully:', {
+            emailId: emailResult.id,
+            reservationId: updatedReservation.id,
+            customerEmail: updatedReservation.email,
+          })
+        } else {
+          console.error(
+            'Failed to send cancellation confirmation email:',
+            emailResult.error
+          )
+        }
+      })
+      .catch((error) => {
+        console.error('Email service error:', error)
+      })
 
     return NextResponse.json({
       success: true,

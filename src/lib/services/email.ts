@@ -1,6 +1,7 @@
 import { Resend } from 'resend'
 import type { Reservation, Restaurant } from '@prisma/client'
 import { ReservationConfirmationEmail } from '@/components/emails/reservation-confirmation'
+import { CancellationConfirmationEmail } from '@/components/emails/cancellation-confirmation'
 import {
   generateCalendarInvite,
   generateCalendarInviteFilename,
@@ -128,23 +129,46 @@ export class EmailService {
         return { success: false, error: 'Email service not configured' }
       }
 
-      // Implementation placeholder - will be completed in future tasks
-      // This will include:
-      // - React email template rendering
-      // - Email sending via Resend API
+      // Determine locale based on restaurant or default to French
+      const locale = 'fr' // Default to French as per project requirements
 
-      console.log(
-        'Cancellation confirmation email would be sent to:',
-        customerEmail
-      )
-      console.log('Cancelled reservation details:', {
-        id: reservation.id,
-        restaurant: restaurant.name,
-        date: reservation.date,
-        guests: reservation.guests,
+      // Send cancellation confirmation email with Resend
+      const emailResult = await resend.emails.send({
+        from: 'no-reply@yeety.be',
+        to: [customerEmail],
+        subject:
+          locale === 'fr' ? 'Réservation Annulée' : 'Reservation Cancelled',
+        react: CancellationConfirmationEmail({
+          reservation: {
+            id: reservation.id,
+            firstName: reservation.firstName,
+            lastName: reservation.lastName,
+            email: reservation.email,
+            phone: reservation.phone,
+            date: reservation.date,
+            guests: reservation.guests,
+            notes: reservation.notes,
+          },
+          restaurant: {
+            name: restaurant.name,
+            emailContact: restaurant.emailContact,
+            phoneContact: restaurant.phoneContact,
+          },
+          locale,
+        }),
       })
 
-      return { success: true, id: 'placeholder-email-id' }
+      console.log('Cancellation confirmation email sent successfully:', {
+        emailId: emailResult.data?.id,
+        customerEmail,
+        reservationId: reservation.id,
+        restaurantName: restaurant.name,
+      })
+
+      return {
+        success: true,
+        id: emailResult.data?.id || 'unknown-email-id',
+      }
     } catch (error) {
       console.error('Failed to send cancellation confirmation email:', error)
       return {
