@@ -1,6 +1,7 @@
 # How to Write a Task
 
 This guide explains how to create well-structured task files for the yeety-book project, following the incremental development methodology defined in `.clinerules`.
+Tasks are .md files in docs/tasks.
 
 ## Task Structure
 
