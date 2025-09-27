@@ -1,8 +1,14 @@
-// import { Resend } from 'resend' // Will be used in future tasks
+import { Resend } from 'resend'
 import type { Reservation, Restaurant } from '@prisma/client'
+import { ReservationConfirmationEmail } from '@/components/emails/reservation-confirmation'
+import {
+  generateCalendarInvite,
+  generateCalendarInviteFilename,
+  validateCalendarInviteData,
+} from '@/lib/utils/calendar-invite'
 
-// Initialize Resend client (will be used in future tasks)
-// const resend = new Resend(process.env.RESEND_API_KEY)
+// Initialize Resend client
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // TypeScript interfaces for email service responses
 export interface EmailResponse {
@@ -32,24 +38,67 @@ export class EmailService {
         return { success: false, error: 'Email service not configured' }
       }
 
-      // Implementation placeholder - will be completed in future tasks
-      // This will include:
-      // - React email template rendering
-      // - Calendar invite (.ics) attachment generation
-      // - Email sending via Resend API
+      // Validate calendar invite data
+      const validation = validateCalendarInviteData(reservation, restaurant)
+      if (!validation.valid) {
+        console.error('Calendar invite validation failed:', validation.error)
+        return { success: false, error: validation.error }
+      }
 
-      console.log(
-        'Reservation confirmation email would be sent to:',
-        customerEmail
+      // Generate calendar invite
+      const calendarInvite = generateCalendarInvite(reservation, restaurant)
+      const calendarFilename = generateCalendarInviteFilename(
+        reservation,
+        restaurant
       )
-      console.log('Reservation details:', {
-        id: reservation.id,
-        restaurant: restaurant.name,
-        date: reservation.date,
-        guests: reservation.guests,
+
+      // Determine locale based on restaurant or default to French
+      const locale = 'fr' // Default to French as per project requirements
+
+      // Send email with Resend
+      const emailResult = await resend.emails.send({
+        from: 'no-reply@yeety.be',
+        to: [customerEmail],
+        subject:
+          locale === 'fr' ? 'Réservation Confirmée' : 'Reservation Confirmed',
+        react: ReservationConfirmationEmail({
+          reservation: {
+            id: reservation.id,
+            firstName: reservation.firstName,
+            lastName: reservation.lastName,
+            email: reservation.email,
+            phone: reservation.phone,
+            date: reservation.date,
+            guests: reservation.guests,
+            notes: reservation.notes,
+          },
+          restaurant: {
+            name: restaurant.name,
+            emailContact: restaurant.emailContact,
+            phoneContact: restaurant.phoneContact,
+          },
+          locale,
+        }),
+        attachments: [
+          {
+            filename: calendarFilename,
+            content: Buffer.from(calendarInvite, 'utf-8'),
+            contentType: 'text/calendar',
+          },
+        ],
       })
 
-      return { success: true, id: 'placeholder-email-id' }
+      console.log('Reservation confirmation email sent successfully:', {
+        emailId: emailResult.data?.id,
+        customerEmail,
+        reservationId: reservation.id,
+        restaurantName: restaurant.name,
+      })
+
+      return {
+        success: true,
+        id: emailResult.data?.id || 'unknown-email-id',
+      }
     } catch (error) {
       console.error('Failed to send reservation confirmation email:', error)
       return {

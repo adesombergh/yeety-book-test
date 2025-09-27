@@ -31,4 +31,4 @@ Integrate confirmation email sending into the reservation creation API endpoint 
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

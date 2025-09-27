@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { randomBytes } from 'crypto'
+import { EmailService } from '@/lib/services/email'
 
 // Zod validation schema for reservation data
 const createReservationSchema = z.object({
@@ -122,10 +123,28 @@ export async function POST(request: NextRequest) {
             name: true,
             slug: true,
             emailContact: true,
+            phoneContact: true,
           },
         },
       },
     })
+
+    // Send confirmation email (non-blocking - email failures should not prevent reservation success)
+    EmailService.sendReservationConfirmation(reservation, restaurant, email)
+      .then((emailResult) => {
+        if (emailResult.success) {
+          console.log('Confirmation email sent successfully:', {
+            emailId: emailResult.id,
+            reservationId: reservation.id,
+            customerEmail: email,
+          })
+        } else {
+          console.error('Failed to send confirmation email:', emailResult.error)
+        }
+      })
+      .catch((error) => {
+        console.error('Email service error:', error)
+      })
 
     return NextResponse.json(
       {
