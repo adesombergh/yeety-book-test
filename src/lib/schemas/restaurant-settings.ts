@@ -1,7 +1,128 @@
 import { z } from 'zod'
+import { getTranslations } from 'next-intl/server'
 
-// Day schedule schema for opening hours
-const dayScheduleSchema = z
+// Function to create localized day schedule schema
+async function createDayScheduleSchema(
+  t: Awaited<ReturnType<typeof getTranslations>>
+) {
+  return z
+    .object({
+      closed: z.boolean(),
+      open: z.string().optional(),
+      close: z.string().optional(),
+    })
+    .refine(
+      (data) => {
+        // If not closed, both open and close times must be provided
+        if (!data.closed) {
+          return data.open && data.close
+        }
+        return true
+      },
+      {
+        message: t('restaurant.openingHours.timesRequired'),
+      }
+    )
+    .refine(
+      (data) => {
+        // If not closed, open time must be before close time
+        if (!data.closed && data.open && data.close) {
+          const openTime = new Date(`1970-01-01T${data.open}:00`)
+          const closeTime = new Date(`1970-01-01T${data.close}:00`)
+          return openTime < closeTime
+        }
+        return true
+      },
+      {
+        message: t('restaurant.openingHours.timeOrder'),
+      }
+    )
+}
+
+// Function to create localized restaurant settings schema
+export async function createRestaurantSettingsSchema(locale: string = 'en') {
+  const t = await getTranslations({ locale, namespace: 'validation' })
+
+  const dayScheduleSchema = await createDayScheduleSchema(t)
+
+  // Opening hours schema
+  const openingHoursSchema = z.object({
+    monday: dayScheduleSchema,
+    tuesday: dayScheduleSchema,
+    wednesday: dayScheduleSchema,
+    thursday: dayScheduleSchema,
+    friday: dayScheduleSchema,
+    saturday: dayScheduleSchema,
+    sunday: dayScheduleSchema,
+  })
+
+  // Main restaurant settings schema
+  return z
+    .object({
+      name: z.string().min(1, t('required')).max(100, t('restaurant.name.max')),
+      slug: z
+        .string()
+        .min(1, t('required'))
+        .max(50, t('restaurant.slug.max'))
+        .regex(/^[a-z0-9-]+$/, t('restaurant.slug.format')),
+      emailContact: z.string().email(t('restaurant.email.invalid')),
+      phoneContact: z.string().optional(),
+      openingHours: openingHoursSchema,
+      slotInterval: z
+        .string()
+        .refine((val) => ['15', '30', '60'].includes(val), {
+          message: t('restaurant.slotInterval.invalid'),
+        }),
+      minGuestsPerReservation: z
+        .number()
+        .int(t('number.int'))
+        .min(1, t('number.min', { min: 1 }))
+        .max(20, t('number.max', { max: 20 })),
+      maxGuestsPerReservation: z
+        .number()
+        .int(t('number.int'))
+        .min(1, t('number.min', { min: 1 }))
+        .max(50, t('number.max', { max: 50 })),
+      maxReservationsPerSlot: z
+        .number()
+        .int(t('number.int'))
+        .min(1, t('number.min', { min: 1 }))
+        .max(100, t('number.max', { max: 100 })),
+      reservationLeadTimeMin: z
+        .number()
+        .int(t('number.int'))
+        .min(0, t('number.min', { min: 0 }))
+        .max(168, t('number.max', { max: 168 })),
+      reservationLeadTimeMax: z
+        .number()
+        .int(t('number.int'))
+        .min(1, t('number.min', { min: 1 }))
+        .max(365, t('number.max', { max: 365 })),
+    })
+    .refine(
+      (data) => {
+        // Ensure min guests <= max guests
+        return data.minGuestsPerReservation <= data.maxGuestsPerReservation
+      },
+      {
+        message: t('restaurant.guests.minMax'),
+        path: ['minGuestsPerReservation'],
+      }
+    )
+    .refine(
+      (data) => {
+        // Ensure min lead time < max lead time (convert max from days to hours)
+        return data.reservationLeadTimeMin < data.reservationLeadTimeMax * 24
+      },
+      {
+        message: t('restaurant.leadTime.minMax'),
+        path: ['reservationLeadTimeMin'],
+      }
+    )
+}
+
+// Create a default English schema for client-side use
+const defaultDayScheduleSchema = z
   .object({
     closed: z.boolean(),
     open: z.string().optional(),
@@ -34,18 +155,18 @@ const dayScheduleSchema = z
     }
   )
 
-// Opening hours schema
-const openingHoursSchema = z.object({
-  monday: dayScheduleSchema,
-  tuesday: dayScheduleSchema,
-  wednesday: dayScheduleSchema,
-  thursday: dayScheduleSchema,
-  friday: dayScheduleSchema,
-  saturday: dayScheduleSchema,
-  sunday: dayScheduleSchema,
+// Default opening hours schema
+const defaultOpeningHoursSchema = z.object({
+  monday: defaultDayScheduleSchema,
+  tuesday: defaultDayScheduleSchema,
+  wednesday: defaultDayScheduleSchema,
+  thursday: defaultDayScheduleSchema,
+  friday: defaultDayScheduleSchema,
+  saturday: defaultDayScheduleSchema,
+  sunday: defaultDayScheduleSchema,
 })
 
-// Main restaurant settings schema
+// Default restaurant settings schema (English) for client-side use
 export const restaurantSettingsSchema = z
   .object({
     name: z
@@ -62,7 +183,7 @@ export const restaurantSettingsSchema = z
       ),
     emailContact: z.string().email('Please enter a valid email address'),
     phoneContact: z.string().optional(),
-    openingHours: openingHoursSchema,
+    openingHours: defaultOpeningHoursSchema,
     slotInterval: z.string().refine((val) => ['15', '30', '60'].includes(val), {
       message: 'Please select a valid time slot interval',
     }),
@@ -113,6 +234,7 @@ export const restaurantSettingsSchema = z
     }
   )
 
+// Type for form data
 export type RestaurantSettingsFormData = z.infer<
   typeof restaurantSettingsSchema
 >

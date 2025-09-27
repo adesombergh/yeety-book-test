@@ -134,5 +134,56 @@
       "placeholder": "This is a placeholder page. Clerk authentication will be implemented in task 11."
     },
     "signOut": "Sign Out"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": {
+      "invalid": "Please enter a valid email address"
+    },
+    "string": {
+      "min": "Must be at least {min} characters",
+      "max": "Must be less than {max} characters",
+      "regex": "Invalid format"
+    },
+    "number": {
+      "min": "Must be at least {min}",
+      "max": "Cannot exceed {max}",
+      "int": "Must be a whole number",
+      "positive": "Must be a positive number"
+    },
+    "datetime": {
+      "invalid": "Invalid date format"
+    },
+    "reservation": {
+      "guests": {
+        "min": "At least 1 guest is required",
+        "max": "Cannot exceed 20 guests"
+      }
+    },
+    "restaurant": {
+      "name": {
+        "max": "Restaurant name must be less than 100 characters"
+      },
+      "slug": {
+        "max": "URL slug must be less than 50 characters",
+        "format": "URL slug can only contain lowercase letters, numbers, and hyphens"
+      },
+      "email": {
+        "invalid": "Please enter a valid email address"
+      },
+      "slotInterval": {
+        "invalid": "Please select a valid time slot interval"
+      },
+      "guests": {
+        "minMax": "Minimum guests cannot be greater than maximum guests"
+      },
+      "leadTime": {
+        "minMax": "Minimum lead time must be less than maximum lead time"
+      },
+      "openingHours": {
+        "timesRequired": "Open and close times are required when not closed",
+        "timeOrder": "Open time must be before close time"
+      }
+    }
   }
 }

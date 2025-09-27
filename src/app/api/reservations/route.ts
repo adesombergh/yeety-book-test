@@ -3,19 +3,29 @@ import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { randomBytes } from 'crypto'
 import { EmailService } from '@/lib/services/email'
+import { getLocaleFromHeaders } from '@/lib/utils/locale'
+import { getTranslations } from 'next-intl/server'
 
-// Zod validation schema for reservation data
-const createReservationSchema = z.object({
-  restaurantId: z.number().int().positive(),
-  firstName: z.string().min(1, 'First name is required').max(50),
-  lastName: z.string().min(1, 'Last name is required').max(50),
-  email: z.email('Invalid email address'),
-  phone: z.string().min(1, 'Phone number is required'),
-  date: z.iso.datetime('Invalid date format'),
-  guests: z.number().int().min(1, 'At least 1 guest is required').max(20),
-  notes: z.string().optional(),
-  turnstileToken: z.string().min(1, 'Turnstile verification is required'),
-})
+// Function to create localized reservation schema
+async function createReservationSchema(locale: string) {
+  const t = await getTranslations({ locale, namespace: 'validation' })
+
+  return z.object({
+    restaurantId: z.number().int().positive(),
+    firstName: z.string().min(1, t('required')).max(50),
+    lastName: z.string().min(1, t('required')).max(50),
+    email: z.email(t('email.invalid')),
+    phone: z.string().min(1, t('required')),
+    date: z.iso.datetime({ message: t('datetime.invalid') }),
+    guests: z
+      .number()
+      .int()
+      .min(1, t('reservation.guests.min'))
+      .max(20, t('reservation.guests.max')),
+    notes: z.string().optional(),
+    turnstileToken: z.string().min(1, t('required')),
+  })
+}
 
 // Function to verify Turnstile token with CloudFlare
 async function verifyTurnstileToken(token: string): Promise<boolean> {
@@ -54,8 +64,12 @@ export async function POST(request: NextRequest) {
     // Parse request body
     const body = await request.json()
 
-    // Validate request data
-    const validationResult = createReservationSchema.safeParse(body)
+    // Get locale from request headers
+    const locale = getLocaleFromHeaders(request.headers)
+
+    // Create localized schema and validate request data
+    const schema = await createReservationSchema(locale)
+    const validationResult = schema.safeParse(body)
 
     if (!validationResult.success) {
       return NextResponse.json(

@@ -1,16 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { getTranslations } from 'next-intl/server'
 
-interface ReservationSuccessPageProps {
-  params: Promise<{
-    restaurantSlug: string
-  }>
-}
-
-export default async function ReservationSuccessPage({
-  params,
-}: ReservationSuccessPageProps) {
-  const { restaurantSlug } = await params
+export default async function ReservationSuccessPage() {
   const t = await getTranslations('reservation.success')
 
   return (

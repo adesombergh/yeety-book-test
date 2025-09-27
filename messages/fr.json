@@ -129,5 +129,56 @@
       "placeholder": "Ceci est une page temporaire. L'authentification Clerk sera implémentée dans la tâche 11."
     },
     "signOut": "Se Déconnecter"
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "email": {
+      "invalid": "Veuillez entrer une adresse email valide"
+    },
+    "string": {
+      "min": "Doit contenir au moins {min} caractères",
+      "max": "Doit contenir moins de {max} caractères",
+      "regex": "Format invalide"
+    },
+    "number": {
+      "min": "Doit être au moins {min}",
+      "max": "Ne peut pas dépasser {max}",
+      "int": "Doit être un nombre entier",
+      "positive": "Doit être un nombre positif"
+    },
+    "datetime": {
+      "invalid": "Format de date invalide"
+    },
+    "reservation": {
+      "guests": {
+        "min": "Au moins 1 convive est requis",
+        "max": "Ne peut pas dépasser 20 convives"
+      }
+    },
+    "restaurant": {
+      "name": {
+        "max": "Le nom du restaurant doit contenir moins de 100 caractères"
+      },
+      "slug": {
+        "max": "L'identifiant URL doit contenir moins de 50 caractères",
+        "format": "L'identifiant URL ne peut contenir que des lettres minuscules, des chiffres et des tirets"
+      },
+      "email": {
+        "invalid": "Veuillez entrer une adresse email valide"
+      },
+      "slotInterval": {
+        "invalid": "Veuillez sélectionner un intervalle de créneaux valide"
+      },
+      "guests": {
+        "minMax": "Le nombre minimum de convives ne peut pas être supérieur au maximum"
+      },
+      "leadTime": {
+        "minMax": "Le délai minimum doit être inférieur au délai maximum"
+      },
+      "openingHours": {
+        "timesRequired": "Les heures d'ouverture et de fermeture sont requises quand le restaurant n'est pas fermé",
+        "timeOrder": "L'heure d'ouverture doit être antérieure à l'heure de fermeture"
+      }
+    }
   }
 }

@@ -26,8 +26,8 @@ Replace hardcoded English error messages in Zod schemas with internationalized e
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
-import { restaurantSettingsSchema } from '@/lib/schemas/restaurant-settings'
+import { createRestaurantSettingsSchema } from '@/lib/schemas/restaurant-settings'
 import { verifyRestaurantAccess } from '@/lib/auth/restaurant-access'
+import { getLocaleFromHeaders } from '@/lib/utils/locale'
 
 export async function PATCH(
   request: NextRequest,
@@ -37,7 +38,13 @@ export async function PATCH(
 
     // Parse and validate request body
     const body = await request.json()
-    const validationResult = restaurantSettingsSchema.safeParse(body)
+
+    // Get locale from request headers
+    const locale = getLocaleFromHeaders(request.headers)
+
+    // Create localized schema and validate request data
+    const schema = await createRestaurantSettingsSchema(locale)
+    const validationResult = schema.safeParse(body)
 
     if (!validationResult.success) {
       return NextResponse.json(

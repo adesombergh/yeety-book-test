@@ -1,7 +1,6 @@
 'use client'
 
 import { CalendarReservation } from '@/lib/queries/reservation-calendar'
-import { ReservationStatus } from '@prisma/client'
 import { Users } from 'lucide-react'
 
 interface ReservationBlockProps {
@@ -41,7 +40,6 @@ export function ReservationBlock({
       })
     }
   }
-
 
   return (
     <div
