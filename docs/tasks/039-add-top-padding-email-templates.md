@@ -28,4 +28,4 @@ Improve email template visual design by adding padding before the white rounded 
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

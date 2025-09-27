@@ -28,4 +28,4 @@ Enhance reservation form user experience by adding proper loading state after su
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

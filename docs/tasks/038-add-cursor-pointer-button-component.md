@@ -27,4 +27,4 @@ Fix button component styling to include proper cursor pointer for better user ex
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

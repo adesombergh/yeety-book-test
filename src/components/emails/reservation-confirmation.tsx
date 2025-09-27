@@ -100,6 +100,11 @@ export function ReservationConfirmationEmail({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{t.subject}</title>
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body style={bodyStyle}>
         <table style={containerStyle} cellPadding="0" cellSpacing="0">
@@ -242,9 +247,9 @@ export function ReservationConfirmationEmail({
 // Inline styles for maximum email client compatibility
 const bodyStyle: React.CSSProperties = {
   margin: '0',
-  padding: '0',
+  padding: '40px 0 0 0',
   backgroundColor: '#F8F2EB',
-  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontFamily: "'Bricolage Grotesque', Arial, Helvetica, sans-serif",
   lineHeight: '1.6',
   color: '#02201F',
 }

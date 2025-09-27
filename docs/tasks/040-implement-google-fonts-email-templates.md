@@ -28,4 +28,4 @@ Enhance email typography by implementing Bricolage Grotesque font with proper fa
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
