@@ -272,24 +272,167 @@ src/
 
 ### Email Workflow Pattern
 
-**Pattern**: Transactional emails with secure token-based actions
+**Pattern**: Transactional emails with Resend API integration
 
-**Flow**:
+**Architecture**:
+
+```typescript
+// Email Service Layer
+export class EmailService {
+  static async sendReservationConfirmation(
+    reservation: Reservation,
+    restaurant: Restaurant,
+    customerEmail: string
+  ): Promise<{ success: boolean; error?: string }>
+
+  static async sendCancellationConfirmation(
+    reservation: Reservation,
+    restaurant: Restaurant,
+    customerEmail: string
+  ): Promise<{ success: boolean; error?: string }>
+}
+```
+
+**Email Flow**:
 
 ```
-Trigger → Template Selection → Resend API → Delivery → Action Links
+API Trigger → Email Service → Resend API → Template Rendering → Delivery
+     ↓              ↓             ↓              ↓              ↓
+Reservation    Validation    React Email    Calendar Invite   Customer
+Creation       & Logging     Template       (.ics file)      Inbox
 ```
 
-**Security**:
+**Email Types & Triggers**:
 
-- Unique tokens for cancellation links
-- Time-based token expiration
-- One-time use enforcement
-- Secure token generation (crypto.randomUUID())
+- **Reservation Confirmation**: Triggered after successful reservation creation
+- **Cancellation Confirmation**: Triggered after successful reservation cancellation
+- **Calendar Invites**: .ics attachments for reservation confirmations only
+
+**Integration Points**:
+
+```typescript
+// Reservation Creation API
+const reservation = await prisma.reservation.create({...})
+
+// Send confirmation email (non-blocking)
+EmailService.sendReservationConfirmation(reservation, restaurant, email)
+  .catch(error => console.error('Email failed:', error))
+
+return NextResponse.json({ success: true, data: reservation })
+```
+
+**Error Handling Strategy**:
+
+- Email failures NEVER block reservation operations
+- Log email errors for monitoring and debugging
+- Graceful degradation if Resend service is unavailable
+- Retry logic for transient email delivery failures
+
+**Security & Compliance**:
+
+- Secure cancellation tokens (existing crypto.randomUUID() pattern)
+- No sensitive data in email templates
+- GDPR-compliant email handling
+- Proper unsubscribe mechanisms (future enhancement)
+
+### Calendar Invite Generation Pattern
+
+**Pattern**: RFC 5545 compliant .ics file generation for email attachments
+
+**Implementation**:
+
+```typescript
+// Calendar Invite Utility
+export function generateCalendarInvite(
+  reservation: Reservation,
+  restaurant: Restaurant
+): string {
+  const startDate = new Date(reservation.date + 'T' + reservation.time)
+  const endDate = new Date(startDate.getTime() + (2 * 60 * 60 * 1000)) // 2 hours
+
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//YeetyBook//Reservation//EN',
+    'BEGIN:VEVENT',
+    `UID:${reservation.id}@yeety.be`,
+    `DTSTART:${formatICSDate(startDate)}`,
+    `DTEND:${formatICSDate(endDate)}`,
+    `SUMMARY:Reservation at ${restaurant.name}`,
+    `DESCRIPTION:Reservation for ${reservation.guests} guests`,
+    `LOCATION:${restaurant.address}`,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n')
+}
+```
+
+**Attachment Integration**:
+
+```typescript
+// Resend Email with Calendar Invite
+await resend.emails.send({
+  from: 'no-reply@yeety.be',
+  to: [customerEmail],
+  subject: `Reservation Confirmed - ${restaurant.name}`,
+  react: ReservationConfirmationEmail({ reservation, restaurant }),
+  attachments: [
+    {
+      filename: 'reservation.ics',
+      content: generateCalendarInvite(reservation, restaurant),
+      content_type: 'text/calendar'
+    }
+  ]
+})
+```
+
+### Email Template Pattern
+
+**Pattern**: React-based email templates with consistent branding
+
+**Template Structure**:
+
+```typescript
+// Email Template Component
+interface EmailTemplateProps {
+  reservation: Reservation
+  restaurant: Restaurant
+  locale?: string
+}
+
+export function ReservationConfirmationEmail({
+  reservation,
+  restaurant,
+  locale = 'en'
+}: EmailTemplateProps) {
+  return (
+    <Html>
+      <Head />
+      <Body style={bodyStyle}>
+        <Container style={containerStyle}>
+          <Heading>Reservation Confirmed</Heading>
+          <Text>Your reservation at {restaurant.name} is confirmed.</Text>
+          {/* Reservation details */}
+          <Text>Date: {formatDate(reservation.date)}</Text>
+          <Text>Time: {reservation.time}</Text>
+          <Text>Guests: {reservation.guests}</Text>
+        </Container>
+      </Body>
+    </Html>
+  )
+}
+```
+
+**Styling Approach**:
+
+- Inline styles for maximum email client compatibility
+- Consistent YeetyBook branding (colors, typography)
+- Mobile-responsive design with table-based layouts
+- Minimal, clean design without restaurant-specific branding
 
 ### Billing Integration Pattern
 
-**Pattern**: Stripe webhooks with database synchronization
+**Pattern**: Stripe webhooks with database synchronization (Future Phase)
 
 **Flow**:
 

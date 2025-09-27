@@ -2,102 +2,124 @@
 
 ## Current Task Focus
 
-### UI Refinement: shadcn/ui Component Modernization - COMPLETED ✅
+### Email & Communication System Implementation 🚀
 
-**Status**: Completed ✅
-**Goal**: Modernize all forms and UI components to use proper shadcn/ui patterns
+**Status**: Ready to start implementation
+**Goal**: Complete customer email workflow with Resend integration
 
-**Final Implementation**:
+**🎉 MAJOR MILESTONE ACHIEVED**: All foundation and dashboard tasks (1-26) are COMPLETE!
 
-- ✅ Installed missing shadcn/ui components (badge, checkbox, switch, sonner, form)
-- ✅ Added Toaster component to root layout for global toast notifications
-- ✅ Converted reservation form to use proper shadcn/ui Form pattern with FormField components
-- ✅ **COMPLETED: Restaurant settings form fully converted to shadcn/ui Form components**
-- ✅ Replaced inline status messages with Sonner toast notifications
-- ✅ Converted reservation status spans to Badge components
-- ✅ Cleaned up unused imports and fixed linting issues
-- ✅ All validation tests passed (lint, typecheck, build)
+**Next Phase Requirements**:
 
-**Key Improvements Delivered**:
+- **Email Types**: Reservation confirmation and cancellation confirmation
+- **Technology**: Resend API with React-based email templates
+- **Branding**: Clean, minimal YeetyBook branding (no restaurant-specific branding)
+- **From Address**: `no-reply@yeety.be`
+- **Calendar Invites**: .ics file attachments for reservation confirmations
+- **Integration**: Trigger emails from existing reservation APIs
 
-1. **Form Consistency**: All forms now use shadcn/ui FormField pattern for better accessibility
-2. **Better UX**: Toast notifications provide non-intrusive feedback
-3. **Component Standardization**: Badge components for consistent status display
-4. **Accessibility**: Proper form labeling and error handling with automatic ARIA attributes
-5. **Code Quality**: Removed manual HTML inputs in favor of shadcn/ui components
-6. **Type Safety**: Better TypeScript integration with form context
-7. **Error Handling**: FormMessage automatically displays validation errors
+**Key Implementation Areas**:
 
-**Settings Form Conversion Details**:
+1. **Email Service Layer**: Create `src/lib/services/email.ts` for Resend integration
+2. **Email Templates**: React components for confirmation and cancellation emails
+3. **Calendar Invites**: Utility to generate RFC 5545 compliant .ics files
+4. **API Integration**: Add email triggers to reservation creation and cancellation
+5. **Production Setup**: Domain verification and DNS configuration for `yeety.be`
 
-- Converted all basic information fields to FormField pattern
-- Updated opening hours section with proper FormField components
-- Converted all reservation settings to use FormField + FormControl pattern
-- Removed manual error handling (now handled by FormMessage)
-- Maintained existing functionality while improving code quality
-- All form validation and submission logic preserved
+**Current Priority**: Begin with email service foundation and template creation
 
-### Previous Task 26: Enhanced Reservation Cancellation Page
+### All Foundation Work - ✅ COMPLETED
 
-**Status**: Completed ✅
-**Goal**: Improve the reservation cancellation page with better UX, confirmation flow, and proper feedback messages
+**Project Setup & Styling (Tasks 1-11)** - ✅ COMPLETED
 
-**Completed Implementation**:
+- Next.js 15 + TypeScript + pnpm setup
+- TailwindCSS + shadcn/ui + design tokens
+- Database setup with Supabase + Prisma
+- Internationalization with next-intl
+- Authentication with Clerk
+- Complete routing structure
 
-- ✅ Created cancellation API endpoint (`/api/reservations/cancel`)
-- ✅ Added database query helper (`src/lib/queries/reservation-cancel.ts`)
-- ✅ Enhanced cancellation page component with full functionality
-- ✅ Updated internationalization messages for all states
-- ✅ Implemented confirmation dialog with reservation details display
-- ✅ Added "Confirm Cancellation" button with loading states
-- ✅ Added optional cancellation reason collection (textarea field)
-- ✅ Implemented proper token validation and security handling
-- ✅ Added success/error feedback messages
-- ✅ All validation tests passed (lint, typecheck, build)
+**Customer Reservation System (Tasks 12-16)** - ✅ COMPLETED
 
-**Key Features Delivered**:
+- Complete booking flow with CloudFlare Turnstile protection
+- Advanced form components with React Hook Form + Zod
+- Database integration with Reservation model
+- API endpoints with dual validation
+- End-to-end reservation functionality
 
-1. **Token Validation**: Secure lookup of reservations by cancel token
-2. **Confirmation Dialog**: Prevents accidental cancellations with reservation details
-3. **Optional Reason**: Collects cancellation reason for restaurant insights
-4. **Loading States**: Proper feedback during API calls
-5. **Success/Error Handling**: Clear messaging for all outcomes
-6. **Responsive Design**: Mobile-optimized using shadcn/ui components
-7. **Security**: Prevents cancellation of past or already cancelled reservations
+**Dashboard Foundation (Tasks 17-26)** - ✅ COMPLETED
 
-**Next Priority**: Move to next dashboard development task
+- Multi-tenant security with user-restaurant ownership validation
+- Complete restaurant management with list page and switcher
+- Sophisticated 7-day calendar with time slots and reservation display
+- Restaurant settings system with opening hours and constraints
+- Enhanced reservation cancellation workflow
+- All dashboard functionality working end-to-end
 
-## Recent Completed Work
+## Email System Implementation Plan
 
-### Task 24: Restaurant Settings Form Structure ✅
+### Phase 1: Email Service Foundation
 
-**Completed**: Form structure with all configuration fields
+**Dependencies & Setup**:
 
-- Settings form component created with basic info fields
-- Opening hours configuration section (7-day structure)
-- Reservation constraints fields (min/max guests, lead times, slot intervals)
-- Form uses shadcn/ui components and design tokens
-- Settings page loads and displays form correctly
+- Install `resend` package for email API integration
+- Add `RESEND_API_KEY` environment variable
+- Create email service utility structure
 
-### Task 16: Reservation Form Components ✅
+**Email Service Architecture**:
 
-**Completed**: Functional reservation form with CloudFlare Turnstile
+```typescript
+// src/lib/services/email.ts
+export class EmailService {
+  static async sendReservationConfirmation(
+    reservation: Reservation,
+    restaurant: Restaurant,
+    customerEmail: string
+  ): Promise<{ success: boolean; error?: string }>
 
-- Reservation form and card components created
-- Date/time picker with shadcn/ui calendar
-- Guest count selector with validation
-- Customer information fields with React Hook Form + Zod
-- CloudFlare Turnstile integration working
-- Complete end-to-end reservation flow functional
+  static async sendCancellationConfirmation(
+    reservation: Reservation,
+    restaurant: Restaurant,
+    customerEmail: string
+  ): Promise<{ success: boolean; error?: string }>
+}
+```
 
-### Task 15: CloudFlare Turnstile Integration ✅
+### Phase 2: Email Templates & Calendar Invites
 
-**Completed**: Spam protection for reservation API
+**React Email Templates**:
 
-- CloudFlare Turnstile configured with site and secret keys
-- Server-side token verification in reservation API
-- Proper error handling for failed verification
-- API rejects requests without valid Turnstile tokens
+- `src/components/emails/reservation-confirmation.tsx`
+- `src/components/emails/cancellation-confirmation.tsx`
+- Clean, minimal YeetyBook branding
+- Multi-language support (French/English)
+
+**Calendar Invite Generation**:
+
+- `src/lib/utils/calendar-invite.ts`
+- RFC 5545 compliant .ics file generation
+- Include reservation details, restaurant location, contact info
+
+### Phase 3: API Integration
+
+**Integration Points**:
+
+- **Reservation Creation** (`/api/reservations` POST): Add email sending after successful DB insert
+- **Reservation Cancellation** (`/api/reservations/cancel` POST): Add email sending after cancellation
+
+**Error Handling**:
+
+- Email failures should not block reservation creation/cancellation
+- Log email errors for monitoring
+- Graceful degradation if email service is unavailable
+
+### Phase 4: Production Setup
+
+**Domain Configuration**:
+
+- Setup `yeety.be` domain verification in Resend dashboard
+- Configure SPF, DKIM, and DMARC DNS records
+- Test email delivery and reputation
 
 ## Current Architecture State
 
@@ -250,26 +272,44 @@ const updated = await prisma.restaurant.update({...})
 
 ## Next Session Priorities
 
-1. **Complete Task 25**: Settings form validation and save functionality
-2. **Validate Implementation**: Ensure all validation steps pass
-3. **Test End-to-End**: Use test credentials to verify complete flow
-4. **Move to Task 26**: Enhanced reservation cancellation page
+1. **Install Resend Package**: Add `resend` dependency and setup environment
+2. **Create Email Service**: Build foundational email service utility
+3. **Build Email Templates**: Create React components for confirmation and cancellation emails
+4. **Implement Calendar Invites**: Build .ics file generation utility
+5. **Integrate with APIs**: Add email triggers to existing reservation endpoints
+6. **Test Email Flow**: Validate complete email workflow end-to-end
 
 ## Important Context for Memory Resets
 
-**Critical Files to Check**:
+**Email System Context**:
 
-- `src/components/ui/restaurant-settings-form.tsx` - Current form structure
-- `src/app/api/restaurants/[restaurantId]/route.ts` - API endpoint for updates
-- `src/lib/schemas/restaurant-settings.ts` - Zod validation schema
-- `docs/tasks/025-settings-form-validation-and-save.md` - Task requirements
+- **From Address**: `no-reply@yeety.be` (confirmed requirement)
+- **No Restaurant Branding**: Clean YeetyBook branding only
+- **No Restaurant Notifications**: Customer emails only
+- **Email Types**: Confirmation with .ics + Cancellation confirmation
+- **Technology Stack**: Resend API + React email templates
 
-**Key Patterns to Remember**:
+**Critical Files for Email Implementation**:
+
+- `src/lib/services/email.ts` - Email service utility (to be created)
+- `src/components/emails/` - React email templates (to be created)
+- `src/lib/utils/calendar-invite.ts` - .ics generation (to be created)
+- `src/app/api/reservations/route.ts` - Add email trigger to reservation creation
+- `src/app/api/reservations/cancel/route.ts` - Add email trigger to cancellation
+
+**Established Patterns to Maintain**:
 
 - Server-side Prisma queries only
 - shadcn/ui component foundation
 - React Hook Form + Zod validation
 - Design tokens for all styling
 - Multi-tenant security validation
+- Error handling with graceful degradation
 
-This active context ensures continuity across memory resets and maintains focus on current development priorities.
+**Production Requirements**:
+
+- Domain verification for `yeety.be` in Resend
+- DNS configuration (SPF, DKIM, DMARC)
+- Email delivery testing and monitoring
+
+This active context ensures continuity across memory resets and maintains focus on email system implementation priorities.

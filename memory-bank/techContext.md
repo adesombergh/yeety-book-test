@@ -76,11 +76,69 @@
 
 **Resend for Transactional Emails**
 
-- **Provider**: Resend for reliable email delivery
-- **Templates**: HTML email templates with restaurant branding
-- **Attachments**: Calendar invites (.ics files) for reservations
-- **Security**: Secure cancellation tokens in email links
-- **Tracking**: Delivery status and bounce handling
+- **Provider**: Resend for reliable email delivery and high deliverability
+- **SDK**: `resend` npm package for Next.js App Router integration
+- **Templates**: React-based email templates using JSX components
+- **Attachments**: Calendar invites (.ics files) for reservation confirmations
+- **Security**: Secure cancellation tokens in email links (existing UUID pattern)
+- **Branding**: Clean YeetyBook branding (no restaurant-specific branding)
+- **From Address**: `no-reply@yeety.be` for all transactional emails
+
+**Email Types & Implementation**:
+
+```typescript
+// Email Service Architecture
+export class EmailService {
+  static async sendReservationConfirmation(
+    reservation: Reservation,
+    restaurant: Restaurant,
+    customerEmail: string
+  ): Promise<{ success: boolean; error?: string }>
+
+  static async sendCancellationConfirmation(
+    reservation: Reservation,
+    restaurant: Restaurant,
+    customerEmail: string
+  ): Promise<{ success: boolean; error?: string }>
+}
+```
+
+**React Email Templates**:
+
+- `src/components/emails/reservation-confirmation.tsx`
+- `src/components/emails/cancellation-confirmation.tsx`
+- Inline styles for maximum email client compatibility
+- Mobile-responsive design with table-based layouts
+- Multi-language support (French/English) via props
+
+**Calendar Invite Generation**:
+
+- RFC 5545 compliant .ics file generation
+- `src/lib/utils/calendar-invite.ts` utility
+- Includes reservation details, restaurant location, contact info
+- 2-hour default duration for reservation events
+- Proper timezone handling and date formatting
+
+**Integration Pattern**:
+
+```typescript
+// API Integration Example
+const reservation = await prisma.reservation.create({...})
+
+// Non-blocking email sending
+EmailService.sendReservationConfirmation(reservation, restaurant, email)
+  .catch(error => console.error('Email failed:', error))
+
+// Always return success for reservation creation
+return NextResponse.json({ success: true, data: reservation })
+```
+
+**Error Handling Strategy**:
+
+- Email failures never block reservation operations
+- Graceful degradation if Resend service unavailable
+- Comprehensive error logging for debugging
+- Retry logic for transient delivery failures
 
 ### Payment & Billing
 
@@ -115,16 +173,32 @@
 **Environment Variables**:
 
 ```env
+# Database
 DATABASE_URL=          # Supabase connection string
 DIRECT_URL=           # Supabase direct connection
+
+# Authentication
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
-RESEND_API_KEY=
+
+# Email Service
+RESEND_API_KEY=       # Resend API key for email sending
+
+# Payment Processing (Future)
 STRIPE_SECRET_KEY=
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+
+# Spam Protection
 TURNSTILE_SECRET_KEY=
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 ```
+
+**Email Service Configuration**:
+
+- **Domain**: `yeety.be` must be verified in Resend dashboard
+- **DNS Records**: SPF, DKIM, and DMARC configuration required
+- **Rate Limits**: Resend free tier allows 3,000 emails/month, 100/day
+- **Deliverability**: Proper domain authentication ensures high inbox rates
 
 ### Development Workflow
 
@@ -175,15 +249,24 @@ src/
 │   └── layout.tsx         # Root layout
 ├── components/
 │   ├── ui/                # shadcn/ui + custom wrappers
+│   ├── emails/            # React email templates
 │   └── [feature]/         # Feature-specific components
 ├── lib/
 │   ├── queries/           # Database queries (server-side)
 │   ├── schemas/           # Zod validation schemas
+│   ├── services/          # Business logic services (email, etc.)
 │   ├── utils/             # Utility functions
 │   └── prisma.ts          # Prisma client setup
 ├── layouts/               # Layout components
 └── middleware.ts          # Route protection
 ```
+
+**Email System Files**:
+
+- `src/components/emails/reservation-confirmation.tsx` - Confirmation email template
+- `src/components/emails/cancellation-confirmation.tsx` - Cancellation email template
+- `src/lib/services/email.ts` - Email service with Resend integration
+- `src/lib/utils/calendar-invite.ts` - Calendar invite (.ics) generation utility
 
 ### Naming Conventions
 
