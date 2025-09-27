@@ -28,4 +28,4 @@ Add a secure cancellation link to the reservation confirmation email template th
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

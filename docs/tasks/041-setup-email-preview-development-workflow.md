@@ -24,8 +24,8 @@ Integrate React Email preview server into the main development workflow for easi
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
