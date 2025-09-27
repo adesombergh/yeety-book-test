@@ -459,7 +459,6 @@ export function RestaurantSettingsForm({
           <Button
             type="submit"
             variant="default"
-            // className="bg-primary hover:bg-primary/90 text-white"
             disabled={isSaving}
           >
             {isSaving ? 'Saving...' : 'Save Settings'}

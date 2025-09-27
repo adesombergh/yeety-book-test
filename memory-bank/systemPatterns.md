@@ -53,9 +53,12 @@ Database Queries → src/lib/queries/* (server-side functions)
 **Critical Rules**:
 
 - Always use shadcn/ui as the foundation
+- Always use cn from @/lib/utils to handle conditional classes
 - Never hardcode colors, spacing, or radii - use design tokens
 - Custom components must wrap shadcn primitives, not replace them
 - Export all custom components from `components/ui/`
+- components/ui folder is for atomic design elements
+- block level elements should go into 'components/{groupName}. Ex: components/dashboard contains dashboard related components'
 
 ## Authentication & Authorization Patterns
 
