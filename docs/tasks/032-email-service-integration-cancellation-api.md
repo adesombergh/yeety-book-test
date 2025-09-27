@@ -27,7 +27,7 @@ Integrate cancellation confirmation email sending into the reservation cancellat
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

@@ -25,7 +25,7 @@ Create a utility function to generate RFC 5545 compliant .ics calendar invite fi
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

@@ -27,7 +27,7 @@ Integrate confirmation email sending into the reservation creation API endpoint 
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

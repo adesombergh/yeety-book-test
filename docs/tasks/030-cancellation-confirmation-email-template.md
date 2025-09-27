@@ -27,7 +27,7 @@ Create a React-based email template component for reservation cancellation confi
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
