@@ -2,12 +2,32 @@
 
 ## Current Task Focus
 
-### Email & Communication System Implementation 🚀
+### New Task Phase: UX & Internationalization Improvements 🎯
 
-**Status**: Ready to start implementation
-**Goal**: Complete customer email workflow with Resend integration
+**Status**: Task planning completed - Ready for implementation
+**Goal**: Refine user experience and complete internationalization setup
 
-**🎉 MAJOR MILESTONE ACHIEVED**: All foundation and dashboard tasks (1-26) are COMPLETE!
+**🎉 MAJOR MILESTONE ACHIEVED**: All foundation, dashboard, and email system tasks (1-34) are COMPLETE!
+
+**New Task Series (035-041) - Created and Ready**:
+
+**Internationalization Refinement**:
+
+- **Task 035**: Remove English locale, set French as default
+- **Task 036**: Audit application for hardcoded text, implement translation keys
+
+**User Experience Improvements**:
+
+- **Task 037**: Add loading state to reservation form submission
+- **Task 038**: Add cursor pointer to button component
+
+**Email System Enhancements**:
+
+- **Task 039**: Add top padding to email templates
+- **Task 040**: Implement Google Fonts (Bricolage Grotesque) in emails
+- **Task 041**: Set up email preview development workflow
+
+**Implementation Priority**: Tasks should be completed in sequence (035-041) as some have dependencies.
 
 **Next Phase Requirements**:
 
@@ -272,30 +292,50 @@ const updated = await prisma.restaurant.update({...})
 
 ## Next Session Priorities
 
-1. **Install Resend Package**: Add `resend` dependency and setup environment
-2. **Create Email Service**: Build foundational email service utility
-3. **Build Email Templates**: Create React components for confirmation and cancellation emails
-4. **Implement Calendar Invites**: Build .ics file generation utility
-5. **Integrate with APIs**: Add email triggers to existing reservation endpoints
-6. **Test Email Flow**: Validate complete email workflow end-to-end
+**Immediate Tasks (Ready for Implementation)**:
+
+1. **Task 035**: Remove English locale and set French as default
+2. **Task 036**: Audit entire application for hardcoded text and implement translation keys
+3. **Task 037**: Add loading state to reservation form submission
+4. **Task 038**: Add cursor pointer to button component
+5. **Task 039**: Add top padding to email templates
+6. **Task 040**: Implement Google Fonts in email templates
+7. **Task 041**: Set up email preview development workflow
+
+**Task Methodology**: Each task is designed for 10-15 minutes completion, following project standards.
 
 ## Important Context for Memory Resets
 
-**Email System Context**:
+**Current Task Context (Tasks 035-041)**:
 
-- **From Address**: `no-reply@yeety.be` (confirmed requirement)
-- **No Restaurant Branding**: Clean YeetyBook branding only
-- **No Restaurant Notifications**: Customer emails only
-- **Email Types**: Confirmation with .ics + Cancellation confirmation
-- **Technology Stack**: Resend API + React email templates
+**Internationalization Requirements**:
 
-**Critical Files for Email Implementation**:
+- Remove English locale entirely, French-only setup
+- Audit entire application for hardcoded text
+- Implement translation keys using next-intl patterns
+- Update `src/i18n/routing.ts` and `messages/fr.json`
 
-- `src/lib/services/email.ts` - Email service utility (to be created)
-- `src/components/emails/` - React email templates (to be created)
-- `src/lib/utils/calendar-invite.ts` - .ics generation (to be created)
-- `src/app/api/reservations/route.ts` - Add email trigger to reservation creation
-- `src/app/api/reservations/cancel/route.ts` - Add email trigger to cancellation
+**UX Improvement Requirements**:
+
+- Add loading state to reservation form with proper feedback
+- Fix button component cursor styling across all variants
+- Enhance email template visual design with padding and fonts
+
+**Email Enhancement Requirements**:
+
+- Add top padding to email templates before white container
+- Implement Bricolage Grotesque font: `'Bricolage Grotesque', Arial, Helvetica, sans-serif`
+- Set up React Email preview server for development workflow
+
+**Critical Files for Current Tasks**:
+
+- `src/i18n/routing.ts` - Locale configuration
+- `messages/en.json` - To be removed
+- `messages/fr.json` - Translation keys to be expanded
+- `src/components/reservation/form.tsx` - Loading state implementation
+- `src/components/ui/button.tsx` - Cursor pointer styling
+- `src/components/emails/*.tsx` - Email template enhancements
+- `package.json` - Email preview script addition
 
 **Established Patterns to Maintain**:
 
