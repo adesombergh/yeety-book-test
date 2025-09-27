@@ -23,4 +23,4 @@ Configure the application to use only French locale, removing English support en
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
