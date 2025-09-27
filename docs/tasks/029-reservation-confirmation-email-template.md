@@ -31,4 +31,4 @@ Create a React-based email template component for reservation confirmation email
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated
