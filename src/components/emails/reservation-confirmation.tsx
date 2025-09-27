@@ -11,9 +11,11 @@ interface ReservationConfirmationEmailProps {
     date: Date
     guests: number
     notes?: string | null
+    cancelToken: string
   }
   restaurant: {
     name: string
+    slug: string
     emailContact: string
     phoneContact?: string | null
   }
@@ -40,6 +42,8 @@ const content = {
     calendarNote: 'A calendar invite has been attached to this email.',
     contactNote:
       'If you need to make any changes, please contact the restaurant directly.',
+    cancelNote: 'Need to cancel? Click the link below:',
+    cancelLink: 'Cancel Reservation',
   },
   fr: {
     subject: 'Réservation Confirmée',
@@ -59,6 +63,8 @@ const content = {
     calendarNote: 'Une invitation de calendrier a été jointe à cet email.',
     contactNote:
       'Si vous devez apporter des modifications, veuillez contacter directement le restaurant.',
+    cancelNote: "Besoin d'annuler ? Cliquez sur le lien ci-dessous :",
+    cancelLink: 'Annuler la Réservation',
   },
 }
 
@@ -182,6 +188,31 @@ export function ReservationConfirmationEmail({
                                 </td>
                               </tr>
                             )}
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+
+                    {/* Cancellation section */}
+                    <table style={sectionStyle} cellPadding="0" cellSpacing="0">
+                      <tr>
+                        <td>
+                          <p style={cancelNoteStyle}>{t.cancelNote}</p>
+                          <table
+                            style={cancelButtonTableStyle}
+                            cellPadding="0"
+                            cellSpacing="0"
+                          >
+                            <tr>
+                              <td style={cancelButtonCellStyle}>
+                                <a
+                                  href={`https://yeety-book.vercel.app/${restaurant.slug}/reservation/cancel/${reservation.cancelToken}`}
+                                  style={cancelButtonStyle}
+                                >
+                                  {t.cancelLink}
+                                </a>
+                              </td>
+                            </tr>
                           </table>
                         </td>
                       </tr>
@@ -326,6 +357,38 @@ const footerTextStyle: React.CSSProperties = {
   margin: '0',
   fontSize: '12px',
   color: '#666666',
+}
+
+const cancelNoteStyle: React.CSSProperties = {
+  margin: '0 0 16px 0',
+  fontSize: '14px',
+  lineHeight: '1.4',
+  color: '#02201F',
+  textAlign: 'center',
+}
+
+const cancelButtonTableStyle: React.CSSProperties = {
+  width: '100%',
+  margin: '0 auto',
+}
+
+const cancelButtonCellStyle: React.CSSProperties = {
+  textAlign: 'center',
+  padding: '0',
+}
+
+const cancelButtonStyle: React.CSSProperties = {
+  display: 'inline-block',
+  padding: '12px 24px',
+  backgroundColor: '#FE6C3B',
+  color: '#ffffff',
+  textDecoration: 'none',
+  borderRadius: '6px',
+  fontSize: '14px',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  border: 'none',
+  cursor: 'pointer',
 }
 
 export default ReservationConfirmationEmail

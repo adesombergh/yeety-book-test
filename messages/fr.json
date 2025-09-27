@@ -34,7 +34,37 @@
       "title": "Annuler la Réservation",
       "subtitle": "Annulez votre réservation de table",
       "placeholder": "Annulation de Réservation - Bientôt Disponible",
-      "message": "Êtes-vous sûr de vouloir annuler votre réservation ?"
+      "message": "Êtes-vous sûr de vouloir annuler votre réservation ?",
+      "loading": "Chargement des détails de la réservation...",
+      "confirmTitle": "Confirmer l'Annulation",
+      "confirmMessage": "Êtes-vous sûr de vouloir annuler cette réservation ? Cette action ne peut pas être annulée.",
+      "reasonLabel": "Raison de l'Annulation (Optionnel)",
+      "reasonPlaceholder": "Veuillez nous dire pourquoi vous annulez...",
+      "confirmButton": "Confirmer l'Annulation",
+      "cancelButton": "Garder la Réservation",
+      "cancelling": "Annulation en cours...",
+      "success": {
+        "title": "Réservation Annulée",
+        "message": "Votre réservation a été annulée avec succès. Vous devriez recevoir un email de confirmation sous peu."
+      },
+      "error": {
+        "invalidToken": "Lien d'annulation invalide ou expiré",
+        "alreadyCancelled": "Cette réservation a déjà été annulée",
+        "pastReservation": "Impossible d'annuler une réservation qui est déjà passée",
+        "failed": "Échec de l'annulation de la réservation. Veuillez réessayer ou contacter directement le restaurant."
+      },
+      "details": {
+        "reservationFor": "Réservation pour {name}",
+        "date": "Date",
+        "time": "Heure",
+        "guests": "Convives",
+        "restaurant": "Restaurant",
+        "contact": "Contact"
+      },
+      "email": {
+        "linkText": "Annuler la Réservation",
+        "linkNote": "Besoin d'annuler ? Cliquez sur le lien ci-dessous :"
+      }
     }
   },
   "dashboard": {

@@ -9,7 +9,7 @@ Add a secure cancellation link to the reservation confirmation email template th
 - Update `src/components/emails/reservation-confirmation.tsx` to include cancellation link
 - Add cancellation link text to both English and French translation files
 - Cancellation link uses existing `cancelToken` from reservation data
-- Link points to `/{locale}/[restaurantSlug]/reservation/cancel/[token]` route
+- Link points to `/[restaurantSlug]/reservation/cancel/[token]` route
 - Styled cancellation button/link consistent with email template design
 - Multi-language support for cancellation link text
 
@@ -24,7 +24,7 @@ Add a secure cancellation link to the reservation confirmation email template th
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 

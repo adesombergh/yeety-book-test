@@ -60,6 +60,10 @@
         "guests": "Guests",
         "restaurant": "Restaurant",
         "contact": "Contact"
+      },
+      "email": {
+        "linkText": "Cancel Reservation",
+        "linkNote": "Need to cancel? Click the link below:"
       }
     }
   },

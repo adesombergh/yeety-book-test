@@ -72,9 +72,11 @@ export class EmailService {
             date: reservation.date,
             guests: reservation.guests,
             notes: reservation.notes,
+            cancelToken: reservation.cancelToken || '',
           },
           restaurant: {
             name: restaurant.name,
+            slug: restaurant.slug,
             emailContact: restaurant.emailContact,
             phoneContact: restaurant.phoneContact,
           },

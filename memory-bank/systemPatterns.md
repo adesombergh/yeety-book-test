@@ -8,7 +8,7 @@
 
 **Implementation**:
 
-- **URL Structure**: `/{locale}/[restaurantSlug]/*` for public, `/{locale}/dashboard/[restaurantId]/*` for private
+- **URL Structure**: `/[restaurantSlug]/*` for public, `/dashboard/[restaurantId]/*` for private
 - **Data Isolation**: Restaurant-scoped queries with user ownership validation
 - **Access Control**: Middleware validates user-restaurant relationships
 - **Admin Override**: `isAdmin` users can access all restaurants

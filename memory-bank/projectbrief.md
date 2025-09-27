@@ -55,8 +55,8 @@ Enable restaurants to manage online reservations through a comprehensive SaaS pl
 ## Key Architectural Decisions
 
 1. **Multi-tenant URL Structure**:
-   - Public: `/{locale}/[restaurantSlug]/*`
-   - Private: `/{locale}/dashboard/[restaurantId]/*`
+   - Public: `/[restaurantSlug]/*`
+   - Private: `/dashboard/[restaurantId]/*`
 
 2. **No Customer Accounts**: Customers book via email + secure tokens
 
