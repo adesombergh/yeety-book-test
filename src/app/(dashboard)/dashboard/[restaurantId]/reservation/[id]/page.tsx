@@ -20,15 +20,12 @@ export default async function ReservationDetailPage({
 
       <div className="mt-8 p-6 border border-border rounded-lg bg-background">
         <p className="text-text-secondary">
-          Reservation detail for restaurant:{' '}
+          {t('reservationDetailFor')}{' '}
           <span className="font-mono text-primary">{restaurantId}</span>
         </p>
         <p className="text-text-secondary mt-2">
-          Reservation ID: <span className="font-mono text-primary">{id}</span>
-        </p>
-        <p className="text-text-secondary mt-2">
-          This page will display detailed information and management options for
-          a specific reservation.
+          {t('reservationId')}{' '}
+          <span className="font-mono text-primary">{id}</span>
         </p>
       </div>
     </div>

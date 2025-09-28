@@ -1,5 +1,6 @@
 'use server'
 
+import { getTranslations } from 'next-intl/server'
 import { getRestaurantBySlug } from '@/lib/queries/restaurant'
 import {
   formatOpeningHours,
@@ -19,6 +20,7 @@ export default async function ReservationPage({
   params,
 }: ReservationPageProps) {
   const { restaurantSlug } = await params
+  const t = await getTranslations('ui')
 
   // Fetch restaurant data
   const { restaurant, error } = await getRestaurantBySlug(restaurantSlug)
@@ -29,12 +31,12 @@ export default async function ReservationPage({
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-dark mb-2">
-            Restaurant Not Found
+            {t('restaurantNotFound')}
           </h1>
           <p className="text-text-secondary">
             {error === 'Restaurant not found'
-              ? `We couldn't find a restaurant with the name "${restaurantSlug}".`
-              : 'There was an error loading the restaurant information. Please try again later.'}
+              ? t('restaurantNotFoundMessage', { restaurantSlug })
+              : t('errorLoadingRestaurant')}
           </p>
         </div>
       </div>
@@ -45,10 +47,10 @@ export default async function ReservationPage({
     return (
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-text-dark mb-2">Loading...</h1>
-          <p className="text-text-secondary">
-            Loading restaurant information...
-          </p>
+          <h1 className="text-3xl font-bold text-text-dark mb-2">
+            {t('loading')}
+          </h1>
+          <p className="text-text-secondary">{t('loadingRestaurantInfo')}</p>
         </div>
       </div>
     )
@@ -66,7 +68,7 @@ export default async function ReservationPage({
           {restaurant.name}
         </h1>
         <p className="text-text-secondary">
-          Make a reservation at {restaurant.name}
+          {t('makeReservation', { restaurantName: restaurant.name })}
         </p>
         <div className="mt-2">
           <span
@@ -74,11 +76,11 @@ export default async function ReservationPage({
               isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
             }`}
           >
-            {isOpen ? 'Open Now' : 'Closed'}
+            {isOpen ? t('openNow') : t('closed')}
           </span>
           {restaurant.subscriptionStatus !== 'active' && (
             <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-              Limited Service
+              {t('limitedService')}
             </span>
           )}
         </div>
@@ -88,18 +90,20 @@ export default async function ReservationPage({
       <Card>
         <CardHeader>
           <CardTitle className="text-xl">
-            <h2>Restaurant Information</h2>
+            <h2>{t('restaurantInformation')}</h2>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-6">
             {/* Contact Information */}
             <div>
-              <h3 className="font-medium text-text-dark mb-2">Contact</h3>
+              <h3 className="font-medium text-text-dark mb-2">
+                {t('contact')}
+              </h3>
               <div className="space-y-1 text-sm text-text-secondary">
-                <p>Email: {restaurant.emailContact}</p>
+                <p>{t('emailLabel', { email: restaurant.emailContact })}</p>
                 {restaurant.phoneContact && (
-                  <p>Phone: {restaurant.phoneContact}</p>
+                  <p>{t('phoneLabel', { phone: restaurant.phoneContact })}</p>
                 )}
               </div>
             </div>
@@ -107,16 +111,25 @@ export default async function ReservationPage({
             {/* Reservation Settings */}
             <div>
               <h3 className="font-medium text-text-dark mb-2">
-                Reservation Details
+                {t('reservationDetails')}
               </h3>
               <div className="space-y-1 text-sm text-text-secondary">
                 <p>
-                  Party size: {restaurant.minGuestsPerReservation}-
-                  {restaurant.maxGuestsPerReservation} guests
+                  {t('restaurant.partySize', {
+                    min: restaurant.minGuestsPerReservation,
+                    max: restaurant.maxGuestsPerReservation,
+                  })}
                 </p>
-                <p>Time slots: Every {restaurant.slotInterval} minutes</p>
                 <p>
-                  Advance booking: {leadTimeMin} - {leadTimeMax}
+                  {t('restaurant.timeSlots', {
+                    interval: restaurant.slotInterval,
+                  })}
+                </p>
+                <p>
+                  {t('restaurant.advanceBooking', {
+                    min: leadTimeMin,
+                    max: leadTimeMax,
+                  })}
                 </p>
               </div>
             </div>
@@ -124,7 +137,9 @@ export default async function ReservationPage({
 
           {/* Opening Hours */}
           <div className="mt-6">
-            <h3 className="font-medium text-text-dark mb-2">Opening Hours</h3>
+            <h3 className="font-medium text-text-dark mb-2">
+              {t('openingHours')}
+            </h3>
             <div className="grid sm:grid-cols-2 gap-1 text-sm text-text-secondary">
               {openingHours.map((hours, index) => (
                 <p key={index}>{hours}</p>

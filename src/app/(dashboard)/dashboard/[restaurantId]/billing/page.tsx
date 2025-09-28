@@ -16,13 +16,10 @@ export default async function BillingPage({ params }: BillingPageProps) {
 
       <div className="mt-8 p-6 border border-border rounded-lg bg-background">
         <p className="text-text-secondary">
-          Billing for restaurant:{' '}
+          {t('billingFor')}{' '}
           <span className="font-mono text-primary">{restaurantId}</span>
         </p>
-        <p className="text-text-secondary mt-2">
-          This page will contain subscription management, payment methods,
-          billing history, and invoice downloads.
-        </p>
+        <p className="text-text-secondary mt-2">{t('description')}</p>
       </div>
     </div>
   )

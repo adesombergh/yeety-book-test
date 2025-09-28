@@ -40,8 +40,8 @@ async function createDayScheduleSchema(
 }
 
 // Function to create localized restaurant settings schema
-export async function createRestaurantSettingsSchema(locale: string = 'en') {
-  const t = await getTranslations({ locale, namespace: 'validation' })
+export async function createRestaurantSettingsSchema() {
+  const t = await getTranslations('validation')
 
   const dayScheduleSchema = await createDayScheduleSchema(t)
 

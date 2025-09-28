@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 export function Footer() {
+  const t = useTranslations('footer')
+  const tCommon = useTranslations('common')
   return (
     <footer className="bg-background mt-auto">
       <div className="container mx-auto px-4 py-8">
@@ -12,24 +15,22 @@ export function Footer() {
                 <span className="text-white font-bold text-xs">Y</span>
               </div>
               <span className="font-bold text-lg text-text-dark">
-                YeetyBook
+                {tCommon('yeetybook')}
               </span>
             </div>
-            <p className="text-text-secondary text-sm">
-              Simplifying restaurant reservations for everyone.
-            </p>
+            <p className="text-text-secondary text-sm">{t('tagline')}</p>
           </div>
 
           {/* Product Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-text-dark">Product</h3>
+            <h3 className="font-semibold text-text-dark">{t('product')}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Features
+                  {t('features')}
                 </Link>
               </li>
               <li>
@@ -37,7 +38,7 @@ export function Footer() {
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Pricing
+                  {t('pricing')}
                 </Link>
               </li>
               <li>
@@ -45,7 +46,7 @@ export function Footer() {
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Demo
+                  {t('demo')}
                 </Link>
               </li>
             </ul>
@@ -53,14 +54,14 @@ export function Footer() {
 
           {/* Support Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-text-dark">Support</h3>
+            <h3 className="font-semibold text-text-dark">{t('support')}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Help Center
+                  {t('helpCenter')}
                 </Link>
               </li>
               <li>
@@ -68,7 +69,7 @@ export function Footer() {
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Contact Us
+                  {t('contactUs')}
                 </Link>
               </li>
               <li>
@@ -76,7 +77,7 @@ export function Footer() {
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Status
+                  {t('status')}
                 </Link>
               </li>
             </ul>
@@ -84,14 +85,14 @@ export function Footer() {
 
           {/* Legal Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-text-dark">Legal</h3>
+            <h3 className="font-semibold text-text-dark">{t('legal')}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Privacy Policy
+                  {t('privacyPolicy')}
                 </Link>
               </li>
               <li>
@@ -99,7 +100,7 @@ export function Footer() {
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Terms of Service
+                  {t('termsOfService')}
                 </Link>
               </li>
               <li>
@@ -107,7 +108,7 @@ export function Footer() {
                   href="#"
                   className="text-text-secondary hover:text-primary transition-colors"
                 >
-                  Cookie Policy
+                  {t('cookiePolicy')}
                 </Link>
               </li>
             </ul>
@@ -117,15 +118,13 @@ export function Footer() {
         <div className="shadow-sm w-full h-px mt-8 border-t"></div>
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-text-secondary text-sm">
-            © 2024 YeetyBook. All rights reserved.
-          </p>
+          <p className="text-text-secondary text-sm">{t('copyright')}</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <Link
               href="#"
               className="text-text-secondary hover:text-primary transition-colors"
             >
-              <span className="sr-only">Twitter</span>
+              <span className="sr-only">{t('twitter')}</span>
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
               </svg>
@@ -134,7 +133,7 @@ export function Footer() {
               href="#"
               className="text-text-secondary hover:text-primary transition-colors"
             >
-              <span className="sr-only">LinkedIn</span>
+              <span className="sr-only">{t('linkedin')}</span>
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"

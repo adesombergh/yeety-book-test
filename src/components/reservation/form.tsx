@@ -255,7 +255,7 @@ export function ReservationForm({
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  Time
+                  {t('forms.time')}
                 </FormLabel>
                 <Select
                   onValueChange={field.onChange}
@@ -287,7 +287,7 @@ export function ReservationForm({
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <Users className="h-4 w-4" />
-                  Number of Guests
+                  {t('forms.numberOfGuests')}
                 </FormLabel>
                 <Select
                   onValueChange={(value) => field.onChange(parseInt(value))}
@@ -323,7 +323,7 @@ export function ReservationForm({
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
                     <User className="h-4 w-4" />
-                    First Name
+                    {t('forms.firstName')}
                   </FormLabel>
                   <FormControl>
                     <Input placeholder="Enter your first name" {...field} />
@@ -338,7 +338,7 @@ export function ReservationForm({
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel>{t('forms.lastName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter your last name" {...field} />
                   </FormControl>
@@ -355,7 +355,7 @@ export function ReservationForm({
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <Mail className="h-4 w-4" />
-                  Email Address
+                  {t('forms.emailAddress')}
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -376,7 +376,7 @@ export function ReservationForm({
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <Phone className="h-4 w-4" />
-                  Phone Number
+                  {t('forms.phoneNumber')}
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -397,7 +397,7 @@ export function ReservationForm({
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <MessageSquare className="h-4 w-4" />
-                  Special Requests (Optional)
+                  {t('forms.specialRequestsOptional')}
                 </FormLabel>
                 <FormControl>
                   <Textarea
@@ -417,7 +417,7 @@ export function ReservationForm({
             name="turnstileToken"
             render={() => (
               <FormItem>
-                <FormLabel>Security Verification</FormLabel>
+                <FormLabel>{t('forms.securityVerification')}</FormLabel>
                 <FormControl>
                   <Turnstile
                     siteKey={turnstileSiteKey}

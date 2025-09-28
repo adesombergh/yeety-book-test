@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -36,27 +37,30 @@ interface RestaurantSettingsFormProps {
   initialData: RestaurantWithTypedHours
 }
 
-const DAYS_OF_WEEK = [
-  { key: 'monday', label: 'Monday' },
-  { key: 'tuesday', label: 'Tuesday' },
-  { key: 'wednesday', label: 'Wednesday' },
-  { key: 'thursday', label: 'Thursday' },
-  { key: 'friday', label: 'Friday' },
-  { key: 'saturday', label: 'Saturday' },
-  { key: 'sunday', label: 'Sunday' },
-]
-
-const SLOT_INTERVALS = [
-  { value: '15', label: '15 minutes' },
-  { value: '30', label: '30 minutes' },
-  { value: '60', label: '60 minutes' },
-]
-
 export function RestaurantSettingsForm({
   restaurantId,
   initialData,
 }: RestaurantSettingsFormProps) {
   const [isSaving, setIsSaving] = useState(false)
+  const t = useTranslations('restaurant.settings')
+  const tCommon = useTranslations('common')
+  const tForms = useTranslations('forms')
+
+  const DAYS_OF_WEEK = [
+    { key: 'monday', label: t('days.monday') },
+    { key: 'tuesday', label: t('days.tuesday') },
+    { key: 'wednesday', label: t('days.wednesday') },
+    { key: 'thursday', label: t('days.thursday') },
+    { key: 'friday', label: t('days.friday') },
+    { key: 'saturday', label: t('days.saturday') },
+    { key: 'sunday', label: t('days.sunday') },
+  ]
+
+  const SLOT_INTERVALS = [
+    { value: '15', label: t('slotIntervals.15') },
+    { value: '30', label: t('slotIntervals.30') },
+    { value: '60', label: t('slotIntervals.60') },
+  ]
 
   const form = useForm<RestaurantSettingsFormData>({
     resolver: zodResolver(restaurantSettingsSchema),
@@ -112,7 +116,7 @@ export function RestaurantSettingsForm({
           <div className="space-y-6">
             <div>
               <h2 className="text-xl font-semibold text-text-dark mb-4">
-                Basic Information
+                {t('basicInformation')}
               </h2>
             </div>
 
@@ -122,7 +126,7 @@ export function RestaurantSettingsForm({
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Restaurant Name</FormLabel>
+                    <FormLabel>{t('restaurantName')}</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter restaurant name" {...field} />
                     </FormControl>
@@ -136,14 +140,11 @@ export function RestaurantSettingsForm({
                 name="slug"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>URL Slug</FormLabel>
+                    <FormLabel>{t('urlSlug')}</FormLabel>
                     <FormControl>
                       <Input placeholder="restaurant-slug" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This will be used in your booking URL:
-                      yoursite.com/restaurant-slug
-                    </FormDescription>
+                    <FormDescription>{t('urlSlugDescription')}</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -156,7 +157,7 @@ export function RestaurantSettingsForm({
                 name="emailContact"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contact Email</FormLabel>
+                    <FormLabel>{t('contactEmail')}</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
@@ -174,7 +175,7 @@ export function RestaurantSettingsForm({
                 name="phoneContact"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contact Phone</FormLabel>
+                    <FormLabel>{t('contactPhone')}</FormLabel>
                     <FormControl>
                       <Input
                         type="tel"
@@ -195,11 +196,10 @@ export function RestaurantSettingsForm({
           <div className="space-y-6">
             <div>
               <h2 className="text-xl font-semibold text-text-dark mb-4">
-                Opening Hours
+                {t('openingHours')}
               </h2>
               <p className="text-text-secondary">
-                Set your restaurant&apos;s operating hours for each day of the
-                week.
+                {t('openingHoursDescription')}
               </p>
             </div>
 
@@ -230,7 +230,7 @@ export function RestaurantSettingsForm({
                               htmlFor={`${day.key}-closed`}
                               className="text-sm"
                             >
-                              Closed
+                              {t('closed')}
                             </Label>
                           </div>
                         )}
@@ -244,7 +244,7 @@ export function RestaurantSettingsForm({
                             htmlFor={`${day.key}-open`}
                             className="text-sm"
                           >
-                            Open:
+                            {t('open')}
                           </Label>
                           <FormField
                             control={form.control}
@@ -265,7 +265,7 @@ export function RestaurantSettingsForm({
                             htmlFor={`${day.key}-close`}
                             className="text-sm"
                           >
-                            Close:
+                            {t('close')}
                           </Label>
                           <FormField
                             control={form.control}
@@ -287,9 +287,7 @@ export function RestaurantSettingsForm({
               })}
             </div>
             {form.formState.errors.openingHours && (
-              <p className="text-sm text-red-600">
-                Please check your opening hours configuration
-              </p>
+              <p className="text-sm text-red-600">{t('openingHoursError')}</p>
             )}
           </div>
         </Card>
@@ -299,10 +297,10 @@ export function RestaurantSettingsForm({
           <div className="space-y-6">
             <div>
               <h2 className="text-xl font-semibold text-text-dark mb-4">
-                Reservation Settings
+                {t('reservationSettings')}
               </h2>
               <p className="text-text-secondary">
-                Configure reservation constraints and booking rules.
+                {t('reservationSettingsDescription')}
               </p>
             </div>
 
@@ -312,7 +310,7 @@ export function RestaurantSettingsForm({
                 name="minGuestsPerReservation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Minimum Guests</FormLabel>
+                    <FormLabel>{t('minimumGuests')}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -333,7 +331,7 @@ export function RestaurantSettingsForm({
                 name="maxGuestsPerReservation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Maximum Guests</FormLabel>
+                    <FormLabel>{t('maximumGuests')}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -354,7 +352,7 @@ export function RestaurantSettingsForm({
                 name="maxReservationsPerSlot"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Max Reservations per Slot</FormLabel>
+                    <FormLabel>{t('maxReservationsPerSlot')}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -377,7 +375,7 @@ export function RestaurantSettingsForm({
                 name="slotInterval"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Time Slot Interval</FormLabel>
+                    <FormLabel>{t('timeSlotInterval')}</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -405,7 +403,7 @@ export function RestaurantSettingsForm({
                 name="reservationLeadTimeMin"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Minimum Lead Time (hours)</FormLabel>
+                    <FormLabel>{t('minimumLeadTimeHours')}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -417,7 +415,7 @@ export function RestaurantSettingsForm({
                       />
                     </FormControl>
                     <FormDescription>
-                      How far in advance customers must book
+                      {t('minimumLeadTimeDescription')}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -429,7 +427,7 @@ export function RestaurantSettingsForm({
                 name="reservationLeadTimeMax"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Maximum Lead Time (days)</FormLabel>
+                    <FormLabel>{t('maximumLeadTimeDays')}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -441,7 +439,7 @@ export function RestaurantSettingsForm({
                       />
                     </FormControl>
                     <FormDescription>
-                      How far in advance customers can book
+                      {t('maximumLeadTimeDescription')}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -453,15 +451,16 @@ export function RestaurantSettingsForm({
 
         {/* Form Actions */}
         <div className="flex justify-end gap-4">
-          <Button type="button" variant="input" disabled={isSaving} onClick={() => form.reset()}>
-            Cancel
-          </Button>
           <Button
-            type="submit"
-            variant="default"
+            type="button"
+            variant="input"
             disabled={isSaving}
+            onClick={() => form.reset()}
           >
-            {isSaving ? 'Saving...' : 'Save Settings'}
+            {tForms('cancel')}
+          </Button>
+          <Button type="submit" variant="default" disabled={isSaving}>
+            {isSaving ? tCommon('saving') : tCommon('saveSettings')}
           </Button>
         </div>
       </form>

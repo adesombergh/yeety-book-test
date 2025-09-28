@@ -7,6 +7,8 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export function Header() {
   const t = useTranslations('auth')
+  const tCommon = useTranslations('common')
+  const tUi = useTranslations('ui')
 
   return (
     <header className="bg-background">
@@ -17,7 +19,9 @@ export function Header() {
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-white font-bold text-sm">Y</span>
             </div>
-            <span className="font-bold text-xl text-text-dark">YeetyBook</span>
+            <span className="font-bold text-xl text-text-dark">
+              {tCommon('yeetybook')}
+            </span>
           </Link>
 
           {/* Navigation and Actions */}
@@ -25,7 +29,7 @@ export function Header() {
             {/* Authenticated User */}
             <SignedIn>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/dashboard">My restaurants</Link>
+                <Link href="/dashboard">{tUi('myRestaurants')}</Link>
               </Button>
               <UserButton
                 appearance={{

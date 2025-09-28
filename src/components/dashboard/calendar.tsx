@@ -11,6 +11,7 @@ import {
   CalendarReservationsByDate,
 } from '@/lib/queries/reservation-calendar'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 interface DashboardCalendarProps {
   restaurantId: string
@@ -39,6 +40,8 @@ export function DashboardCalendar({
   timeSlotInterval = 30,
   currentWeek,
 }: DashboardCalendarProps) {
+  const t = useTranslations('dashboard.calendar')
+  const tUi = useTranslations('ui')
   const [selectedWeek, setSelectedWeek] = useState(currentWeek || new Date())
   const [reservationsByDate, setReservationsByDate] =
     useState<CalendarReservationsByDate>({})
@@ -249,7 +252,7 @@ export function DashboardCalendar({
             onClick={goToPreviousWeek}
             className="px-3"
           >
-            ← Previous
+            {t('previous')}
           </Button>
           <Button
             variant="input"
@@ -257,7 +260,7 @@ export function DashboardCalendar({
             onClick={goToCurrentWeek}
             className="px-3"
           >
-            Today
+            {t('today')}
           </Button>
           <Button
             variant="input"
@@ -265,7 +268,7 @@ export function DashboardCalendar({
             onClick={goToNextWeek}
             className="px-3"
           >
-            Next →
+            {t('next')}
           </Button>
         </div>
       </div>
@@ -275,7 +278,7 @@ export function DashboardCalendar({
         <div className="grid grid-cols-8 rounded-lg overflow-clip">
           {/* Time column header */}
           <div className="p-3 font-medium text-text-secondary text-sm sticky top-0 bg-white">
-            Time
+            {tUi('time')}
           </div>
 
           {/* Day headers */}
@@ -327,17 +330,16 @@ export function DashboardCalendar({
                   return (
                     <div
                       key={`${day.dayKey}-${timeSlot}`}
-                      className={cn('p-3 border-t border-border min-h-[60px]',
-                        {
-                          'bg-neutral-200': day.isToday,
-                          'bg-gray-100': daySchedule.closed,
-                          'hover:bg-neutral-300 cursor-pointer': !daySchedule.closed,
-                        }
-                      )}
+                      className={cn('p-3 border-t border-border min-h-[60px]', {
+                        'bg-neutral-200': day.isToday,
+                        'bg-gray-100': daySchedule.closed,
+                        'hover:bg-neutral-300 cursor-pointer':
+                          !daySchedule.closed,
+                      })}
                     >
                       {daySchedule.closed && (
                         <div className="text-xs text-text-secondary text-center">
-                          Closed
+                          {tUi('closed')}
                         </div>
                       )}
                       {hasSlot && !daySchedule.closed && (
@@ -371,11 +373,11 @@ export function DashboardCalendar({
         <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-text-secondary">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-neutral-200 rounded"></div>
-            <span>Today</span>
+            <span>{tUi('today')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-gray-100 rounded"></div>
-            <span>Closed</span>
+            <span>{tUi('closed')}</span>
           </div>
         </div>
       </Card>

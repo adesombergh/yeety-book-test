@@ -43,6 +43,8 @@ export function ReservationCancelForm({
   reservation,
 }: ReservationCancelFormProps) {
   const t = useTranslations('reservation.cancel')
+  const tErrors = useTranslations('errors')
+  const tCommon = useTranslations('common')
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [reason, setReason] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -142,7 +144,9 @@ export function ReservationCancelForm({
               />
             </svg>
           </div>
-          <CardTitle className="text-red-800">Cancellation Failed</CardTitle>
+          <CardTitle className="text-red-800">
+            {tErrors('cancellationFailed')}
+          </CardTitle>
           <CardDescription className="text-red-700">
             {result.error}
           </CardDescription>
@@ -153,7 +157,7 @@ export function ReservationCancelForm({
             onClick={() => setResult(null)}
             className="border-red-300 text-red-700 hover:bg-red-100"
           >
-            Try Again
+            {tErrors('tryAgain')}
           </Button>
         </CardContent>
       </Card>
@@ -311,7 +315,7 @@ export function ReservationCancelForm({
           {reservation.notes && (
             <div>
               <span className="text-sm text-text-secondary">
-                Special Requests
+                {tCommon('specialRequests')}
               </span>
               <p className="font-medium text-text-dark">{reservation.notes}</p>
             </div>

@@ -20,15 +20,11 @@ export default async function DayViewPage({ params }: DayViewPageProps) {
 
       <div className="mt-8 p-6 border border-border rounded-lg bg-background">
         <p className="text-text-secondary">
-          Day view for restaurant:{' '}
+          {t('dayViewFor')}{' '}
           <span className="font-mono text-primary">{restaurantId}</span>
         </p>
         <p className="text-text-secondary mt-2">
-          Date: <span className="font-mono text-primary">{date}</span>
-        </p>
-        <p className="text-text-secondary mt-2">
-          This page will display detailed reservation management for a specific
-          date.
+          {t('date')} <span className="font-mono text-primary">{date}</span>
         </p>
       </div>
     </div>

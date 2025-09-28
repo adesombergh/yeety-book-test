@@ -1,14 +1,13 @@
+import prisma from '@/lib/prisma'
+import { EmailService } from '@/lib/services/email'
+import { randomBytes } from 'crypto'
+import { getTranslations } from 'next-intl/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import prisma from '@/lib/prisma'
-import { randomBytes } from 'crypto'
-import { EmailService } from '@/lib/services/email'
-import { getLocaleFromHeaders } from '@/lib/utils/locale'
-import { getTranslations } from 'next-intl/server'
 
 // Function to create localized reservation schema
-async function createReservationSchema(locale: string) {
-  const t = await getTranslations({ locale, namespace: 'validation' })
+async function createReservationSchema() {
+  const t = await getTranslations('validation')
 
   return z.object({
     restaurantId: z.number().int().positive(),
@@ -64,11 +63,8 @@ export async function POST(request: NextRequest) {
     // Parse request body
     const body = await request.json()
 
-    // Get locale from request headers
-    const locale = getLocaleFromHeaders(request.headers)
-
     // Create localized schema and validate request data
-    const schema = await createReservationSchema(locale)
+    const schema = await createReservationSchema()
     const validationResult = schema.safeParse(body)
 
     if (!validationResult.success) {

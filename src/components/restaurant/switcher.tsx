@@ -64,7 +64,7 @@ export function RestaurantSwitcher({
           disabled
         >
           <ChevronDown className="h-3 w-3" />
-          <span className="sr-only">Switch restaurant (coming soon)</span>
+          <span className="sr-only">{t('restaurant.switchRestaurant')}</span>
         </Button>
       </div>
     </div>

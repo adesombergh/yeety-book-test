@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { useTranslations } from 'next-intl'
 
 interface ReservationCardProps {
   reservation: {
@@ -51,6 +52,8 @@ export function ReservationCard({
   showRestaurant = false,
   className,
 }: ReservationCardProps) {
+  const t = useTranslations('restaurant')
+
   const reservationDate =
     typeof reservation.date === 'string'
       ? new Date(reservation.date)
@@ -119,7 +122,7 @@ export function ReservationCard({
         {/* Reservation ID */}
         <div className="pt-2 border-t border-gray-100">
           <span className="text-xs text-gray-500">
-            Reservation #{reservation.id}
+            {t('reservationNumber', { id: reservation.id })}
           </span>
         </div>
       </CardContent>

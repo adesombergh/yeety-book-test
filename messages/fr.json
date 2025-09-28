@@ -44,7 +44,9 @@
     "restaurantNotFoundMessage": "Nous n'avons pas pu trouver un restaurant avec le nom \"{restaurantSlug}\".",
     "errorLoadingRestaurant": "Il y a eu une erreur lors du chargement des informations du restaurant. Veuillez réessayer plus tard.",
     "creatingReservation": "Création de la réservation...",
-    "moreReservations": "+{count} de plus"
+    "moreReservations": "+{count} de plus",
+    "emailLabel": "Email : {email}",
+    "phoneLabel": "Téléphone : {phone}"
   },
   "errors": {
     "pageNotFound": "404 Introuvable",
@@ -65,6 +67,7 @@
     "emailAddress": "Adresse Email",
     "phoneNumber": "Numéro de Téléphone",
     "guests": "Convives",
+    "numberOfGuests": "Nombre de Convives",
     "date": "Date",
     "time": "Heure",
     "notes": "Notes Spéciales",
@@ -74,7 +77,9 @@
     "minimumLeadTime": "Délai Minimum (heures)",
     "maximumLeadTime": "Délai Maximum (jours)",
     "save": "Enregistrer",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "specialRequestsOptional": "Demandes Spéciales (Optionnel)",
+    "securityVerification": "Vérification de Sécurité"
   },
   "emails": {
     "reservationConfirmed": "Votre réservation chez {restaurantName} a été confirmée.",
@@ -130,7 +135,9 @@
         "invalidToken": "Lien d'annulation invalide ou expiré",
         "alreadyCancelled": "Cette réservation a déjà été annulée",
         "pastReservation": "Impossible d'annuler une réservation qui est déjà passée",
-        "failed": "Échec de l'annulation de la réservation. Veuillez réessayer ou contacter directement le restaurant."
+        "failed": "Échec de l'annulation de la réservation. Veuillez réessayer ou contacter directement le restaurant.",
+        "unableToCancel": "Impossible d'Annuler",
+        "contactRestaurant": "Si vous pensez qu'il s'agit d'une erreur, veuillez contacter directement le restaurant."
       },
       "details": {
         "reservationFor": "Réservation pour {name}",
@@ -153,15 +160,22 @@
     },
     "calendar": {
       "title": "Calendrier",
-      "subtitle": "Voir et gérer les réservations par date"
+      "subtitle": "Voir et gérer les réservations par date",
+      "previous": "← Précédent",
+      "next": "Suivant →",
+      "today": "Aujourd'hui"
     },
     "dayView": {
       "title": "Vue Journalière",
-      "subtitle": "Vue détaillée pour le {date}"
+      "subtitle": "Vue détaillée pour le {date}",
+      "dayViewFor": "Vue journalière pour le restaurant :",
+      "date": "Date :"
     },
     "reservationDetail": {
       "title": "Détail de Réservation",
-      "subtitle": "Gérer la réservation #{id}"
+      "subtitle": "Gérer la réservation #{id}",
+      "reservationDetailFor": "Détail de réservation pour le restaurant :",
+      "reservationId": "ID de réservation :"
     },
     "settings": {
       "title": "Paramètres",
@@ -169,12 +183,13 @@
     },
     "billing": {
       "title": "Facturation",
-      "subtitle": "Gestion des abonnements et paiements"
+      "subtitle": "Gestion des abonnements et paiements",
+      "billingFor": "Facturation pour le restaurant :",
+      "description": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures."
     },
     "errorLoadingRestaurants": "Erreur lors du chargement des restaurants",
     "noRestaurants": "Aucun Restaurant",
     "noRestaurantsDescription": "Vous n'avez pas encore de restaurants configurés.",
-    "billingFor": "Facturation pour le restaurant :",
     "thisPageWillContain": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures.",
     "dayViewDescription": "Cette page affichera la gestion détaillée des réservations pour une date spécifique.",
     "reservationDetailDescription": "Cette page affichera des informations détaillées et des options de gestion pour une réservation spécifique."
@@ -215,6 +230,81 @@
       "placeholder": "Ceci est une page temporaire. L'authentification Clerk sera implémentée dans la tâche 11."
     },
     "signOut": "Se Déconnecter"
+  },
+  "restaurant": {
+    "settings": {
+      "basicInformation": "Informations de Base",
+      "restaurantName": "Nom du Restaurant",
+      "urlSlug": "Identifiant URL",
+      "urlSlugDescription": "Ceci sera utilisé dans votre URL de réservation : yoursite.com/restaurant-slug",
+      "contactEmail": "Email de Contact",
+      "contactPhone": "Téléphone de Contact",
+      "openingHours": "Heures d'Ouverture",
+      "openingHoursDescription": "Définissez les heures d'ouverture de votre restaurant pour chaque jour de la semaine.",
+      "closed": "Fermé",
+      "open": "Ouvert :",
+      "close": "Fermeture :",
+      "openingHoursError": "Veuillez vérifier la configuration de vos heures d'ouverture",
+      "reservationSettings": "Paramètres de Réservation",
+      "reservationSettingsDescription": "Configurez les contraintes de réservation et les règles de réservation.",
+      "minimumGuests": "Convives Minimum",
+      "maximumGuests": "Convives Maximum",
+      "maxReservationsPerSlot": "Réservations Maximum par Créneau",
+      "timeSlotInterval": "Intervalle des Créneaux",
+      "minimumLeadTimeHours": "Délai Minimum (heures)",
+      "minimumLeadTimeDescription": "À quelle distance à l'avance les clients doivent réserver",
+      "maximumLeadTimeDays": "Délai Maximum (jours)",
+      "maximumLeadTimeDescription": "À quelle distance à l'avance les clients peuvent réserver",
+      "days": {
+        "monday": "Lundi",
+        "tuesday": "Mardi",
+        "wednesday": "Mercredi",
+        "thursday": "Jeudi",
+        "friday": "Vendredi",
+        "saturday": "Samedi",
+        "sunday": "Dimanche"
+      },
+      "slotIntervals": {
+        "15": "15 minutes",
+        "30": "30 minutes",
+        "60": "60 minutes"
+      }
+    },
+    "partySize": "Taille du groupe : {min}-{max} convives",
+    "timeSlots": "Créneaux : Toutes les {interval} minutes",
+    "advanceBooking": "Réservation à l'avance : {min} - {max}",
+    "reservationNumber": "Réservation #{id}",
+    "switchRestaurant": "Changer de restaurant (bientôt disponible)"
+  },
+  "common": {
+    "yeetybook": "YeetyBook",
+    "accessForbidden": "Accès Interdit",
+    "accessForbiddenMessage": "Vous n'avez pas la permission d'accéder au tableau de bord de ce restaurant.",
+    "returnToDashboard": "Retourner au Tableau de Bord",
+    "unableToCancel": "Impossible d'Annuler",
+    "contactRestaurantError": "Si vous pensez qu'il s'agit d'une erreur, veuillez contacter directement le restaurant.",
+    "specialRequests": "Demandes Spéciales",
+    "limitedService": "Service Limité",
+    "saving": "Enregistrement...",
+    "saveSettings": "Enregistrer les Paramètres"
+  },
+  "footer": {
+    "tagline": "Simplifier les réservations de restaurant pour tous.",
+    "product": "Produit",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "demo": "Démo",
+    "support": "Support",
+    "helpCenter": "Centre d'Aide",
+    "contactUs": "Nous Contacter",
+    "status": "Statut",
+    "legal": "Légal",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions d'Utilisation",
+    "cookiePolicy": "Politique des Cookies",
+    "copyright": "© 2024 YeetyBook. Tous droits réservés.",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn"
   },
   "validation": {
     "required": "Ce champ est requis",

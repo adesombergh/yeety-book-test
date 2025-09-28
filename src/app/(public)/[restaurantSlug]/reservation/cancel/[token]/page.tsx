@@ -51,13 +51,14 @@ export default async function ReservationCancelPage({
                 />
               </svg>
             </div>
-            <CardTitle className="text-red-800">Unable to Cancel</CardTitle>
+            <CardTitle className="text-red-800">
+              {t('error.unableToCancel')}
+            </CardTitle>
             <CardDescription className="text-red-700">{error}</CardDescription>
           </CardHeader>
           <CardContent className="text-center">
             <p className="text-sm text-red-600 mb-4">
-              If you believe this is an error, please contact the restaurant
-              directly.
+              {t('error.contactRestaurant')}
             </p>
           </CardContent>
         </Card>

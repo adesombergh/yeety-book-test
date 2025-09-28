@@ -2,6 +2,7 @@
 
 import { CalendarReservation } from '@/lib/queries/reservation-calendar'
 import { Users } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface ReservationBlockProps {
   reservation: CalendarReservation
@@ -103,6 +104,8 @@ export function ReservationSlot({
   isLoading = false,
   maxVisible = 3,
 }: ReservationSlotProps) {
+  const t = useTranslations('ui')
+
   if (isLoading) {
     return <ReservationBlockSkeleton count={2} />
   }
@@ -125,7 +128,7 @@ export function ReservationSlot({
       ))}
       {hiddenCount > 0 && (
         <div className="text-xs text-text-secondary text-center py-1">
-          +{hiddenCount} more
+          {t('moreReservations', { count: hiddenCount })}
         </div>
       )}
     </div>

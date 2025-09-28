@@ -39,6 +39,7 @@ const content = {
     footer: 'Thank you for using YeetyBook!',
     contactNote:
       'If you have any questions, please contact the restaurant directly.',
+    yeetybook: 'YeetyBook',
   },
   fr: {
     subject: 'Réservation Annulée',
@@ -57,6 +58,7 @@ const content = {
     footer: "Merci d'avoir utilisé YeetyBook !",
     contactNote:
       'Si vous avez des questions, veuillez contacter directement le restaurant.',
+    yeetybook: 'YeetyBook',
   },
 }
 
@@ -106,7 +108,7 @@ export function CancellationConfirmationEmail({
               <table style={headerStyle} cellPadding="0" cellSpacing="0">
                 <tr>
                   <td style={headerContentStyle}>
-                    <h1 style={brandingStyle}>YeetyBook</h1>
+                    <h1 style={brandingStyle}>{t.yeetybook}</h1>
                     <h2 style={headingStyle}>{t.subject}</h2>
                   </td>
                 </tr>

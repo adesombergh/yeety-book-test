@@ -65,6 +65,7 @@ const content = {
       'Si vous devez apporter des modifications, veuillez contacter directement le restaurant.',
     cancelNote: "Besoin d'annuler ? Cliquez sur le lien ci-dessous :",
     cancelLink: 'Annuler la Réservation',
+    yeetybook: 'YeetyBook',
   },
 }
 
@@ -114,7 +115,9 @@ export function ReservationConfirmationEmail({
               <table style={headerStyle} cellPadding="0" cellSpacing="0">
                 <tr>
                   <td style={headerContentStyle}>
-                    <h1 style={brandingStyle}>YeetyBook</h1>
+                    <h1 style={brandingStyle}>
+                      {content.fr.yeetybook || 'YeetyBook'}
+                    </h1>
                     <h2 style={headingStyle}>{t.subject}</h2>
                   </td>
                 </tr>
