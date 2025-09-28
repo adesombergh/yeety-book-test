@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ChevronDown, Building2 } from 'lucide-react'
 import { Restaurant } from '@prisma/client'
+import { useTranslations } from 'next-intl'
 
 interface RestaurantSwitcherProps {
   className?: string
@@ -16,6 +17,7 @@ export function RestaurantSwitcher({
   currentRestaurant,
 }: RestaurantSwitcherProps) {
   const pathname = usePathname()
+  const t = useTranslations()
 
   // Extract restaurant ID from pathname
   const restaurantIdMatch = pathname.match(/^\/dashboard\/(\d+)/)
@@ -27,7 +29,9 @@ export function RestaurantSwitcher({
       <div className={className}>
         <div className="flex items-center space-x-2">
           <Building2 className="h-5 w-5 text-text-secondary" />
-          <span className="font-semibold text-text-dark">My restaurants</span>
+          <span className="font-semibold text-text-dark">
+            {t('ui.myRestaurants')}
+          </span>
         </div>
       </div>
     )
@@ -43,7 +47,7 @@ export function RestaurantSwitcher({
             href="/dashboard"
             className="text-sm text-text-secondary hover:text-text-dark transition-colors"
           >
-            My restaurants
+            {t('ui.myRestaurants')}
           </Link>
           <span className="text-text-secondary">/</span>
           <span className="font-semibold text-text-dark">

@@ -3,6 +3,10 @@
     "title": "Yeety Book",
     "subtitle": "Plateforme SaaS de Réservation de Restaurant Multi-locataire",
     "getStarted": "Commencer",
+    "welcome": "Bienvenue sur YeetyBook",
+    "findAndBook": "Trouvez et réservez des restaurants",
+    "unableToLoad": "Impossible de charger les restaurants. Veuillez réessayer plus tard.",
+    "noRestaurantsAvailable": "Aucun restaurant disponible pour le moment.",
     "features": {
       "easySetup": {
         "title": "Configuration Facile",
@@ -17,6 +21,81 @@
         "description": "Informations et rapports détaillés"
       }
     }
+  },
+  "ui": {
+    "loading": "Chargement...",
+    "loadingRestaurantInfo": "Chargement des informations du restaurant...",
+    "openSidebar": "Ouvrir la barre latérale",
+    "time": "Heure",
+    "closed": "Fermé",
+    "today": "Aujourd'hui",
+    "contact": "Contact",
+    "email": "Email",
+    "phone": "Téléphone",
+    "openNow": "Ouvert Maintenant",
+    "limitedService": "Service Limité",
+    "myRestaurants": "Mes restaurants",
+    "restaurantInformation": "Informations du Restaurant",
+    "reservationDetails": "Détails de la Réservation",
+    "openingHours": "Heures d'Ouverture",
+    "makeReservation": "Faire une réservation chez {restaurantName}",
+    "contactUs": "Nous Contacter",
+    "restaurantNotFound": "Restaurant Introuvable",
+    "restaurantNotFoundMessage": "Nous n'avons pas pu trouver un restaurant avec le nom \"{restaurantSlug}\".",
+    "errorLoadingRestaurant": "Il y a eu une erreur lors du chargement des informations du restaurant. Veuillez réessayer plus tard.",
+    "creatingReservation": "Création de la réservation...",
+    "moreReservations": "+{count} de plus"
+  },
+  "errors": {
+    "pageNotFound": "404 Introuvable",
+    "pageNotFoundMessage": "La page que vous recherchez n'existe pas.",
+    "goHome": "Retour à l'accueil",
+    "cancellationFailed": "Échec de l'Annulation",
+    "tryAgain": "Réessayer"
+  },
+  "forms": {
+    "selectTime": "Sélectionnez une heure",
+    "enterFirstName": "Entrez votre prénom",
+    "enterLastName": "Entrez votre nom",
+    "enterEmail": "Entrez votre adresse email",
+    "enterPhone": "Entrez votre numéro de téléphone",
+    "specialRequests": "Demandes spéciales ou exigences alimentaires ?",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "emailAddress": "Adresse Email",
+    "phoneNumber": "Numéro de Téléphone",
+    "guests": "Convives",
+    "date": "Date",
+    "time": "Heure",
+    "notes": "Notes Spéciales",
+    "contactEmail": "Email de Contact",
+    "contactPhone": "Téléphone de Contact",
+    "timeSlotInterval": "Intervalle des Créneaux",
+    "minimumLeadTime": "Délai Minimum (heures)",
+    "maximumLeadTime": "Délai Maximum (jours)",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "emails": {
+    "reservationConfirmed": "Votre réservation chez {restaurantName} a été confirmée.",
+    "reservationCancelled": "Votre réservation chez {restaurantName} a été annulée avec succès.",
+    "details": "Détails de la Réservation :",
+    "cancelledDetails": "Détails de la Réservation Annulée :",
+    "date": "Date",
+    "time": "Heure",
+    "guests": "Convives",
+    "specialRequests": "Demandes Spéciales",
+    "restaurantInfo": "Informations du Restaurant :",
+    "restaurant": "Restaurant",
+    "phone": "Téléphone",
+    "email": "Email",
+    "footer": "Merci d'avoir choisi YeetyBook !",
+    "footerCancellation": "Merci d'avoir utilisé YeetyBook !",
+    "calendarNote": "Une invitation de calendrier a été jointe à cet email.",
+    "modificationNote": "Si vous devez apporter des modifications, veuillez contacter directement le restaurant.",
+    "contactNote": "Si vous avez des questions, n'hésitez pas à contacter directement le restaurant.",
+    "cancelNote": "Besoin d'annuler ? Cliquez sur le lien ci-dessous :",
+    "cancelLink": "Annuler la Réservation"
   },
   "reservation": {
     "form": {
@@ -91,7 +170,14 @@
     "billing": {
       "title": "Facturation",
       "subtitle": "Gestion des abonnements et paiements"
-    }
+    },
+    "errorLoadingRestaurants": "Erreur lors du chargement des restaurants",
+    "noRestaurants": "Aucun Restaurant",
+    "noRestaurantsDescription": "Vous n'avez pas encore de restaurants configurés.",
+    "billingFor": "Facturation pour le restaurant :",
+    "thisPageWillContain": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures.",
+    "dayViewDescription": "Cette page affichera la gestion détaillée des réservations pour une date spécifique.",
+    "reservationDetailDescription": "Cette page affichera des informations détaillées et des options de gestion pour une réservation spécifique."
   },
   "auth": {
     "signIn": {

@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Loader2,
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -117,6 +118,7 @@ export function ReservationForm({
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string>('')
   const router = useRouter()
+  const t = useTranslations()
 
   const form = useForm<ReservationFormData>({
     resolver: zodResolver(reservationSchema),
@@ -211,7 +213,7 @@ export function ReservationForm({
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <CalendarIcon className="h-4 w-4" />
-                  Reservation Date
+                  {t('forms.date')}
                 </FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>

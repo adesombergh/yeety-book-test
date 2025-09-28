@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Menu } from 'lucide-react'
 import { ReactNode, useState } from 'react'
 import { Restaurant } from '@prisma/client'
+import { useTranslations } from 'next-intl'
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -16,6 +17,7 @@ export const DashboardLayout = ({
   currentRestaurant,
 }: DashboardLayoutProps): ReactNode | Promise<ReactNode> => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const t = useTranslations()
   return (
     <div className="flex h-full min-h-screen">
       {/* Sidebar */}
@@ -38,7 +40,7 @@ export const DashboardLayout = ({
             className="lg:hidden"
           >
             <Menu className="h-6 w-6" />
-            <span className="sr-only">Open sidebar</span>
+            <span className="sr-only">{t('ui.openSidebar')}</span>
           </Button>
           <RestaurantSwitcher
             currentRestaurant={currentRestaurant}

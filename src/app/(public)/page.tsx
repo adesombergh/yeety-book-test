@@ -1,9 +1,9 @@
-'use server'
-
 import { getAllRestaurants } from '@/lib/queries/restaurant'
 import { RestaurantCard } from '@/components/restaurant/card'
+import { getTranslations } from 'next-intl/server'
 
 export default async function HomePage() {
+  const t = await getTranslations()
   const { restaurants, error } = await getAllRestaurants()
 
   if (error) {
@@ -11,15 +11,15 @@ export default async function HomePage() {
       <div className="container mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-dark">
-            Welcome to YeetyBook
+            {t('homepage.welcome')}
           </h1>
           <p className="text-text-secondary mt-2">
-            Find and book restaurant reservations
+            {t('homepage.findAndBook')}
           </p>
         </div>
         <div className="text-center py-12">
           <p className="text-lg text-text-secondary">
-            Unable to load restaurants. Please try again later.
+            {t('homepage.unableToLoad')}
           </p>
         </div>
       </div>
@@ -30,17 +30,15 @@ export default async function HomePage() {
     <div className="container mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-text-dark">
-          Welcome to YeetyBook
+          {t('homepage.welcome')}
         </h1>
-        <p className="text-text-secondary mt-2">
-          Find and book restaurant reservations
-        </p>
+        <p className="text-text-secondary mt-2">{t('homepage.findAndBook')}</p>
       </div>
 
       {restaurants.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-lg text-text-secondary">
-            No restaurants available at the moment.
+            {t('homepage.noRestaurantsAvailable')}
           </p>
         </div>
       ) : (
