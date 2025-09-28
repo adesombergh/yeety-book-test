@@ -79,7 +79,17 @@
     "save": "Enregistrer",
     "cancel": "Annuler",
     "specialRequestsOptional": "Demandes Spéciales (Optionnel)",
-    "securityVerification": "Vérification de Sécurité"
+    "securityVerification": "Vérification de Sécurité",
+    "enterRestaurantName": "Entrez le nom du restaurant",
+    "restaurantSlugPlaceholder": "nom-restaurant",
+    "contactEmailPlaceholder": "contact@restaurant.com",
+    "contactPhonePlaceholder": "+33 1 23 45 67 89",
+    "selectInterval": "Sélectionnez un intervalle",
+    "selectDate": "Choisissez une date",
+    "makeReservation": "Faire une réservation",
+    "creatingReservation": "Création de la réservation...",
+    "guestSingular": "Convive",
+    "guestPlural": "Convives"
   },
   "emails": {
     "reservationConfirmed": "Votre réservation chez {restaurantName} a été confirmée.",

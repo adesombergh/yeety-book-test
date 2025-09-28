@@ -228,7 +228,7 @@ export function ReservationForm({
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {field.value
                           ? format(field.value, 'PPP')
-                          : 'Pick a date'}
+                          : t('forms.selectDate')}
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -263,7 +263,7 @@ export function ReservationForm({
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a time" />
+                      <SelectValue placeholder={t('forms.selectTime')} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -304,7 +304,10 @@ export function ReservationForm({
                       (_, i) => minGuests + i
                     ).map((count) => (
                       <SelectItem key={count} value={count.toString()}>
-                        {count} {count === 1 ? 'Guest' : 'Guests'}
+                        {count}{' '}
+                        {count === 1
+                          ? t('forms.guestSingular')
+                          : t('forms.guestPlural')}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -326,7 +329,7 @@ export function ReservationForm({
                     {t('forms.firstName')}
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your first name" {...field} />
+                    <Input placeholder={t('forms.enterFirstName')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -340,7 +343,7 @@ export function ReservationForm({
                 <FormItem>
                   <FormLabel>{t('forms.lastName')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your last name" {...field} />
+                    <Input placeholder={t('forms.enterLastName')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -360,7 +363,7 @@ export function ReservationForm({
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="Enter your email address"
+                    placeholder={t('forms.enterEmail')}
                     {...field}
                   />
                 </FormControl>
@@ -381,7 +384,7 @@ export function ReservationForm({
                 <FormControl>
                   <Input
                     type="tel"
-                    placeholder="Enter your phone number"
+                    placeholder={t('forms.enterPhone')}
                     {...field}
                   />
                 </FormControl>
@@ -401,7 +404,7 @@ export function ReservationForm({
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Any special requests or dietary requirements?"
+                    placeholder={t('forms.specialRequests')}
                     rows={3}
                     {...field}
                   />
@@ -447,10 +450,10 @@ export function ReservationForm({
             {isSubmitting ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Creating Reservation...
+                {t('forms.creatingReservation')}
               </>
             ) : (
-              'Make Reservation'
+              t('forms.makeReservation')
             )}
           </Button>
         </fieldset>

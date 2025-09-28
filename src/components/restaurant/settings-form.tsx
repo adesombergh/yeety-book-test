@@ -128,7 +128,10 @@ export function RestaurantSettingsForm({
                   <FormItem>
                     <FormLabel>{t('restaurantName')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter restaurant name" {...field} />
+                      <Input
+                        placeholder={t('forms.enterRestaurantName')}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -142,7 +145,10 @@ export function RestaurantSettingsForm({
                   <FormItem>
                     <FormLabel>{t('urlSlug')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="restaurant-slug" {...field} />
+                      <Input
+                        placeholder={t('forms.restaurantSlugPlaceholder')}
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>{t('urlSlugDescription')}</FormDescription>
                     <FormMessage />
@@ -161,7 +167,7 @@ export function RestaurantSettingsForm({
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="contact@restaurant.com"
+                        placeholder={t('forms.contactEmailPlaceholder')}
                         {...field}
                       />
                     </FormControl>
@@ -179,7 +185,7 @@ export function RestaurantSettingsForm({
                     <FormControl>
                       <Input
                         type="tel"
-                        placeholder="+1 (555) 123-4567"
+                        placeholder={t('forms.contactPhonePlaceholder')}
                         {...field}
                       />
                     </FormControl>
@@ -379,7 +385,9 @@ export function RestaurantSettingsForm({
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select interval" />
+                          <SelectValue
+                            placeholder={t('forms.selectInterval')}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
