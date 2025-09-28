@@ -1,13 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { EmailService } from '@/lib/services/email'
-import { getLocaleFromHeaders } from '@/lib/utils/locale'
 import { getTranslations } from 'next-intl/server'
+import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 
 // Function to create localized cancellation schema
-async function createCancelReservationSchema(locale: string) {
-  const t = await getTranslations({ locale, namespace: 'validation' })
+async function createCancelReservationSchema() {
+  const t = await getTranslations('validation')
 
   return z.object({
     cancelToken: z.string().min(1, t('required')),
@@ -20,11 +19,8 @@ export async function PATCH(request: NextRequest) {
     // Parse request body
     const body = await request.json()
 
-    // Get locale from request headers
-    const locale = getLocaleFromHeaders(request.headers)
-
     // Create localized schema and validate request data
-    const schema = await createCancelReservationSchema(locale)
+    const schema = await createCancelReservationSchema()
     const validationResult = schema.safeParse(body)
 
     if (!validationResult.success) {
