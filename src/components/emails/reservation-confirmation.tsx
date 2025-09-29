@@ -214,7 +214,8 @@ export function ReservationConfirmationEmail({
                             <tr>
                               <td style={cancelButtonCellStyle}>
                                 <a
-                                  href={`https://yeety-book.vercel.app/${restaurant.slug}/reservation/cancel/${reservation.cancelToken}`}
+                                  // TODO: Use ENV
+                                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/${restaurant.slug}/reservation/cancel/${reservation.cancelToken}`}
                                   style={cancelButtonStyle}
                                 >
                                   {t.cancelLink}

@@ -2,12 +2,12 @@
 
 ## Current Status Overview
 
-**Project Phase**: Email & Communication System - READY TO START
-**Overall Progress**: ~98% of MVP completed
-**Current Task**: Email system implementation with Resend
-**Next Major Milestone**: Complete email confirmation and cancellation workflow
+**Project Phase**: User Onboarding System - READY TO START
+**Overall Progress**: ~99% of MVP completed
+**Current Task**: User onboarding flow implementation
+**Next Major Milestone**: Complete first-time user restaurant creation experience
 
-**🎉 MAJOR MILESTONE ACHIEVED**: All foundation and dashboard tasks (1-26) are COMPLETE!
+**🎉 MAJOR MILESTONE ACHIEVED**: All foundation, dashboard, and email system tasks (1-41) are COMPLETE!
 
 ## ✅ What's Working (Completed Features)
 
@@ -78,34 +78,29 @@
 
 ## ⏳ What's Left to Build
 
-### Immediate Next Steps (Email System Implementation)
+### Immediate Next Steps (User Onboarding System Implementation)
 
-**Phase 1: Email Service Foundation**
+**Phase 1: Database & Infrastructure**
 
-1. Install Resend package and setup environment variables
-2. Create email service utility structure (`src/lib/services/email.ts`)
-3. Implement calendar invite (.ics) generation utility
+1. **Task 042**: Update Restaurant model for optional onboarding fields
+2. **Task 043**: Create onboarding route structure and layout
+3. **Task 044**: Enhance middleware for onboarding redirect logic
 
-**Phase 2: Email Templates**
-4. Build reservation confirmation React email template
-5. Build cancellation confirmation React email template
-6. Test email templates in development
+**Phase 2: Core Implementation**
+4. **Task 045**: Create restaurant slug generation utility
+5. **Task 046**: Create onboarding form component
+6. **Task 047**: Implement restaurant creation server action
 
-**Phase 3: API Integration**
-7. Integrate confirmation emails into reservation creation API
-8. Integrate cancellation emails into cancellation API
-9. Test complete email workflow end-to-end
+**Phase 3: Integration & Testing**
+7. **Task 048**: Add Clerk session token custom claims configuration
+8. **Task 049**: Test complete onboarding flow end-to-end
 
-**Phase 4: Production Setup**
-10. Setup `yeety.be` domain verification in Resend
-11. Configure DNS records for email delivery
-12. Deploy and test production email delivery
-
-**All Foundation Tasks (1-26) COMPLETED**:
+**All Previous Tasks COMPLETED**:
 
 - ✅ Complete project setup and styling foundation (Tasks 1-11)
 - ✅ Complete customer reservation flow (Tasks 12-16)
 - ✅ Complete dashboard foundation and management (Tasks 17-26)
+- ✅ Complete email system implementation (Tasks 27-41)
 
 ### Core Dashboard Features (COMPLETED ✅)
 
@@ -228,14 +223,24 @@
 - ✅ Multi-restaurant support
 - ✅ Enhanced cancellation workflow
 
-### Milestone 2: Email & Communication System
+### Milestone 2: Email & Communication System ✅ COMPLETED
 
 **Target**: Complete customer communication workflow
 
-- Reservation confirmation emails
-- Calendar invite attachments
-- Secure cancellation workflow
-- Email template system
+- ✅ Reservation confirmation emails
+- ✅ Calendar invite attachments
+- ✅ Secure cancellation workflow
+- ✅ Email template system
+
+### Milestone 2.5: User Onboarding System
+
+**Target**: Seamless first-time user experience for restaurant creation
+
+- Restaurant creation onboarding flow
+- Middleware-based onboarding detection
+- Minimal form with automatic slug generation
+- Clerk metadata integration for onboarding completion
+- Default restaurant settings for quick setup
 
 ### Milestone 3: Billing & Subscription
 

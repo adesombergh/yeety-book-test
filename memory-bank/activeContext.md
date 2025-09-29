@@ -2,32 +2,45 @@
 
 ## Current Task Focus
 
-### New Task Phase: UX & Internationalization Improvements 🎯
+### New Task Phase: User Onboarding System 🎯
 
 **Status**: Task planning completed - Ready for implementation
-**Goal**: Refine user experience and complete internationalization setup
+**Goal**: Create comprehensive onboarding flow for new restaurant owners
 
-**🎉 MAJOR MILESTONE ACHIEVED**: All foundation, dashboard, and email system tasks (1-34) are COMPLETE!
+**🎉 MAJOR MILESTONE ACHIEVED**: All foundation, dashboard, and email system tasks (1-41) are COMPLETE!
 
-**New Task Series (035-041) - Created and Ready**:
+**New Task Series (042-049) - Created and Ready**:
+
+**User Onboarding Flow**:
+
+- **Task 042**: Update Restaurant model for optional onboarding fields
+- **Task 043**: Create onboarding route structure and layout
+- **Task 044**: Enhance middleware for onboarding redirect logic
+- **Task 045**: Create restaurant slug generation utility
+- **Task 046**: Create onboarding form component
+- **Task 047**: Implement restaurant creation server action
+- **Task 048**: Add Clerk session token custom claims configuration
+- **Task 049**: Test complete onboarding flow end-to-end
+
+**Implementation Priority**: Tasks should be completed in sequence (042-049) as each builds upon the previous.
+
+**Previous Task Series (035-041) - Completed**:
 
 **Internationalization Refinement**:
 
-- **Task 035**: Remove English locale, set French as default
-- **Task 036**: Audit application for hardcoded text, implement translation keys
+- **Task 035**: Remove English locale, set French as default ✅
+- **Task 036**: Audit application for hardcoded text, implement translation keys ✅
 
 **User Experience Improvements**:
 
-- **Task 037**: Add loading state to reservation form submission
-- **Task 038**: Add cursor pointer to button component
+- **Task 037**: Add loading state to reservation form submission ✅
+- **Task 038**: Add cursor pointer to button component ✅
 
 **Email System Enhancements**:
 
-- **Task 039**: Add top padding to email templates
-- **Task 040**: Implement Google Fonts (Bricolage Grotesque) in emails
-- **Task 041**: Set up email preview development workflow
-
-**Implementation Priority**: Tasks should be completed in sequence (035-041) as some have dependencies.
+- **Task 039**: Add top padding to email templates ✅
+- **Task 040**: Implement Google Fonts (Bricolage Grotesque) in emails ✅
+- **Task 041**: Set up email preview development workflow ✅
 
 **Next Phase Requirements**:
 
