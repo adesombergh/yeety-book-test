@@ -43,6 +43,8 @@ import {
 } from '@/components/ui/form'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { cn } from '@/lib/utils'
+import { isRestaurantClosedOnDate } from '@/lib/utils/opening-hours'
+import type { OpeningHours } from '@/lib/types/restaurant'
 
 // Validation schema
 const reservationSchema = z.object({
@@ -77,7 +79,7 @@ interface ReservationFormProps {
   restaurantSlug: string
   minGuests: number
   maxGuests: number
-  openingHours: unknown
+  openingHours: OpeningHours
   leadTimeMin: number
   leadTimeMax: number
   turnstileSiteKey: string
@@ -106,6 +108,7 @@ export function ReservationForm({
   restaurantSlug,
   minGuests,
   maxGuests,
+  openingHours,
   leadTimeMin,
   leadTimeMax,
   turnstileSiteKey,
@@ -284,7 +287,19 @@ export function ReservationForm({
                         field.onChange(date)
                         setCalendarOpen(false)
                       }}
-                      disabled={(date) => date < minDate || date > maxDate}
+                      disabled={(date) =>
+                        date < minDate ||
+                        date > maxDate ||
+                        isRestaurantClosedOnDate(openingHours, date)
+                      }
+                      modifiers={{
+                        closed: (date) =>
+                          isRestaurantClosedOnDate(openingHours, date),
+                      }}
+                      modifiersClassNames={{
+                        closed:
+                          'line-through opacity-40 bg-gray-100 dark:bg-gray-800',
+                      }}
                       initialFocus
                     />
                   </PopoverContent>

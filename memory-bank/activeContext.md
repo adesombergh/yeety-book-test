@@ -2,7 +2,25 @@
 
 ## Current Task Focus
 
-### Layout Improvement: Reservation Screen Restructure ✅
+### Calendar Enhancement: Date Restrictions & Closed Days ✅
+
+**Status**: COMPLETED
+**Goal**: Enhance reservation form calendar to prevent past date selection and clearly display closed days
+
+**Implementation Details**:
+
+- Added `isRestaurantClosedOnDate` utility function to check restaurant closure on specific dates
+- Updated ReservationForm calendar to disable past dates and closed days
+- Added visual styling (strikethrough, opacity, gray background) for closed days
+- Calendar now prevents selection of dates before `leadTimeMin` and after `leadTimeMax`
+- Closed days are clearly indicated and disabled in the calendar UI
+
+**Files Modified**:
+
+- `src/lib/utils/opening-hours.ts`: Added `isRestaurantClosedOnDate` function
+- `src/components/reservation/form.tsx`: Enhanced calendar with closed day logic and styling
+
+### Previous: Layout Improvement: Reservation Screen Restructure ✅
 
 **Status**: COMPLETED
 **Goal**: Restructure reservation page layout with sticky sidebar

@@ -76,3 +76,22 @@ export function isRestaurantOpen(
   const currentTime = date.toTimeString().slice(0, 5) // HH:MM format
   return currentTime >= schedule.open && currentTime <= schedule.close
 }
+
+export function isRestaurantClosedOnDate(
+  openingHours: OpeningHours,
+  date: Date
+): boolean {
+  const dayNames = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ] as const
+  const dayOfWeek = dayNames[date.getDay()]
+  const schedule = openingHours[dayOfWeek]
+
+  return schedule.closed || !schedule.open || !schedule.close
+}
