@@ -10,13 +10,13 @@ const DAYS_ORDER = [
   'sunday',
 ] as const
 const DAY_NAMES = {
-  monday: 'Monday',
-  tuesday: 'Tuesday',
-  wednesday: 'Wednesday',
-  thursday: 'Thursday',
-  friday: 'Friday',
-  saturday: 'Saturday',
-  sunday: 'Sunday',
+  monday: 'Lundi',
+  tuesday: 'Mardi',
+  wednesday: 'Mercredi',
+  thursday: 'Jeudi',
+  friday: 'Vendredi',
+  saturday: 'Samedi',
+  sunday: 'Dimanche',
 } as const
 
 export function formatOpeningHours(openingHours: OpeningHours): string[] {

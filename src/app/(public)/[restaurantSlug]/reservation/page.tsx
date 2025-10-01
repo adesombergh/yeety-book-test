@@ -20,7 +20,8 @@ export default async function ReservationPage({
   params,
 }: ReservationPageProps) {
   const { restaurantSlug } = await params
-  const t = await getTranslations('ui')
+  const tUi = await getTranslations('ui')
+  const t = await getTranslations()
 
   // Fetch restaurant data
   const { restaurant, error } = await getRestaurantBySlug(restaurantSlug)
@@ -31,12 +32,12 @@ export default async function ReservationPage({
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-dark mb-2">
-            {t('restaurantNotFound')}
+            {tUi('restaurantNotFound')}
           </h1>
           <p className="text-text-secondary">
             {error === 'Restaurant not found'
-              ? t('restaurantNotFoundMessage', { restaurantSlug })
-              : t('errorLoadingRestaurant')}
+              ? tUi('restaurantNotFoundMessage', { restaurantSlug })
+              : tUi('errorLoadingRestaurant')}
           </p>
         </div>
       </div>
@@ -48,9 +49,9 @@ export default async function ReservationPage({
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-dark mb-2">
-            {t('loading')}
+            {tUi('loading')}
           </h1>
-          <p className="text-text-secondary">{t('loadingRestaurantInfo')}</p>
+          <p className="text-text-secondary">{tUi('loadingRestaurantInfo')}</p>
         </div>
       </div>
     )
@@ -68,7 +69,7 @@ export default async function ReservationPage({
           {restaurant.name}
         </h1>
         <p className="text-text-secondary">
-          {t('makeReservation', { restaurantName: restaurant.name })}
+          {tUi('makeReservation', { restaurantName: restaurant.name })}
         </p>
         <div className="mt-2">
           <span
@@ -76,11 +77,11 @@ export default async function ReservationPage({
               isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
             }`}
           >
-            {isOpen ? t('openNow') : t('closed')}
+            {isOpen ? tUi('openNow') : tUi('closed')}
           </span>
           {restaurant.subscriptionStatus !== 'active' && (
             <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-              {t('limitedService')}
+              {tUi('limitedService')}
             </span>
           )}
         </div>
@@ -90,7 +91,7 @@ export default async function ReservationPage({
       <Card>
         <CardHeader>
           <CardTitle className="text-xl">
-            <h2>{t('restaurantInformation')}</h2>
+            <h2>{tUi('restaurantInformation')}</h2>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -98,12 +99,12 @@ export default async function ReservationPage({
             {/* Contact Information */}
             <div>
               <h3 className="font-medium text-text-dark mb-2">
-                {t('contact')}
+                {tUi('contact')}
               </h3>
               <div className="space-y-1 text-sm text-text-secondary">
-                <p>{t('emailLabel', { email: restaurant.emailContact })}</p>
+                <p>{tUi('emailLabel', { email: restaurant.emailContact })}</p>
                 {restaurant.phoneContact && (
-                  <p>{t('phoneLabel', { phone: restaurant.phoneContact })}</p>
+                  <p>{tUi('phoneLabel', { phone: restaurant.phoneContact })}</p>
                 )}
               </div>
             </div>
@@ -111,7 +112,7 @@ export default async function ReservationPage({
             {/* Reservation Settings */}
             <div>
               <h3 className="font-medium text-text-dark mb-2">
-                {t('reservationDetails')}
+                {tUi('reservationDetails')}
               </h3>
               <div className="space-y-1 text-sm text-text-secondary">
                 <p>
@@ -138,9 +139,9 @@ export default async function ReservationPage({
           {/* Opening Hours */}
           <div className="mt-6">
             <h3 className="font-medium text-text-dark mb-2">
-              {t('openingHours')}
+              {tUi('openingHours')}
             </h3>
-            <div className="grid sm:grid-cols-2 gap-1 text-sm text-text-secondary">
+            <div className="space-y-1 text-sm text-text-secondary">
               {openingHours.map((hours, index) => (
                 <p key={index}>{hours}</p>
               ))}
