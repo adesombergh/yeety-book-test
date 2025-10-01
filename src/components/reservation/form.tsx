@@ -292,6 +292,8 @@ export function ReservationForm({
                         date > maxDate ||
                         isRestaurantClosedOnDate(openingHours, date)
                       }
+                      fromDate={minDate}
+                      toDate={maxDate}
                       modifiers={{
                         closed: (date) =>
                           isRestaurantClosedOnDate(openingHours, date),
