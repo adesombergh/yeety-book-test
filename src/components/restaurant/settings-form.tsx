@@ -129,7 +129,7 @@ export function RestaurantSettingsForm({
                     <FormLabel>{t('restaurantName')}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={t('forms.enterRestaurantName')}
+                        placeholder={tForms('enterRestaurantName')}
                         {...field}
                       />
                     </FormControl>
@@ -146,7 +146,7 @@ export function RestaurantSettingsForm({
                     <FormLabel>{t('urlSlug')}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={t('forms.restaurantSlugPlaceholder')}
+                        placeholder={tForms('restaurantSlugPlaceholder')}
                         {...field}
                       />
                     </FormControl>
@@ -167,7 +167,7 @@ export function RestaurantSettingsForm({
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder={t('forms.contactEmailPlaceholder')}
+                        placeholder={tForms('contactEmailPlaceholder')}
                         {...field}
                       />
                     </FormControl>
@@ -185,7 +185,7 @@ export function RestaurantSettingsForm({
                     <FormControl>
                       <Input
                         type="tel"
-                        placeholder={t('forms.contactPhonePlaceholder')}
+                        placeholder={tForms('contactPhonePlaceholder')}
                         {...field}
                       />
                     </FormControl>
@@ -385,9 +385,7 @@ export function RestaurantSettingsForm({
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue
-                            placeholder={t('forms.selectInterval')}
-                          />
+                          <SelectValue placeholder={tForms('selectInterval')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

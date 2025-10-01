@@ -2,6 +2,21 @@
 
 ## Current Task Focus
 
+### Layout Improvement: Reservation Screen Restructure ✅
+
+**Status**: COMPLETED
+**Goal**: Restructure reservation page layout with sticky sidebar
+
+**🎉 LAYOUT UPDATE COMPLETED**: Reservation screen now features optimal two-column layout!
+
+**Key Changes Made**:
+
+- **Two-Column Layout**: Form is now the main content (2/3 width), information panel is sidebar (1/3 width)
+- **Sticky Sidebar**: Restaurant information panel sticks to viewport on desktop for easy reference
+- **Responsive Design**: Mobile stacked layout, desktop side-by-side layout
+- **Improved UX**: Form is now the visual focus, reducing user friction
+- **Single Column Info**: Information panel uses vertical stacking instead of cramped grid
+
 ### New Task Phase: User Onboarding System 🎯
 
 **Status**: Task planning completed - Ready for implementation
