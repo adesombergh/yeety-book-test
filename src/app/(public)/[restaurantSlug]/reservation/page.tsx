@@ -106,7 +106,6 @@ export default async function ReservationPage({
                 restaurantSlug={restaurant.slug}
                 minGuests={restaurant.minGuestsPerReservation}
                 maxGuests={restaurant.maxGuestsPerReservation}
-                slotInterval={restaurant.slotInterval}
                 openingHours={restaurant.openingHours}
                 leadTimeMin={restaurant.reservationLeadTimeMin}
                 leadTimeMax={restaurant.reservationLeadTimeMax}

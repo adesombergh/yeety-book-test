@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -77,7 +77,6 @@ interface ReservationFormProps {
   restaurantSlug: string
   minGuests: number
   maxGuests: number
-  slotInterval: number
   openingHours: unknown
   leadTimeMin: number
   leadTimeMax: number
@@ -85,22 +84,21 @@ interface ReservationFormProps {
   onSuccess?: () => void
 }
 
-// Generate time slots based on interval
-function generateTimeSlots(interval: number): string[] {
-  const slots: string[] = []
-  const startHour = 9 // 9 AM
-  const endHour = 22 // 10 PM
+interface TimeSlot {
+  time: string
+  available: boolean
+  remainingCapacity: number
+}
 
-  for (let hour = startHour; hour < endHour; hour++) {
-    for (let minute = 0; minute < 60; minute += interval) {
-      const timeString = `${hour.toString().padStart(2, '0')}:${minute
-        .toString()
-        .padStart(2, '0')}`
-      slots.push(timeString)
-    }
+interface TimeSlotsResponse {
+  success: boolean
+  data?: {
+    date: string
+    dayOfWeek: string
+    restaurantOpen: boolean
+    slots: TimeSlot[]
   }
-
-  return slots
+  error?: string
 }
 
 export function ReservationForm({
@@ -108,7 +106,6 @@ export function ReservationForm({
   restaurantSlug,
   minGuests,
   maxGuests,
-  slotInterval,
   leadTimeMin,
   leadTimeMax,
   turnstileSiteKey,
@@ -118,6 +115,9 @@ export function ReservationForm({
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string>('')
   const [calendarOpen, setCalendarOpen] = useState(false)
+  const [isLoadingTimeSlots, setIsLoadingTimeSlots] = useState(false)
+  const [availableTimeSlots, setAvailableTimeSlots] = useState<TimeSlot[]>([])
+  const [restaurantOpen, setRestaurantOpen] = useState(true)
   const router = useRouter()
   const t = useTranslations()
 
@@ -128,12 +128,55 @@ export function ReservationForm({
     },
   })
 
-  const timeSlots = generateTimeSlots(slotInterval)
+  const selectedDate = form.watch('date')
 
   // Calculate min/max dates based on lead times
   const today = new Date()
   const minDate = new Date(today.getTime() + leadTimeMin * 60 * 1000)
   const maxDate = new Date(today.getTime() + leadTimeMax * 60 * 1000)
+
+  // Fetch time slots when date is selected
+  useEffect(() => {
+    if (!selectedDate) {
+      setAvailableTimeSlots([])
+      setRestaurantOpen(true)
+      return
+    }
+
+    const fetchTimeSlots = async () => {
+      setIsLoadingTimeSlots(true)
+      try {
+        const dateString = format(selectedDate, 'yyyy-MM-dd')
+        const response = await fetch(
+          `/api/restaurants/${restaurantId}/time-slots?date=${dateString}`
+        )
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch time slots')
+        }
+
+        const result: TimeSlotsResponse = await response.json()
+
+        if (result.success && result.data) {
+          setRestaurantOpen(result.data.restaurantOpen)
+          setAvailableTimeSlots(result.data.slots)
+
+          // Reset time selection when date changes
+          form.setValue('time', '')
+        } else {
+          throw new Error(result.error || 'Failed to load time slots')
+        }
+      } catch (error) {
+        console.error('Error fetching time slots:', error)
+        setAvailableTimeSlots([])
+        setRestaurantOpen(true)
+      } finally {
+        setIsLoadingTimeSlots(false)
+      }
+    }
+
+    fetchTimeSlots()
+  }, [selectedDate, restaurantId, form])
 
   const onSubmit = async (data: ReservationFormData) => {
     if (!turnstileToken) {
@@ -261,23 +304,50 @@ export function ReservationForm({
                   <Clock className="h-4 w-4" />
                   {t('forms.time')}
                 </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t('forms.selectTime')} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {timeSlots.map((time) => (
-                      <SelectItem key={time} value={time}>
-                        {time}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {!selectedDate ? (
+                  <p className="text-sm text-muted-foreground">
+                    {t('forms.selectDateFirst')}
+                  </p>
+                ) : isLoadingTimeSlots ? (
+                  <div className="flex items-center gap-2 p-3 border rounded-md">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm">
+                      {t('forms.loadingTimeSlots')}
+                    </span>
+                  </div>
+                ) : !restaurantOpen ? (
+                  <p className="text-sm text-muted-foreground">
+                    {t('forms.restaurantClosedOnDay')}
+                  </p>
+                ) : availableTimeSlots.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    {t('forms.noSlotsAvailable')}
+                  </p>
+                ) : (
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    disabled={!selectedDate || isLoadingTimeSlots}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={t('forms.selectTime')} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {availableTimeSlots.map((slot) => (
+                        <SelectItem
+                          key={slot.time}
+                          value={slot.time}
+                          disabled={!slot.available}
+                        >
+                          {slot.time}
+                          {!slot.available && ` (${t('forms.slotFull')})`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
                 <FormMessage />
               </FormItem>
             )}
