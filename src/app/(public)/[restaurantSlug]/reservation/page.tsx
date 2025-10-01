@@ -63,8 +63,9 @@ export default async function ReservationPage({
   const leadTimeMax = formatTimeRange(restaurant.reservationLeadTimeMax)
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
-      <div className="text-center">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Restaurant Header - Full Width */}
+      <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-text-dark mb-2">
           {restaurant.name}
         </h1>
@@ -87,85 +88,119 @@ export default async function ReservationPage({
         </div>
       </div>
 
-      {/* Restaurant Information */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">
-            <h2>{tUi('restaurantInformation')}</h2>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Contact Information */}
-            <div>
-              <h3 className="font-medium text-text-dark mb-2">
-                {tUi('contact')}
-              </h3>
-              <div className="space-y-1 text-sm text-text-secondary">
-                <p>{tUi('emailLabel', { email: restaurant.emailContact })}</p>
-                {restaurant.phoneContact && (
-                  <p>{tUi('phoneLabel', { phone: restaurant.phoneContact })}</p>
-                )}
-              </div>
-            </div>
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Content - Reservation Form */}
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">
+                <h2>
+                  {tUi('makeReservation', { restaurantName: restaurant.name })}
+                </h2>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ReservationForm
+                restaurantId={restaurant.id}
+                restaurantSlug={restaurant.slug}
+                minGuests={restaurant.minGuestsPerReservation}
+                maxGuests={restaurant.maxGuestsPerReservation}
+                slotInterval={restaurant.slotInterval}
+                openingHours={restaurant.openingHours}
+                leadTimeMin={restaurant.reservationLeadTimeMin}
+                leadTimeMax={restaurant.reservationLeadTimeMax}
+                turnstileSiteKey={
+                  process.env.NEXT_PUBLIC_TURNSTYLE_SITE_KEY || ''
+                }
+              />
+            </CardContent>
+          </Card>
+        </div>
 
-            {/* Reservation Settings */}
-            <div>
-              <h3 className="font-medium text-text-dark mb-2">
-                {tUi('reservationDetails')}
-              </h3>
-              <div className="space-y-1 text-sm text-text-secondary">
-                <p>
-                  {t('restaurant.partySize', {
-                    min: restaurant.minGuestsPerReservation,
-                    max: restaurant.maxGuestsPerReservation,
-                  })}
-                </p>
-                <p>
-                  {t('restaurant.timeSlots', {
-                    interval: restaurant.slotInterval,
-                  })}
-                </p>
-                <p>
-                  {t('restaurant.advanceBooking', {
-                    min: leadTimeMin,
-                    max: leadTimeMax,
-                  })}
-                </p>
-              </div>
-            </div>
+        {/* Sidebar - Restaurant Information */}
+        <div className="lg:col-span-1">
+          <div className="lg:sticky lg:top-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">
+                  <h2>{tUi('restaurantInformation')}</h2>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Contact Information */}
+                  <div>
+                    <h3 className="font-medium text-text-dark mb-2">
+                      {tUi('contact')}
+                    </h3>
+                    <div className="space-y-1 text-sm text-text-secondary">
+                      <p>
+                        {tUi('email')}:{' '}
+                        <a
+                          href={`mailto:${restaurant.emailContact}`}
+                          className="underline hover:text-primary/80"
+                        >
+                          {restaurant.emailContact}
+                        </a>
+                      </p>
+                      {restaurant.phoneContact && (
+                        <p>
+                          {tUi('phone')}:{' '}
+                          <a
+                            href={`tel:${restaurant.phoneContact}`}
+                            className="underline hover:text-primary/80"
+                          >
+                            {restaurant.phoneContact}
+                          </a>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Reservation Settings */}
+                  <div>
+                    <h3 className="font-medium text-text-dark mb-2">
+                      {tUi('reservationDetails')}
+                    </h3>
+                    <div className="space-y-1 text-sm text-text-secondary">
+                      <p>
+                        {t('restaurant.partySize', {
+                          min: restaurant.minGuestsPerReservation,
+                          max: restaurant.maxGuestsPerReservation,
+                        })}
+                      </p>
+                      <p>
+                        {t('restaurant.timeSlots', {
+                          interval: restaurant.slotInterval,
+                        })}
+                      </p>
+                      <p>
+                        {t('restaurant.advanceBooking', {
+                          min: leadTimeMin,
+                          max: leadTimeMax,
+                        })}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Opening Hours */}
+                  <div>
+                    <h3 className="font-medium text-text-dark mb-2">
+                      {tUi('openingHours')}
+                    </h3>
+                    <div className="space-y-1 text-sm text-text-secondary">
+                      {openingHours.map((hours, index) => (
+                        <p key={index}>{hours}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-
-          {/* Opening Hours */}
-          <div className="mt-6">
-            <h3 className="font-medium text-text-dark mb-2">
-              {tUi('openingHours')}
-            </h3>
-            <div className="space-y-1 text-sm text-text-secondary">
-              {openingHours.map((hours, index) => (
-                <p key={index}>{hours}</p>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Reservation Form */}
-      <Card>
-        <CardContent>
-          <ReservationForm
-            restaurantId={restaurant.id}
-            restaurantSlug={restaurant.slug}
-            minGuests={restaurant.minGuestsPerReservation}
-            maxGuests={restaurant.maxGuestsPerReservation}
-            slotInterval={restaurant.slotInterval}
-            openingHours={restaurant.openingHours}
-            leadTimeMin={restaurant.reservationLeadTimeMin}
-            leadTimeMax={restaurant.reservationLeadTimeMax}
-            turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTYLE_SITE_KEY || ''}
-          />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }

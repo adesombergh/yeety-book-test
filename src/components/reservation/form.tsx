@@ -117,6 +117,7 @@ export function ReservationForm({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string>('')
+  const [calendarOpen, setCalendarOpen] = useState(false)
   const router = useRouter()
   const t = useTranslations()
 
@@ -215,7 +216,7 @@ export function ReservationForm({
                   <CalendarIcon className="h-4 w-4" />
                   {t('forms.date')}
                 </FormLabel>
-                <Popover>
+                <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -236,7 +237,10 @@ export function ReservationForm({
                     <Calendar
                       mode="single"
                       selected={field.value}
-                      onSelect={field.onChange}
+                      onSelect={(date) => {
+                        field.onChange(date)
+                        setCalendarOpen(false)
+                      }}
                       disabled={(date) => date < minDate || date > maxDate}
                       initialFocus
                     />
