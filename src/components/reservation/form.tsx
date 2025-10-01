@@ -282,6 +282,7 @@ export function ReservationForm({
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
+                      startMonth={minDate}
                       selected={field.value}
                       onSelect={(date) => {
                         field.onChange(date)
@@ -292,8 +293,6 @@ export function ReservationForm({
                         date > maxDate ||
                         isRestaurantClosedOnDate(openingHours, date)
                       }
-                      fromDate={minDate}
-                      toDate={maxDate}
                       modifiers={{
                         closed: (date) =>
                           isRestaurantClosedOnDate(openingHours, date),
@@ -302,7 +301,6 @@ export function ReservationForm({
                         closed:
                           'line-through opacity-40 bg-gray-100 dark:bg-gray-800',
                       }}
-                      initialFocus
                     />
                   </PopoverContent>
                 </Popover>
