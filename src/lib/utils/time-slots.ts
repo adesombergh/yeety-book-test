@@ -40,6 +40,9 @@ export function generateTimeSlotsForDay(
   const [openHour, openMinute] = schedule.open.split(':').map(Number)
   const [closeHour, closeMinute] = schedule.close.split(':').map(Number)
 
+  // Handle midnight closing time (00:00) by treating it as hour 24
+  const effectiveCloseHour = closeHour === 0 ? 24 : closeHour
+
   // Calculate minimum bookable time (current time + lead time in hours)
   const now = new Date()
   const minBookableTime = new Date(now.getTime() + leadTimeMin * 60 * 60 * 1000)
@@ -50,8 +53,8 @@ export function generateTimeSlotsForDay(
   let currentMinute = openMinute
 
   while (
-    currentHour < closeHour ||
-    (currentHour === closeHour && currentMinute < closeMinute)
+    currentHour < effectiveCloseHour ||
+    (currentHour === effectiveCloseHour && currentMinute < closeMinute)
   ) {
     // Create datetime for this slot
     const slotDateTime = new Date(date)

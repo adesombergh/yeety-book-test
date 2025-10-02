@@ -285,6 +285,7 @@ export function ReservationForm({
                       mode="single"
                       startMonth={minDate}
                       selected={field.value}
+                      weekStartsOn={1}
                       onSelect={(date) => {
                         field.onChange(date)
                         setCalendarOpen(false)
