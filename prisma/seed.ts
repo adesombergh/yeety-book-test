@@ -242,6 +242,15 @@ async function main() {
     },
   })
 
+  // Create second admin user
+  const adminUser2 = await prisma.user.create({
+    data: {
+      clerkId: 'user_32v3G6xviIb49M3QKXj3SkK89JE',
+      email: 'yahia.vlemmings@yeety.be',
+      isAdmin: true,
+    },
+  })
+
   // Create test user
   const testUser = await prisma.user.create({
     data: {
@@ -252,6 +261,7 @@ async function main() {
   })
 
   console.log(`✅ Created admin user: ${adminUser.email}`)
+  console.log(`✅ Created admin user: ${adminUser2.email}`)
   console.log(`✅ Created test user: ${testUser.email}`)
 
   // Check if restaurants already exist
