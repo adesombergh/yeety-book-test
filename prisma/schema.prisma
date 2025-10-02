@@ -26,22 +26,22 @@ model User {
 }
 
 model Restaurant {
-  id                      Int       @id @default(autoincrement())
-  slug                    String    @unique
-  name                    String
-  emailContact            String    @map("email_contact")
-  phoneContact            String?   @map("phone_contact")
-  openingHours            Json      @map("opening_hours")
-  slotInterval            Int       @map("slot_interval")
-  minGuestsPerReservation Int       @map("min_guests_per_reservation")
-  maxGuestsPerReservation Int       @map("max_guests_per_reservation")
-  maxReservationsPerSlot  Int       @map("max_reservations_per_slot")
-  reservationLeadTimeMin  Int       @map("reservation_lead_time_min")
-  reservationLeadTimeMax  Int       @map("reservation_lead_time_max")
-  subscriptionStatus      String    @map("subscription_status")
-  createdAt               DateTime  @default(now()) @map("created_at")
-  updatedAt               DateTime  @updatedAt @map("updated_at")
-  deletedAt               DateTime? @map("deleted_at")
+  id                          Int       @id @default(autoincrement())
+  slug                        String    @unique
+  name                        String
+  emailContact                String    @map("email_contact")
+  phoneContact                String?   @map("phone_contact")
+  openingHours                Json      @map("opening_hours")
+  slotInterval                Int       @map("slot_interval")
+  minGuestsPerReservation     Int       @map("min_guests_per_reservation")
+  maxGuestsPerReservation     Int       @map("max_guests_per_reservation")
+  maxReservationsPerSlot      Int       @map("max_reservations_per_slot")
+  reservationLeadTimeMinHours Int       @map("reservation_lead_time_min_hours")
+  reservationLeadTimeMaxHours Int       @map("reservation_lead_time_max_hours")
+  subscriptionStatus          String    @map("subscription_status")
+  createdAt                   DateTime  @default(now()) @map("created_at")
+  updatedAt                   DateTime  @updatedAt @map("updated_at")
+  deletedAt                   DateTime? @map("deleted_at")
 
   owners       User[]        @relation("RestaurantOwners")
   reservations Reservation[]

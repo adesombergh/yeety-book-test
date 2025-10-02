@@ -80,8 +80,8 @@ interface ReservationFormProps {
   minGuests: number
   maxGuests: number
   openingHours: OpeningHours
-  leadTimeMin: number
-  leadTimeMax: number
+  leadTimeMinHours: number
+  leadTimeMaxHours: number
   turnstileSiteKey: string
   onSuccess?: () => void
 }
@@ -109,8 +109,8 @@ export function ReservationForm({
   minGuests,
   maxGuests,
   openingHours,
-  leadTimeMin,
-  leadTimeMax,
+  leadTimeMinHours,
+  leadTimeMaxHours,
   turnstileSiteKey,
   onSuccess,
 }: ReservationFormProps) {
@@ -133,10 +133,11 @@ export function ReservationForm({
 
   const selectedDate = form.watch('date')
 
-  // Calculate min/max dates based on lead times
+  // Calculate min/max dates based on lead times (in hours)
+  const HOURS_TO_MS = 60 * 60 * 1000
   const today = new Date()
-  const minDate = new Date(today.getTime() + leadTimeMin * 60 * 1000)
-  const maxDate = new Date(today.getTime() + leadTimeMax * 60 * 1000)
+  const minDate = new Date(today.getTime() + leadTimeMinHours * HOURS_TO_MS)
+  const maxDate = new Date(today.getTime() + leadTimeMaxHours * HOURS_TO_MS)
 
   // Fetch time slots when date is selected
   useEffect(() => {

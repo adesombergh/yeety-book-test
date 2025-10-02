@@ -74,8 +74,8 @@ export function RestaurantSettingsForm({
       minGuestsPerReservation: initialData.minGuestsPerReservation,
       maxGuestsPerReservation: initialData.maxGuestsPerReservation,
       maxReservationsPerSlot: initialData.maxReservationsPerSlot,
-      reservationLeadTimeMin: initialData.reservationLeadTimeMin,
-      reservationLeadTimeMax: initialData.reservationLeadTimeMax,
+      reservationLeadTimeMinHours: initialData.reservationLeadTimeMinHours,
+      reservationLeadTimeMaxHours: initialData.reservationLeadTimeMaxHours,
     },
   })
 
@@ -406,7 +406,7 @@ export function RestaurantSettingsForm({
 
               <FormField
                 control={form.control}
-                name="reservationLeadTimeMin"
+                name="reservationLeadTimeMinHours"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t('minimumLeadTimeHours')}</FormLabel>
@@ -430,7 +430,7 @@ export function RestaurantSettingsForm({
 
               <FormField
                 control={form.control}
-                name="reservationLeadTimeMax"
+                name="reservationLeadTimeMaxHours"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t('maximumLeadTimeDays')}</FormLabel>

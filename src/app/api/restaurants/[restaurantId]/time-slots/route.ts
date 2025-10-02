@@ -81,7 +81,7 @@ export async function GET(
       requestedDate,
       restaurant.openingHours,
       restaurant.slotInterval,
-      restaurant.reservationLeadTimeMin
+      restaurant.reservationLeadTimeMinHours
     )
 
     // Get reservation counts for the day

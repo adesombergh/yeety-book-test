@@ -286,8 +286,8 @@ async function main() {
         minGuestsPerReservation: 1,
         maxGuestsPerReservation: 8,
         maxReservationsPerSlot: 3,
-        reservationLeadTimeMin: 60, // 1 hour minimum
-        reservationLeadTimeMax: 10080, // 1 week maximum (in minutes)
+        reservationLeadTimeMinHours: 1, // 1 hour minimum
+        reservationLeadTimeMaxHours: 7, // 1 week maximum (in days)
         subscriptionStatus: 'active',
       },
       {
@@ -308,8 +308,8 @@ async function main() {
         minGuestsPerReservation: 2,
         maxGuestsPerReservation: 6,
         maxReservationsPerSlot: 2,
-        reservationLeadTimeMin: 120, // 2 hours minimum
-        reservationLeadTimeMax: 20160, // 2 weeks maximum (in minutes)
+        reservationLeadTimeMinHours: 2, // 2 hours minimum
+        reservationLeadTimeMaxHours: 14, // 2 weeks maximum (in days)
         subscriptionStatus: 'active',
       },
       {
@@ -330,8 +330,8 @@ async function main() {
         minGuestsPerReservation: 1,
         maxGuestsPerReservation: 10,
         maxReservationsPerSlot: 4,
-        reservationLeadTimeMin: 30, // 30 minutes minimum
-        reservationLeadTimeMax: 4320, // 3 days maximum (in minutes)
+        reservationLeadTimeMinHours: 1, // 1 hour minimum (rounded from 30 minutes)
+        reservationLeadTimeMaxHours: 3, // 3 days maximum (in days)
         subscriptionStatus: 'active',
       },
       {
@@ -352,8 +352,8 @@ async function main() {
         minGuestsPerReservation: 2,
         maxGuestsPerReservation: 12,
         maxReservationsPerSlot: 1,
-        reservationLeadTimeMin: 240, // 4 hours minimum
-        reservationLeadTimeMax: 43200, // 1 month maximum (in minutes)
+        reservationLeadTimeMinHours: 24, // 24 hours minimum
+        reservationLeadTimeMaxHours: 300, // ~12.5 days maximum (in days, converted from hours)
         subscriptionStatus: 'inactive',
       },
     ],

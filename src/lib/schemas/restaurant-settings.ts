@@ -88,12 +88,12 @@ export async function createRestaurantSettingsSchema() {
         .int(t('number.int'))
         .min(1, t('number.min', { min: 1 }))
         .max(100, t('number.max', { max: 100 })),
-      reservationLeadTimeMin: z
+      reservationLeadTimeMinHours: z
         .number()
         .int(t('number.int'))
         .min(0, t('number.min', { min: 0 }))
         .max(168, t('number.max', { max: 168 })),
-      reservationLeadTimeMax: z
+      reservationLeadTimeMaxHours: z
         .number()
         .int(t('number.int'))
         .min(1, t('number.min', { min: 1 }))
@@ -112,11 +112,14 @@ export async function createRestaurantSettingsSchema() {
     .refine(
       (data) => {
         // Ensure min lead time < max lead time (convert max from days to hours)
-        return data.reservationLeadTimeMin < data.reservationLeadTimeMax * 24
+        return (
+          data.reservationLeadTimeMinHours <
+          data.reservationLeadTimeMaxHours * 24
+        )
       },
       {
         message: t('restaurant.leadTime.minMax'),
-        path: ['reservationLeadTimeMin'],
+        path: ['reservationLeadTimeMinHours'],
       }
     )
 }
@@ -202,12 +205,12 @@ export const restaurantSettingsSchema = z
       .int('Must be a whole number')
       .min(1, 'Maximum reservations per slot must be at least 1')
       .max(100, 'Maximum reservations per slot cannot exceed 100'),
-    reservationLeadTimeMin: z
+    reservationLeadTimeMinHours: z
       .number()
       .int('Must be a whole number')
       .min(0, 'Minimum lead time cannot be negative')
       .max(168, 'Minimum lead time cannot exceed 168 hours (1 week)'),
-    reservationLeadTimeMax: z
+    reservationLeadTimeMaxHours: z
       .number()
       .int('Must be a whole number')
       .min(1, 'Maximum lead time must be at least 1 day')
@@ -226,11 +229,13 @@ export const restaurantSettingsSchema = z
   .refine(
     (data) => {
       // Ensure min lead time < max lead time (convert max from days to hours)
-      return data.reservationLeadTimeMin < data.reservationLeadTimeMax * 24
+      return (
+        data.reservationLeadTimeMinHours < data.reservationLeadTimeMaxHours * 24
+      )
     },
     {
       message: 'Minimum lead time must be less than maximum lead time',
-      path: ['reservationLeadTimeMin'],
+      path: ['reservationLeadTimeMinHours'],
     }
   )
 

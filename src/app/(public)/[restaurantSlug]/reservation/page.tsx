@@ -59,8 +59,8 @@ export default async function ReservationPage({
 
   const openingHours = formatOpeningHours(restaurant.openingHours)
   const isOpen = isRestaurantOpen(restaurant.openingHours)
-  const leadTimeMin = formatTimeRange(restaurant.reservationLeadTimeMin)
-  const leadTimeMax = formatTimeRange(restaurant.reservationLeadTimeMax)
+  const leadTimeMin = formatTimeRange(restaurant.reservationLeadTimeMinHours)
+  const leadTimeMax = formatTimeRange(restaurant.reservationLeadTimeMaxHours)
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,8 +107,8 @@ export default async function ReservationPage({
                 minGuests={restaurant.minGuestsPerReservation}
                 maxGuests={restaurant.maxGuestsPerReservation}
                 openingHours={restaurant.openingHours}
-                leadTimeMin={restaurant.reservationLeadTimeMin}
-                leadTimeMax={restaurant.reservationLeadTimeMax}
+                leadTimeMinHours={restaurant.reservationLeadTimeMinHours}
+                leadTimeMaxHours={restaurant.reservationLeadTimeMaxHours}
                 turnstileSiteKey={
                   process.env.NEXT_PUBLIC_TURNSTYLE_SITE_KEY || ''
                 }

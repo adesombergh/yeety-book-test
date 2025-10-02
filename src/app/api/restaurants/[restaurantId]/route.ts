@@ -82,8 +82,8 @@ export async function PATCH(
         minGuestsPerReservation: validatedData.minGuestsPerReservation,
         maxGuestsPerReservation: validatedData.maxGuestsPerReservation,
         maxReservationsPerSlot: validatedData.maxReservationsPerSlot,
-        reservationLeadTimeMin: validatedData.reservationLeadTimeMin,
-        reservationLeadTimeMax: validatedData.reservationLeadTimeMax,
+        reservationLeadTimeMinHours: validatedData.reservationLeadTimeMinHours,
+        reservationLeadTimeMaxHours: validatedData.reservationLeadTimeMaxHours,
         updatedAt: new Date(),
       },
     })
