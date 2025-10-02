@@ -76,13 +76,14 @@ export function ReservationConfirmationEmail({
 }: ReservationConfirmationEmailProps) {
   const t = content[locale]
 
-  // Format date and time
+  // Format date and time in restaurant's timezone (Europe/Brussels)
   const formatDate = (date: Date) => {
     return date.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: 'Europe/Brussels',
     })
   }
 
@@ -91,6 +92,7 @@ export function ReservationConfirmationEmail({
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
+      timeZone: 'Europe/Brussels',
     })
   }
 
