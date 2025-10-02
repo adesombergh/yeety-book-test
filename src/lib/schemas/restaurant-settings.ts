@@ -111,10 +111,9 @@ export async function createRestaurantSettingsSchema() {
     )
     .refine(
       (data) => {
-        // Ensure min lead time < max lead time (convert max from days to hours)
+        // Ensure min lead time < max lead time (both in hours)
         return (
-          data.reservationLeadTimeMinHours <
-          data.reservationLeadTimeMaxHours * 24
+          data.reservationLeadTimeMinHours < data.reservationLeadTimeMaxHours
         )
       },
       {
@@ -228,10 +227,8 @@ export const restaurantSettingsSchema = z
   )
   .refine(
     (data) => {
-      // Ensure min lead time < max lead time (convert max from days to hours)
-      return (
-        data.reservationLeadTimeMinHours < data.reservationLeadTimeMaxHours * 24
-      )
+      // Ensure min lead time < max lead time (both in hours)
+      return data.reservationLeadTimeMinHours < data.reservationLeadTimeMaxHours
     },
     {
       message: 'Minimum lead time must be less than maximum lead time',

@@ -40,9 +40,9 @@ export function generateTimeSlotsForDay(
   const [openHour, openMinute] = schedule.open.split(':').map(Number)
   const [closeHour, closeMinute] = schedule.close.split(':').map(Number)
 
-  // Calculate minimum bookable time (current time + lead time)
+  // Calculate minimum bookable time (current time + lead time in hours)
   const now = new Date()
-  const minBookableTime = new Date(now.getTime() + leadTimeMin * 60 * 1000)
+  const minBookableTime = new Date(now.getTime() + leadTimeMin * 60 * 60 * 1000)
 
   // Generate slots
   const slots: TimeSlot[] = []
