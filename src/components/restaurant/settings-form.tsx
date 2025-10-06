@@ -443,7 +443,7 @@ function DayScheduleField({
 
   return (
     <div className="space-y-3 border-b border-border-light pb-4 last:border-0">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <Label className="font-medium text-base">{dayLabel}</Label>
         <div className="flex items-center gap-2">
           <FormField
@@ -470,7 +470,7 @@ function DayScheduleField({
           {fields.map((field, index) => (
             <div key={field.id} className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <Label className="text-sm w-10">{t('open')}</Label>
+                <Label className="text-sm">{t('open')}</Label>
                 <FormField
                   control={form.control}
                   name={`openingHours.${dayKey}.periods.${index}.open`}
@@ -481,7 +481,7 @@ function DayScheduleField({
               </div>
 
               <div className="flex items-center gap-2">
-                <Label className="text-sm w-10">{t('close')}</Label>
+                <Label className="text-sm">{t('close')}</Label>
                 <FormField
                   control={form.control}
                   name={`openingHours.${dayKey}.periods.${index}.close`}
@@ -511,7 +511,7 @@ function DayScheduleField({
             className="mt-2"
           >
             <Plus className="h-4 w-4 mr-1" />
-            {t('addPeriod') || 'Add Period'}
+            {t('addPeriod')}
           </Button>
         </div>
       )}
