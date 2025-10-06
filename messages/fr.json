@@ -283,7 +283,8 @@
         "15": "15 minutes",
         "30": "30 minutes",
         "60": "60 minutes"
-      }
+      },
+      "addPeriod": "Ajouter une période"
     },
     "partySize": "Taille du groupe : {min}-{max} convives",
     "timeSlots": "Créneaux : Toutes les {interval} minutes",
@@ -368,7 +369,10 @@
       },
       "openingHours": {
         "timesRequired": "Les heures d'ouverture et de fermeture sont requises quand le restaurant n'est pas fermé",
-        "timeOrder": "L'heure d'ouverture doit être antérieure à l'heure de fermeture"
+        "timeOrder": "L'heure d'ouverture doit être antérieure à l'heure de fermeture",
+        "timeFormat": "L'heure doit être au format HH:MM",
+        "periodsRequired": "Au moins une période de service est requise quand le restaurant n'est pas fermé",
+        "overlappingPeriods": "Les périodes de service ne peuvent pas se chevaucher"
       }
     }
   }
