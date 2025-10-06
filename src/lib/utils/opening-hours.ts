@@ -1,4 +1,6 @@
 import { OpeningHours, ServicePeriod } from '@/lib/types/restaurant'
+import { formatDuration, type Duration } from 'date-fns'
+import { fr } from 'date-fns/locale'
 
 const DAYS_ORDER = [
   'monday',
@@ -36,7 +38,7 @@ export function formatOpeningHours(openingHours: OpeningHours): string[] {
       !schedule.periods ||
       schedule.periods.length === 0
     ) {
-      formatted.push(`${dayName}: Closed`)
+      formatted.push(`${dayName}: Fermé`)
     } else {
       const periodsText = schedule.periods
         .map((period) => `${period.open} - ${period.close}`)
@@ -49,7 +51,25 @@ export function formatOpeningHours(openingHours: OpeningHours): string[] {
 }
 
 export function formatTimeRange(hours: number): string {
-  return hours === 1 ? '1 hour' : `${hours} hours`
+  // Convert hours to a human-readable duration using date-fns
+  const days = Math.floor(hours / 24)
+  const remainingHours = hours % 24
+
+  const duration: Duration = {}
+
+  if (days > 0) {
+    duration.days = days
+  }
+  if (remainingHours > 0) {
+    duration.hours = remainingHours
+  }
+
+  // If it's less than 24 hours, just show hours
+  // If it's 24 hours or more, show days (and hours if there are any remaining)
+  return formatDuration(duration, {
+    locale: fr,
+    format: days > 0 ? ['days', 'hours'] : ['hours'],
+  })
 }
 
 export function getServicePeriodsForDate(

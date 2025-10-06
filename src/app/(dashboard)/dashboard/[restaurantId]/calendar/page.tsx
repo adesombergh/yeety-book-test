@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { DashboardCalendar } from '@/components/dashboard/calendar'
 import { getUserRestaurantById } from '@/lib/queries/user-restaurant'
+import { CalendarActions } from '@/components/dashboard/calendar-actions'
 
 interface CalendarPageProps {
   params: Promise<{
@@ -40,8 +41,13 @@ export default async function CalendarPage({ params }: CalendarPageProps) {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
-      <p className="text-text-secondary mt-2">{t('subtitle')}</p>
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
+          <p className="text-text-secondary mt-2">{t('subtitle')}</p>
+        </div>
+        <CalendarActions restaurantSlug={restaurant.slug} />
+      </div>
 
       <div className="mt-8">
         <DashboardCalendar

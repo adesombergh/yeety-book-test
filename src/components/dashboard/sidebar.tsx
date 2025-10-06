@@ -4,17 +4,20 @@ import { cn } from '@/lib/utils'
 import { Calendar, CreditCard, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Restaurant } from '@prisma/client'
 
 interface DashboardSidebarProps {
   isOpen?: boolean
   onToggle?: () => void
   currentRestaurantId?: string | null
+  currentRestaurant?: Restaurant | null
 }
 
 export function DashboardSidebar({
   isOpen = true,
   onToggle,
   currentRestaurantId,
+  currentRestaurant,
 }: DashboardSidebarProps) {
   const pathname = usePathname()
 
@@ -56,6 +59,15 @@ export function DashboardSidebar({
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
+        {/* Restaurant Name Header */}
+        {currentRestaurant && (
+          <div className="px-7 pt-8">
+            <h2 className="text-lg font-semibold text-text-dark truncate">
+              {currentRestaurant.name}
+            </h2>
+          </div>
+        )}
+
         {/* Navigation */}
         <nav className="flex-1 space-y-1 px-4 py-6">
           {navigationItems.map((item) => {

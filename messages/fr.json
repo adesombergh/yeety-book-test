@@ -1,16 +1,16 @@
 {
   "homepage": {
     "title": "Yeety Book",
-    "subtitle": "Plateforme SaaS de Réservation de Restaurant Multi-locataire",
+    "subtitle": "Plateforme SaaS de Réservation d'Etablissement Multi-locataire",
     "getStarted": "Commencer",
     "welcome": "Bienvenue sur YeetyBook",
-    "findAndBook": "Trouvez et réservez des restaurants",
-    "unableToLoad": "Impossible de charger les restaurants. Veuillez réessayer plus tard.",
-    "noRestaurantsAvailable": "Aucun restaurant disponible pour le moment.",
+    "findAndBook": "Trouvez et réservez des établissements",
+    "unableToLoad": "Impossible de charger les établissements. Veuillez réessayer plus tard.",
+    "noRestaurantsAvailable": "Aucun établissement disponible pour le moment.",
     "features": {
       "easySetup": {
         "title": "Configuration Facile",
-        "description": "Intégration rapide des restaurants"
+        "description": "Intégration rapide des établissements"
       },
       "smartBooking": {
         "title": "Réservation Intelligente",
@@ -34,15 +34,15 @@
     "phone": "Téléphone",
     "openNow": "Ouvert Maintenant",
     "limitedService": "Service Limité",
-    "myRestaurants": "Mes restaurants",
-    "restaurantInformation": "Informations du Restaurant",
+    "myRestaurants": "Mes établissements",
+    "restaurantInformation": "Informations de l'Etablissement",
     "reservationDetails": "Détails de la Réservation",
     "openingHours": "Heures d'Ouverture",
     "makeReservation": "Faire une réservation chez {restaurantName}",
     "contactUs": "Nous Contacter",
-    "restaurantNotFound": "Restaurant Introuvable",
-    "restaurantNotFoundMessage": "Nous n'avons pas pu trouver un restaurant avec le nom \"{restaurantSlug}\".",
-    "errorLoadingRestaurant": "Il y a eu une erreur lors du chargement des informations du restaurant. Veuillez réessayer plus tard.",
+    "restaurantNotFound": "Etablissement Introuvable",
+    "restaurantNotFoundMessage": "Nous n'avons pas pu trouver un établissement avec le nom \"{restaurantSlug}\".",
+    "errorLoadingRestaurant": "Il y a eu une erreur lors du chargement des informations de l'établissement. Veuillez réessayer plus tard.",
     "creatingReservation": "Création de la réservation...",
     "moreReservations": "+{count} de plus",
     "emailLabel": "Email : {email}",
@@ -80,8 +80,8 @@
     "cancel": "Annuler",
     "specialRequestsOptional": "Demandes Spéciales (Optionnel)",
     "securityVerification": "Vérification de Sécurité",
-    "enterRestaurantName": "Entrez le nom du restaurant",
-    "restaurantSlugPlaceholder": "nom-restaurant",
+    "enterRestaurantName": "Entrez le nom de l'établissement",
+    "restaurantSlugPlaceholder": "nom-etablissement",
     "contactEmailPlaceholder": "contact@restaurant.com",
     "contactPhonePlaceholder": "+33 1 23 45 67 89",
     "selectInterval": "Sélectionnez un intervalle",
@@ -92,7 +92,7 @@
     "guestPlural": "Convives",
     "selectDateFirst": "Veuillez d'abord sélectionner une date",
     "loadingTimeSlots": "Chargement des créneaux disponibles...",
-    "restaurantClosedOnDay": "Le restaurant est fermé ce jour-là",
+    "restaurantClosedOnDay": "L'établissement est fermé ce jour-là",
     "noSlotsAvailable": "Aucun créneau disponible pour cette date",
     "slotFull": "Complet"
   },
@@ -105,8 +105,8 @@
     "time": "Heure",
     "guests": "Convives",
     "specialRequests": "Demandes Spéciales",
-    "restaurantInfo": "Informations du Restaurant :",
-    "restaurant": "Restaurant",
+    "restaurantInfo": "Informations de l'Etablissement :",
+    "restaurant": "Etablissement",
     "phone": "Téléphone",
     "email": "Email",
     "footer": "Merci d'avoir choisi YeetyBook !",
@@ -159,7 +159,7 @@
         "date": "Date",
         "time": "Heure",
         "guests": "Convives",
-        "restaurant": "Restaurant",
+        "restaurant": "Etablissement",
         "contact": "Contact"
       },
       "email": {
@@ -171,25 +171,29 @@
   "dashboard": {
     "home": {
       "title": "Tableau de Bord",
-      "subtitle": "Vue d'ensemble de la gestion du restaurant"
+      "subtitle": "Vue d'ensemble de la gestion de l'établissement"
     },
     "calendar": {
       "title": "Calendrier",
       "subtitle": "Voir et gérer les réservations par date",
       "previous": "← Précédent",
       "next": "Suivant →",
-      "today": "Aujourd'hui"
+      "today": "Aujourd'hui",
+      "visitReservationPage": "Visiter la page de réservation",
+      "share": "Partager",
+      "linkCopied": "Lien copié dans le presse-papiers !",
+      "unableToCopyLink": "Impossible de copier le lien"
     },
     "dayView": {
       "title": "Vue Journalière",
       "subtitle": "Vue détaillée pour le {date}",
-      "dayViewFor": "Vue journalière pour le restaurant :",
+      "dayViewFor": "Vue journalière pour l'établissement :",
       "date": "Date :"
     },
     "reservationDetail": {
       "title": "Détail de Réservation",
       "subtitle": "Gérer la réservation #{id}",
-      "reservationDetailFor": "Détail de réservation pour le restaurant :",
+      "reservationDetailFor": "Détail de réservation pour l'établissement :",
       "reservationId": "ID de réservation :"
     },
     "settings": {
@@ -199,12 +203,12 @@
     "billing": {
       "title": "Facturation",
       "subtitle": "Gestion des abonnements et paiements",
-      "billingFor": "Facturation pour le restaurant :",
+      "billingFor": "Facturation pour l'établissement :",
       "description": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures."
     },
-    "errorLoadingRestaurants": "Erreur lors du chargement des restaurants",
-    "noRestaurants": "Aucun Restaurant",
-    "noRestaurantsDescription": "Vous n'avez pas encore de restaurants configurés.",
+    "errorLoadingRestaurants": "Erreur lors du chargement des établissements",
+    "noRestaurants": "Aucun Etablissement",
+    "noRestaurantsDescription": "Vous n'avez pas encore d'établissements configurés.",
     "thisPageWillContain": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures.",
     "dayViewDescription": "Cette page affichera la gestion détaillée des réservations pour une date spécifique.",
     "reservationDetailDescription": "Cette page affichera des informations détaillées et des options de gestion pour une réservation spécifique."
@@ -212,7 +216,7 @@
   "auth": {
     "signIn": {
       "title": "Se Connecter",
-      "subtitle": "Accédez à votre tableau de bord restaurant",
+      "subtitle": "Accédez à votre tableau de bord établissement",
       "formTitle": "Bon retour",
       "formDescription": "Entrez vos identifiants pour accéder à votre compte",
       "email": "Email",
@@ -226,7 +230,7 @@
     },
     "signUp": {
       "title": "S'inscrire",
-      "subtitle": "Créez votre compte restaurant",
+      "subtitle": "Créez votre compte établissement",
       "formTitle": "Créer un compte",
       "formDescription": "Entrez vos informations pour créer un nouveau compte",
       "firstName": "Prénom",
@@ -249,13 +253,13 @@
   "restaurant": {
     "settings": {
       "basicInformation": "Informations de Base",
-      "restaurantName": "Nom du Restaurant",
+      "restaurantName": "Nom de l'Etablissement",
       "urlSlug": "Identifiant URL",
       "urlSlugDescription": "Ceci sera utilisé dans votre URL de réservation : yoursite.com/restaurant-slug",
       "contactEmail": "Email de Contact",
       "contactPhone": "Téléphone de Contact",
       "openingHours": "Heures d'Ouverture",
-      "openingHoursDescription": "Définissez les heures d'ouverture de votre restaurant pour chaque jour de la semaine.",
+      "openingHoursDescription": "Définissez les heures d'ouverture de votre établissement pour chaque jour de la semaine.",
       "closed": "Fermé",
       "open": "Ouvert :",
       "close": "Fermeture :",
@@ -290,22 +294,22 @@
     "timeSlots": "Créneaux : Toutes les {interval} minutes",
     "advanceBooking": "Réservation à l'avance : {min} - {max}",
     "reservationNumber": "Réservation #{id}",
-    "switchRestaurant": "Changer de restaurant (bientôt disponible)"
+    "switchRestaurant": "Changer d'établissement (bientôt disponible)"
   },
   "common": {
     "yeetybook": "YeetyBook",
     "accessForbidden": "Accès Interdit",
-    "accessForbiddenMessage": "Vous n'avez pas la permission d'accéder au tableau de bord de ce restaurant.",
+    "accessForbiddenMessage": "Vous n'avez pas la permission d'accéder au tableau de bord de cet établissement.",
     "returnToDashboard": "Retourner au Tableau de Bord",
     "unableToCancel": "Impossible d'Annuler",
-    "contactRestaurantError": "Si vous pensez qu'il s'agit d'une erreur, veuillez contacter directement le restaurant.",
+    "contactRestaurantError": "Si vous pensez qu'il s'agit d'une erreur, veuillez contacter directement l'établissement.",
     "specialRequests": "Demandes Spéciales",
     "limitedService": "Service Limité",
     "saving": "Enregistrement...",
     "saveSettings": "Enregistrer les Paramètres"
   },
   "footer": {
-    "tagline": "Simplifier les réservations de restaurant pour tous.",
+    "tagline": "Simplifier les réservations d'établissement pour tous.",
     "product": "Produit",
     "features": "Fonctionnalités",
     "pricing": "Tarifs",
@@ -349,7 +353,7 @@
     },
     "restaurant": {
       "name": {
-        "max": "Le nom du restaurant doit contenir moins de 100 caractères"
+        "max": "Le nom de l'établissement doit contenir moins de 100 caractères"
       },
       "slug": {
         "max": "L'identifiant URL doit contenir moins de 50 caractères",
@@ -371,7 +375,7 @@
         "timesRequired": "Les heures d'ouverture et de fermeture sont requises quand le restaurant n'est pas fermé",
         "timeOrder": "L'heure d'ouverture doit être antérieure à l'heure de fermeture",
         "timeFormat": "L'heure doit être au format HH:MM",
-        "periodsRequired": "Au moins une période de service est requise quand le restaurant n'est pas fermé",
+        "periodsRequired": "Au moins une période de service est requise quand l'établissement n'est pas fermé",
         "overlappingPeriods": "Les périodes de service ne peuvent pas se chevaucher"
       }
     }

@@ -26,6 +26,7 @@ export const DashboardLayout = ({
           isOpen={sidebarOpen}
           onToggle={() => setSidebarOpen(!sidebarOpen)}
           currentRestaurantId={currentRestaurant?.id.toString() || null}
+          currentRestaurant={currentRestaurant}
         />
       </div>
 
