@@ -8,7 +8,7 @@ import { getMessages } from 'next-intl/server'
 import { ClerkProvider } from '@clerk/nextjs'
 import { frFR } from '@clerk/localizations'
 import { Toaster } from '@/components/ui/sonner'
-
+import { Analytics } from '@vercel/analytics/next'
 const bricolageGrotesque = Bricolage_Grotesque({
   variable: '--font-bricolage-grotesque',
   subsets: ['latin'],
@@ -43,6 +43,7 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider localization={frFR}>
+      <Analytics />
       <html lang="en">
         <body
           className={`${bricolageGrotesque.variable} antialiased min-h-screen flex flex-col`}
