@@ -1,4 +1,4 @@
-import { OpeningHours, DaysOfWeek } from '@/lib/types/restaurant'
+import { OpeningHours, DaysOfWeek, ServicePeriod } from '@/lib/types/restaurant'
 
 export interface TimeSlot {
   time: string // "HH:MM" format
@@ -6,49 +6,23 @@ export interface TimeSlot {
 }
 
 /**
- * Generates time slots for a specific day based on restaurant configuration
- * Filters out slots that are:
- * - Before opening time
- * - After closing time
- * - Before current time + lead time minimum
+ * Generates time slots for a single service period
  */
-export function generateTimeSlotsForDay(
+function generateSlotsForPeriod(
   date: Date,
-  openingHours: OpeningHours,
+  period: ServicePeriod,
   slotInterval: number,
-  leadTimeMin: number
+  minBookableTime: Date
 ): TimeSlot[] {
-  // Get day of week
-  const dayNames: DaysOfWeek[] = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-  ]
-  const dayOfWeek = dayNames[date.getDay()]
-  const schedule = openingHours[dayOfWeek]
-
-  // If restaurant is closed, return empty array
-  if (schedule.closed || !schedule.open || !schedule.close) {
-    return []
-  }
+  const slots: TimeSlot[] = []
 
   // Parse opening and closing times
-  const [openHour, openMinute] = schedule.open.split(':').map(Number)
-  const [closeHour, closeMinute] = schedule.close.split(':').map(Number)
+  const [openHour, openMinute] = period.open.split(':').map(Number)
+  const [closeHour, closeMinute] = period.close.split(':').map(Number)
 
   // Handle midnight closing time (00:00) by treating it as hour 24
   const effectiveCloseHour = closeHour === 0 ? 24 : closeHour
 
-  // Calculate minimum bookable time (current time + lead time in hours)
-  const now = new Date()
-  const minBookableTime = new Date(now.getTime() + leadTimeMin * 60 * 60 * 1000)
-
-  // Generate slots
-  const slots: TimeSlot[] = []
   let currentHour = openHour
   let currentMinute = openMinute
 
@@ -81,6 +55,60 @@ export function generateTimeSlotsForDay(
 }
 
 /**
+ * Generates time slots for a specific day based on restaurant configuration
+ * Supports multiple service periods per day (e.g., lunch and dinner)
+ * Filters out slots that are:
+ * - Before opening time
+ * - After closing time
+ * - Before current time + lead time minimum
+ */
+export function generateTimeSlotsForDay(
+  date: Date,
+  openingHours: OpeningHours,
+  slotInterval: number,
+  leadTimeMin: number
+): TimeSlot[] {
+  // Get day of week
+  const dayNames: DaysOfWeek[] = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ]
+  const dayOfWeek = dayNames[date.getDay()]
+  const schedule = openingHours[dayOfWeek]
+
+  // If restaurant is closed or has no periods, return empty array
+  if (schedule.closed || schedule.periods.length === 0) {
+    return []
+  }
+
+  // Calculate minimum bookable time (current time + lead time in hours)
+  const now = new Date()
+  const minBookableTime = new Date(now.getTime() + leadTimeMin * 60 * 60 * 1000)
+
+  // Generate slots for all service periods
+  const allSlots: TimeSlot[] = []
+  for (const period of schedule.periods) {
+    const periodSlots = generateSlotsForPeriod(
+      date,
+      period,
+      slotInterval,
+      minBookableTime
+    )
+    allSlots.push(...periodSlots)
+  }
+
+  // Sort slots chronologically
+  allSlots.sort((a, b) => a.datetime.getTime() - b.datetime.getTime())
+
+  return allSlots
+}
+
+/**
  * Gets the day of week name from a date
  */
 export function getDayOfWeek(date: Date): DaysOfWeek {
@@ -105,5 +133,5 @@ export function isRestaurantOpenOnDay(
 ): boolean {
   const dayOfWeek = getDayOfWeek(date)
   const schedule = openingHours[dayOfWeek]
-  return !schedule.closed && !!schedule.open && !!schedule.close
+  return !schedule.closed && schedule.periods.length > 0
 }

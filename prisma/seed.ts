@@ -134,23 +134,23 @@ function generateReservationTime(
   const dayOfWeek = daysOfWeek[date.getDay()]
   const daySchedule = openingHours[dayOfWeek]
 
-  if (daySchedule.closed) {
+  if (daySchedule.closed || daySchedule.periods.length === 0) {
     return null
   }
 
-  const [openHour, openMinute] = daySchedule.open?.split(':').map(Number) ?? [
-    0, 0,
-  ]
-  const [closeHour, closeMinute] = daySchedule.close
-    ?.split(':')
-    .map(Number) ?? [0, 0]
+  // Pick a random period from available periods
+  const randomPeriod =
+    daySchedule.periods[Math.floor(Math.random() * daySchedule.periods.length)]
 
-  // Calculate available time slots
+  const [openHour, openMinute] = randomPeriod.open.split(':').map(Number)
+  const [closeHour, closeMinute] = randomPeriod.close.split(':').map(Number)
+
+  // Calculate available time slots within this period
   const openTime = openHour * 60 + openMinute
   const closeTime =
     closeHour * 60 + closeMinute + (closeHour === 0 ? 24 * 60 : 0) // Handle midnight
 
-  // Generate random slot within opening hours
+  // Generate random slot within this service period
   const availableSlots = Math.floor((closeTime - openTime) / slotInterval)
   if (availableSlots <= 0) return null
 
@@ -284,13 +284,37 @@ async function main() {
         emailContact: 'reservations@bellavista.com',
         phoneContact: '+1-555-0123',
         openingHours: {
-          monday: { open: '17:00', close: '22:00', closed: false },
-          tuesday: { open: '17:00', close: '22:00', closed: false },
-          wednesday: { open: '17:00', close: '22:00', closed: false },
-          thursday: { open: '17:00', close: '22:00', closed: false },
-          friday: { open: '17:00', close: '23:00', closed: false },
-          saturday: { open: '12:00', close: '23:00', closed: false },
-          sunday: { open: '12:00', close: '21:00', closed: false },
+          monday: {
+            closed: false,
+            periods: [{ open: '17:00', close: '22:00' }],
+          },
+          tuesday: {
+            closed: false,
+            periods: [{ open: '17:00', close: '22:00' }],
+          },
+          wednesday: {
+            closed: false,
+            periods: [{ open: '17:00', close: '22:00' }],
+          },
+          thursday: {
+            closed: false,
+            periods: [{ open: '17:00', close: '22:00' }],
+          },
+          friday: {
+            closed: false,
+            periods: [{ open: '17:00', close: '23:00' }],
+          },
+          saturday: {
+            closed: false,
+            periods: [
+              { open: '12:00', close: '14:30' },
+              { open: '18:00', close: '23:00' },
+            ],
+          },
+          sunday: {
+            closed: false,
+            periods: [{ open: '12:00', close: '21:00' }],
+          },
         },
         slotInterval: 30,
         minGuestsPerReservation: 1,
@@ -306,13 +330,46 @@ async function main() {
         emailContact: 'contact@lepetitbistro.fr',
         phoneContact: '+33-1-42-86-87-88',
         openingHours: {
-          monday: { closed: true },
-          tuesday: { open: '12:00', close: '14:30', closed: false },
-          wednesday: { open: '12:00', close: '14:30', closed: false },
-          thursday: { open: '12:00', close: '14:30', closed: false },
-          friday: { open: '12:00', close: '14:30', closed: false },
-          saturday: { open: '12:00', close: '22:00', closed: false },
-          sunday: { open: '12:00', close: '21:00', closed: false },
+          monday: { closed: true, periods: [] },
+          tuesday: {
+            closed: false,
+            periods: [
+              { open: '12:00', close: '14:30' },
+              { open: '19:00', close: '22:30' },
+            ],
+          },
+          wednesday: {
+            closed: false,
+            periods: [
+              { open: '12:00', close: '14:30' },
+              { open: '19:00', close: '22:30' },
+            ],
+          },
+          thursday: {
+            closed: false,
+            periods: [
+              { open: '12:00', close: '14:30' },
+              { open: '19:00', close: '22:30' },
+            ],
+          },
+          friday: {
+            closed: false,
+            periods: [
+              { open: '12:00', close: '14:30' },
+              { open: '19:00', close: '23:00' },
+            ],
+          },
+          saturday: {
+            closed: false,
+            periods: [
+              { open: '12:00', close: '14:30' },
+              { open: '18:30', close: '23:00' },
+            ],
+          },
+          sunday: {
+            closed: false,
+            periods: [{ open: '12:00', close: '21:00' }],
+          },
         },
         slotInterval: 60,
         minGuestsPerReservation: 2,
@@ -328,13 +385,31 @@ async function main() {
         emailContact: 'info@sakurasushi.jp',
         phoneContact: '+81-3-1234-5678',
         openingHours: {
-          monday: { open: '18:00', close: '23:00', closed: false },
-          tuesday: { open: '18:00', close: '23:00', closed: false },
-          wednesday: { open: '18:00', close: '23:00', closed: false },
-          thursday: { open: '18:00', close: '23:00', closed: false },
-          friday: { open: '18:00', close: '00:00', closed: false },
-          saturday: { open: '17:00', close: '00:00', closed: false },
-          sunday: { closed: true },
+          monday: {
+            closed: false,
+            periods: [{ open: '18:00', close: '23:00' }],
+          },
+          tuesday: {
+            closed: false,
+            periods: [{ open: '18:00', close: '23:00' }],
+          },
+          wednesday: {
+            closed: false,
+            periods: [{ open: '18:00', close: '23:00' }],
+          },
+          thursday: {
+            closed: false,
+            periods: [{ open: '18:00', close: '23:00' }],
+          },
+          friday: {
+            closed: false,
+            periods: [{ open: '18:00', close: '00:00' }],
+          },
+          saturday: {
+            closed: false,
+            periods: [{ open: '17:00', close: '00:00' }],
+          },
+          sunday: { closed: true, periods: [] },
         },
         slotInterval: 45,
         minGuestsPerReservation: 1,
@@ -350,13 +425,28 @@ async function main() {
         emailContact: 'bookings@mountaingrill.com',
         phoneContact: null, // Testing optional phone contact
         openingHours: {
-          monday: { closed: true },
-          tuesday: { closed: true },
-          wednesday: { open: '16:00', close: '21:00', closed: false },
-          thursday: { open: '16:00', close: '21:00', closed: false },
-          friday: { open: '16:00', close: '22:00', closed: false },
-          saturday: { open: '12:00', close: '22:00', closed: false },
-          sunday: { open: '12:00', close: '20:00', closed: false },
+          monday: { closed: true, periods: [] },
+          tuesday: { closed: true, periods: [] },
+          wednesday: {
+            closed: false,
+            periods: [{ open: '16:00', close: '21:00' }],
+          },
+          thursday: {
+            closed: false,
+            periods: [{ open: '16:00', close: '21:00' }],
+          },
+          friday: {
+            closed: false,
+            periods: [{ open: '16:00', close: '22:00' }],
+          },
+          saturday: {
+            closed: false,
+            periods: [{ open: '12:00', close: '22:00' }],
+          },
+          sunday: {
+            closed: false,
+            periods: [{ open: '12:00', close: '20:00' }],
+          },
         },
         slotInterval: 90,
         minGuestsPerReservation: 2,

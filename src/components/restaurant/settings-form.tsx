@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { Plus, Trash2 } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -209,86 +210,21 @@ export function RestaurantSettingsForm({
               </p>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-6">
               {DAYS_OF_WEEK.map((day) => {
                 const dayKey =
                   day.key as keyof RestaurantSettingsFormData['openingHours']
                 const isClosed = form.watch(`openingHours.${dayKey}.closed`)
 
                 return (
-                  <div key={day.key} className="flex items-center gap-4 h-9">
-                    <div className="w-24">
-                      <Label className="font-medium">{day.label}</Label>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <FormField
-                        control={form.control}
-                        name={`openingHours.${dayKey}.closed`}
-                        render={({ field }) => (
-                          <div className="flex items-center space-x-2">
-                            <Checkbox
-                              id={`${day.key}-closed`}
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                            <Label
-                              htmlFor={`${day.key}-closed`}
-                              className="text-sm"
-                            >
-                              {t('closed')}
-                            </Label>
-                          </div>
-                        )}
-                      />
-                    </div>
-
-                    {!isClosed && (
-                      <>
-                        <div className="flex items-center gap-2">
-                          <Label
-                            htmlFor={`${day.key}-open`}
-                            className="text-sm"
-                          >
-                            {t('open')}
-                          </Label>
-                          <FormField
-                            control={form.control}
-                            name={`openingHours.${dayKey}.open`}
-                            render={({ field }) => (
-                              <Input
-                                id={`${day.key}-open`}
-                                type="time"
-                                className="w-32"
-                                {...field}
-                              />
-                            )}
-                          />
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <Label
-                            htmlFor={`${day.key}-close`}
-                            className="text-sm"
-                          >
-                            {t('close')}
-                          </Label>
-                          <FormField
-                            control={form.control}
-                            name={`openingHours.${dayKey}.close`}
-                            render={({ field }) => (
-                              <Input
-                                id={`${day.key}-close`}
-                                type="time"
-                                className="w-32"
-                                {...field}
-                              />
-                            )}
-                          />
-                        </div>
-                      </>
-                    )}
-                  </div>
+                  <DayScheduleField
+                    key={day.key}
+                    dayKey={dayKey}
+                    dayLabel={day.label}
+                    form={form}
+                    isClosed={isClosed}
+                    t={t}
+                  />
                 )
               })}
             </div>
@@ -471,5 +407,114 @@ export function RestaurantSettingsForm({
         </div>
       </form>
     </Form>
+  )
+}
+
+// Separate component for each day's schedule to handle field array
+function DayScheduleField({
+  dayKey,
+  dayLabel,
+  form,
+  isClosed,
+  t,
+}: {
+  dayKey: keyof RestaurantSettingsFormData['openingHours']
+  dayLabel: string
+  form: ReturnType<typeof useForm<RestaurantSettingsFormData>>
+  isClosed: boolean
+  t: ReturnType<typeof useTranslations>
+}) {
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: `openingHours.${dayKey}.periods`,
+  })
+
+  const handleClosedChange = (checked: boolean) => {
+    form.setValue(`openingHours.${dayKey}.closed`, checked)
+    if (checked) {
+      // Clear all periods when marking as closed
+      form.setValue(`openingHours.${dayKey}.periods`, [])
+    }
+  }
+
+  const handleAddPeriod = () => {
+    append({ open: '09:00', close: '17:00' })
+  }
+
+  return (
+    <div className="space-y-3 border-b border-border-light pb-4 last:border-0">
+      <div className="flex items-center justify-between">
+        <Label className="font-medium text-base">{dayLabel}</Label>
+        <div className="flex items-center gap-2">
+          <FormField
+            control={form.control}
+            name={`openingHours.${dayKey}.closed`}
+            render={({ field }) => (
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id={`${dayKey}-closed`}
+                  checked={field.value}
+                  onCheckedChange={handleClosedChange}
+                />
+                <Label htmlFor={`${dayKey}-closed`} className="text-sm">
+                  {t('closed')}
+                </Label>
+              </div>
+            )}
+          />
+        </div>
+      </div>
+
+      {!isClosed && (
+        <div className="space-y-2 pl-4">
+          {fields.map((field, index) => (
+            <div key={field.id} className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <Label className="text-sm w-10">{t('open')}</Label>
+                <FormField
+                  control={form.control}
+                  name={`openingHours.${dayKey}.periods.${index}.open`}
+                  render={({ field }) => (
+                    <Input type="time" className="w-32" {...field} />
+                  )}
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Label className="text-sm w-10">{t('close')}</Label>
+                <FormField
+                  control={form.control}
+                  name={`openingHours.${dayKey}.periods.${index}.close`}
+                  render={({ field }) => (
+                    <Input type="time" className="w-32" {...field} />
+                  )}
+                />
+              </div>
+
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => remove(index)}
+                className="h-8 w-8 p-0"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
+
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handleAddPeriod}
+            className="mt-2"
+          >
+            <Plus className="h-4 w-4 mr-1" />
+            {t('addPeriod') || 'Add Period'}
+          </Button>
+        </div>
+      )}
+    </div>
   )
 }

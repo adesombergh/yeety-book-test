@@ -1,4 +1,4 @@
-import { OpeningHours } from '@/lib/types/restaurant'
+import { OpeningHours, ServicePeriod } from '@/lib/types/restaurant'
 
 const DAYS_ORDER = [
   'monday',
@@ -20,18 +20,28 @@ const DAY_NAMES = {
 } as const
 
 export function formatOpeningHours(openingHours: OpeningHours): string[] {
+  if (!openingHours) {
+    return []
+  }
+
   const formatted: string[] = []
 
   for (const day of DAYS_ORDER) {
     const schedule = openingHours[day]
     const dayName = DAY_NAMES[day]
 
-    if (schedule.closed) {
+    if (
+      !schedule ||
+      schedule.closed ||
+      !schedule.periods ||
+      schedule.periods.length === 0
+    ) {
       formatted.push(`${dayName}: Closed`)
-    } else if (schedule.open && schedule.close) {
-      formatted.push(`${dayName}: ${schedule.open} - ${schedule.close}`)
     } else {
-      formatted.push(`${dayName}: Hours not set`)
+      const periodsText = schedule.periods
+        .map((period) => `${period.open} - ${period.close}`)
+        .join(', ')
+      formatted.push(`${dayName}: ${periodsText}`)
     }
   }
 
@@ -42,10 +52,14 @@ export function formatTimeRange(hours: number): string {
   return hours === 1 ? '1 hour' : `${hours} hours`
 }
 
-export function isRestaurantOpen(
+export function getServicePeriodsForDate(
   openingHours: OpeningHours,
-  date: Date = new Date()
-): boolean {
+  date: Date
+): ServicePeriod[] {
+  if (!openingHours) {
+    return []
+  }
+
   const dayNames = [
     'sunday',
     'monday',
@@ -55,15 +69,32 @@ export function isRestaurantOpen(
     'friday',
     'saturday',
   ] as const
-  const currentDay = dayNames[date.getDay()]
-  const schedule = openingHours[currentDay]
+  const dayOfWeek = dayNames[date.getDay()]
+  const schedule = openingHours[dayOfWeek]
 
-  if (schedule.closed || !schedule.open || !schedule.close) {
+  if (!schedule || schedule.closed) {
+    return []
+  }
+
+  return schedule.periods || []
+}
+
+export function isRestaurantOpen(
+  openingHours: OpeningHours,
+  date: Date = new Date()
+): boolean {
+  const periods = getServicePeriodsForDate(openingHours, date)
+
+  if (periods.length === 0) {
     return false
   }
 
   const currentTime = date.toTimeString().slice(0, 5) // HH:MM format
-  return currentTime >= schedule.open && currentTime <= schedule.close
+
+  // Check if current time falls within any service period
+  return periods.some((period) => {
+    return currentTime >= period.open && currentTime <= period.close
+  })
 }
 
 export function isRestaurantClosedOnDate(
@@ -82,5 +113,5 @@ export function isRestaurantClosedOnDate(
   const dayOfWeek = dayNames[date.getDay()]
   const schedule = openingHours[dayOfWeek]
 
-  return schedule.closed || !schedule.open || !schedule.close
+  return schedule.closed || schedule.periods.length === 0
 }

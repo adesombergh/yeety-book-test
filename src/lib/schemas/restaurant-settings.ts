@@ -1,40 +1,85 @@
 import { z } from 'zod'
 import { getTranslations } from 'next-intl/server'
 
-// Function to create localized day schedule schema
-async function createDayScheduleSchema(
+// Helper function to check if two time periods overlap
+function periodsOverlap(
+  period1: { open: string; close: string },
+  period2: { open: string; close: string }
+): boolean {
+  const start1 = new Date(`1970-01-01T${period1.open}:00`)
+  const end1 = new Date(`1970-01-01T${period1.close}:00`)
+  const start2 = new Date(`1970-01-01T${period2.open}:00`)
+  const end2 = new Date(`1970-01-01T${period2.close}:00`)
+
+  return start1 < end2 && start2 < end1
+}
+
+// Function to create localized service period schema
+async function createServicePeriodSchema(
   t: Awaited<ReturnType<typeof getTranslations>>
 ) {
   return z
     .object({
-      closed: z.boolean(),
-      open: z.string().optional(),
-      close: z.string().optional(),
+      open: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/, {
+        message: t('restaurant.openingHours.timeFormat'),
+      }),
+      close: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/, {
+        message: t('restaurant.openingHours.timeFormat'),
+      }),
+      label: z.string().optional(),
     })
     .refine(
       (data) => {
-        // If not closed, both open and close times must be provided
-        if (!data.closed) {
-          return data.open && data.close
-        }
-        return true
+        const openTime = new Date(`1970-01-01T${data.open}:00`)
+        const closeTime = new Date(`1970-01-01T${data.close}:00`)
+        return openTime < closeTime
       },
       {
-        message: t('restaurant.openingHours.timesRequired'),
+        message: t('restaurant.openingHours.timeOrder'),
+      }
+    )
+}
+
+// Function to create localized day schedule schema
+async function createDayScheduleSchema(
+  t: Awaited<ReturnType<typeof getTranslations>>
+) {
+  const servicePeriodSchema = await createServicePeriodSchema(t)
+
+  return z
+    .object({
+      closed: z.boolean(),
+      periods: z.array(servicePeriodSchema),
+    })
+    .refine(
+      (data) => {
+        // If closed, periods must be empty
+        if (data.closed) {
+          return data.periods.length === 0
+        }
+        // If not closed, must have at least one period
+        return data.periods.length > 0
+      },
+      {
+        message: t('restaurant.openingHours.periodsRequired'),
       }
     )
     .refine(
       (data) => {
-        // If not closed, open time must be before close time
-        if (!data.closed && data.open && data.close) {
-          const openTime = new Date(`1970-01-01T${data.open}:00`)
-          const closeTime = new Date(`1970-01-01T${data.close}:00`)
-          return openTime < closeTime
+        // Check for overlapping periods
+        if (data.periods.length < 2) return true
+
+        for (let i = 0; i < data.periods.length; i++) {
+          for (let j = i + 1; j < data.periods.length; j++) {
+            if (periodsOverlap(data.periods[i], data.periods[j])) {
+              return false
+            }
+          }
         }
         return true
       },
       {
-        message: t('restaurant.openingHours.timeOrder'),
+        message: t('restaurant.openingHours.overlappingPeriods'),
       }
     )
 }
@@ -123,37 +168,63 @@ export async function createRestaurantSettingsSchema() {
     )
 }
 
+// Default service period schema for client-side use
+const defaultServicePeriodSchema = z
+  .object({
+    open: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/, {
+      message: 'Time must be in HH:MM format',
+    }),
+    close: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/, {
+      message: 'Time must be in HH:MM format',
+    }),
+    label: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      const openTime = new Date(`1970-01-01T${data.open}:00`)
+      const closeTime = new Date(`1970-01-01T${data.close}:00`)
+      return openTime < closeTime
+    },
+    {
+      message: 'Open time must be before close time',
+    }
+  )
+
 // Create a default English schema for client-side use
 const defaultDayScheduleSchema = z
   .object({
     closed: z.boolean(),
-    open: z.string().optional(),
-    close: z.string().optional(),
+    periods: z.array(defaultServicePeriodSchema),
   })
   .refine(
     (data) => {
-      // If not closed, both open and close times must be provided
-      if (!data.closed) {
-        return data.open && data.close
+      // If closed, periods must be empty
+      if (data.closed) {
+        return data.periods.length === 0
       }
-      return true
+      // If not closed, must have at least one period
+      return data.periods.length > 0
     },
     {
-      message: 'Open and close times are required when not closed',
+      message: 'At least one service period is required when not closed',
     }
   )
   .refine(
     (data) => {
-      // If not closed, open time must be before close time
-      if (!data.closed && data.open && data.close) {
-        const openTime = new Date(`1970-01-01T${data.open}:00`)
-        const closeTime = new Date(`1970-01-01T${data.close}:00`)
-        return openTime < closeTime
+      // Check for overlapping periods
+      if (data.periods.length < 2) return true
+
+      for (let i = 0; i < data.periods.length; i++) {
+        for (let j = i + 1; j < data.periods.length; j++) {
+          if (periodsOverlap(data.periods[i], data.periods[j])) {
+            return false
+          }
+        }
       }
       return true
     },
     {
-      message: 'Open time must be before close time',
+      message: 'Service periods cannot overlap',
     }
   )
 

@@ -20,10 +20,15 @@ export const daysOfWeek = [
 ] satisfies DaysOfWeek[]
 export type OpeningHours = Record<DaysOfWeek, DaySchedule>
 
+export interface ServicePeriod {
+  open: string // "11:30"
+  close: string // "14:00"
+  label?: string // optional, e.g. "lunch" or "dinner"
+}
+
 export interface DaySchedule {
-  open?: string
-  close?: string
   closed: boolean
+  periods: ServicePeriod[]
 }
 
 // Typed restaurant with proper opening hours
