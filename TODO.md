@@ -1,3 +1,0 @@
-TODO:
-
-- Add restaurant logo.

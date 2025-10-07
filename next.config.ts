@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
   experimental: {
     authInterrupts: true,
   },
+  images: {
+    remotePatterns: [
+      new URL(
+        'https://ckwbwnaqunbpssdfycvi.supabase.co/storage/v1/object/public/YeetyBookPublic/**'
+      ),
+    ],
+  },
 }
 
 export default withNextIntl(nextConfig)

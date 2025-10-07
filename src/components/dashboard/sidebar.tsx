@@ -69,6 +69,8 @@ export function DashboardSidebar({
                   src={currentRestaurant.logoUrl}
                   alt={`${currentRestaurant.name} logo`}
                   className="h-12 w-12 rounded-lg object-cover flex-shrink-0"
+                  width={48}
+                  height={48}
                 />
               ) : (
                 <div className="h-12 w-12 rounded-lg bg-accent-pink/20 flex items-center justify-center flex-shrink-0">

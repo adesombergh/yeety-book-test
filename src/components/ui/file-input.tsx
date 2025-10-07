@@ -74,6 +74,8 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               src={previewSrc}
               alt="Preview"
               className="h-32 w-32 rounded-lg object-cover border"
+              width={128}
+              height={128}
             />
             <Button
               type="button"

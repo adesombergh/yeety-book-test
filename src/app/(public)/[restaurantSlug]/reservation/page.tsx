@@ -73,6 +73,8 @@ export default async function ReservationPage({
               src={restaurant.logoUrl}
               alt={`${restaurant.name} logo`}
               className="h-16 w-16 rounded-lg object-cover"
+              width={64}
+              height={64}
             />
           ) : (
             <div className="h-16 w-16 rounded-lg bg-accent-pink/20 flex items-center justify-center">
