@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { isRestaurantOpen } from '@/lib/utils/opening-hours'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 
 interface DashboardRestaurantCardProps {
   restaurant: RestaurantWithTypedHours
@@ -20,9 +21,24 @@ export function DashboardRestaurantCard({
     <Link href={`/dashboard/${restaurant.id}/calendar`} className="w-full">
       <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
         <CardHeader>
-          <CardTitle className="text-xl text-text-dark">
-            {restaurant.name}
-          </CardTitle>
+          <div className="flex items-center gap-3 mb-2">
+            {restaurant.logoUrl ? (
+              <Image
+                src={restaurant.logoUrl}
+                alt={`${restaurant.name} logo`}
+                className="h-16 w-16 rounded-lg object-cover flex-shrink-0"
+              />
+            ) : (
+              <div className="h-16 w-16 rounded-lg bg-accent-pink/20 flex items-center justify-center flex-shrink-0">
+                <span className="text-2xl font-semibold text-primary">
+                  {restaurant.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
+            <CardTitle className="text-xl text-text-dark">
+              {restaurant.name}
+            </CardTitle>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">

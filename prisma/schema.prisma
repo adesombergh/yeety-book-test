@@ -29,6 +29,7 @@ model Restaurant {
   id                          Int       @id @default(autoincrement())
   slug                        String    @unique
   name                        String
+  logoUrl                     String?   @map("logo_url")
   emailContact                String    @map("email_contact")
   phoneContact                String?   @map("phone_contact")
   openingHours                Json      @map("opening_hours")

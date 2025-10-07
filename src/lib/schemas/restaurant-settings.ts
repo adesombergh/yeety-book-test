@@ -254,6 +254,28 @@ export const restaurantSettingsSchema = z
         /^[a-z0-9-]+$/,
         'URL slug can only contain lowercase letters, numbers, and hyphens'
       ),
+    logo: z
+      .instanceof(File)
+      .refine((file) => file.size <= 10 * 1024 * 1024, {
+        message: 'Logo must be less than 10MB',
+      })
+      .refine(
+        (file) => {
+          const acceptedTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/webp',
+            'image/gif',
+          ]
+          return acceptedTypes.includes(file.type)
+        },
+        {
+          message: 'Logo must be an image (JPEG, PNG, WebP, or GIF)',
+        }
+      )
+      .optional()
+      .nullable(),
+    removeLogo: z.boolean().optional(),
     emailContact: z.string().email('Please enter a valid email address'),
     phoneContact: z.string().optional(),
     openingHours: defaultOpeningHoursSchema,

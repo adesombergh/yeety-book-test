@@ -35,6 +35,7 @@ export interface DaySchedule {
 export interface RestaurantWithTypedHours
   extends Omit<Restaurant, 'openingHours'> {
   openingHours: OpeningHours
+  logoUrl: string | null
 }
 
 // Query result wrapper for error handling

@@ -9,6 +9,7 @@ import {
 } from '@/lib/utils/opening-hours'
 import { ReservationForm } from '@/components/reservation/form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import Image from 'next/image'
 
 interface ReservationPageProps {
   params: Promise<{
@@ -66,9 +67,24 @@ export default async function ReservationPage({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Restaurant Header - Full Width */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-text-dark mb-2">
-          {restaurant.name}
-        </h1>
+        <div className="flex items-center justify-center gap-4 mb-2">
+          {restaurant.logoUrl ? (
+            <Image
+              src={restaurant.logoUrl}
+              alt={`${restaurant.name} logo`}
+              className="h-16 w-16 rounded-lg object-cover"
+            />
+          ) : (
+            <div className="h-16 w-16 rounded-lg bg-accent-pink/20 flex items-center justify-center">
+              <span className="text-2xl font-semibold text-primary">
+                {restaurant.name.charAt(0).toUpperCase()}
+              </span>
+            </div>
+          )}
+          <h1 className="text-3xl font-bold text-text-dark">
+            {restaurant.name}
+          </h1>
+        </div>
         <p className="text-text-secondary">
           {tUi('makeReservation', { restaurantName: restaurant.name })}
         </p>

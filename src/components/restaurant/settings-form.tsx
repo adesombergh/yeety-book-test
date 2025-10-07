@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { FileInput } from '@/components/ui/file-input'
 import {
   Select,
   SelectContent,
@@ -68,6 +69,8 @@ export function RestaurantSettingsForm({
     defaultValues: {
       name: initialData.name,
       slug: initialData.slug,
+      logo: null,
+      removeLogo: false,
       emailContact: initialData.emailContact,
       phoneContact: initialData.phoneContact || '',
       openingHours: initialData.openingHours,
@@ -84,12 +87,50 @@ export function RestaurantSettingsForm({
     setIsSaving(true)
 
     try {
+      // Create FormData to handle file upload
+      const formData = new FormData()
+
+      // Append all form fields
+      formData.append('name', data.name)
+      formData.append('slug', data.slug)
+      formData.append('emailContact', data.emailContact)
+      formData.append('phoneContact', data.phoneContact || '')
+      formData.append('openingHours', JSON.stringify(data.openingHours))
+      formData.append('slotInterval', data.slotInterval)
+      formData.append(
+        'minGuestsPerReservation',
+        data.minGuestsPerReservation.toString()
+      )
+      formData.append(
+        'maxGuestsPerReservation',
+        data.maxGuestsPerReservation.toString()
+      )
+      formData.append(
+        'maxReservationsPerSlot',
+        data.maxReservationsPerSlot.toString()
+      )
+      formData.append(
+        'reservationLeadTimeMinHours',
+        data.reservationLeadTimeMinHours.toString()
+      )
+      formData.append(
+        'reservationLeadTimeMaxHours',
+        data.reservationLeadTimeMaxHours.toString()
+      )
+
+      // Append logo file if present
+      if (data.logo) {
+        formData.append('logo', data.logo)
+      }
+
+      // Append removeLogo flag
+      if (data.removeLogo) {
+        formData.append('removeLogo', 'true')
+      }
+
       const response = await fetch(`/api/restaurants/${restaurantId}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: formData, // Don't set Content-Type, browser will set it with boundary
       })
 
       const result = await response.json()
@@ -99,6 +140,9 @@ export function RestaurantSettingsForm({
       }
 
       toast.success('Settings saved successfully!')
+
+      // Reload the page to show updated logo
+      window.location.reload()
     } catch (error) {
       console.error('Error saving settings:', error)
       toast.error(
@@ -152,6 +196,37 @@ export function RestaurantSettingsForm({
                       />
                     </FormControl>
                     <FormDescription>{t('urlSlugDescription')}</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
+              <FormField
+                control={form.control}
+                name="logo"
+                render={({ field: { onChange, ...fieldProps } }) => (
+                  <FormItem>
+                    <FormLabel>{t('restaurantLogo')}</FormLabel>
+                    <FormControl>
+                      <FileInput
+                        {...fieldProps}
+                        accept="image/*"
+                        previewUrl={initialData.logoUrl}
+                        onValueChange={(file) => {
+                          onChange(file)
+                          if (file === null && initialData.logoUrl) {
+                            form.setValue('removeLogo', true)
+                          } else {
+                            form.setValue('removeLogo', false)
+                          }
+                        }}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      {t('logoUploadDescription')}
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

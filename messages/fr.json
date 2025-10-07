@@ -254,6 +254,8 @@
     "settings": {
       "basicInformation": "Informations de Base",
       "restaurantName": "Nom de l'Etablissement",
+      "restaurantLogo": "Logo de l'Etablissement",
+      "logoUploadDescription": "Téléchargez le logo de votre établissement (max 10 Mo). Formats acceptés : JPEG, PNG, WebP, GIF.",
       "urlSlug": "Identifiant URL",
       "urlSlugDescription": "Ceci sera utilisé dans votre URL de réservation : yoursite.com/restaurant-slug",
       "contactEmail": "Email de Contact",

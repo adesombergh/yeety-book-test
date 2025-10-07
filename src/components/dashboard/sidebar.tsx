@@ -5,6 +5,7 @@ import { Calendar, CreditCard, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Restaurant } from '@prisma/client'
+import Image from 'next/image'
 
 interface DashboardSidebarProps {
   isOpen?: boolean
@@ -61,10 +62,25 @@ export function DashboardSidebar({
       >
         {/* Restaurant Name Header */}
         {currentRestaurant && (
-          <div className="px-7 pt-8">
-            <h2 className="text-lg font-semibold text-text-dark truncate">
-              {currentRestaurant.name}
-            </h2>
+          <div className="px-7 pt-8 pb-4">
+            <div className="flex items-center gap-3">
+              {currentRestaurant.logoUrl ? (
+                <Image
+                  src={currentRestaurant.logoUrl}
+                  alt={`${currentRestaurant.name} logo`}
+                  className="h-12 w-12 rounded-lg object-cover flex-shrink-0"
+                />
+              ) : (
+                <div className="h-12 w-12 rounded-lg bg-accent-pink/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-lg font-semibold text-primary">
+                    {currentRestaurant.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              )}
+              <h2 className="text-lg font-semibold text-text-dark truncate">
+                {currentRestaurant.name}
+              </h2>
+            </div>
           </div>
         )}
 
