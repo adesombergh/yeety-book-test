@@ -14,7 +14,7 @@ export interface ReservationCancelData {
   restaurant: {
     name: string
     slug: string
-    emailContact: string
+    emailContact: string | null
   }
 }
 

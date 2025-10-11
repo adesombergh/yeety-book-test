@@ -16,7 +16,7 @@ interface ReservationConfirmationEmailProps {
   restaurant: {
     name: string
     slug: string
-    emailContact: string
+    emailContact: string | null
     phoneContact?: string | null
   }
   locale?: 'en' | 'fr'
@@ -184,12 +184,14 @@ export function ReservationConfirmationEmail({
                               <td style={labelStyle}>{t.name}:</td>
                               <td style={valueStyle}>{restaurant.name}</td>
                             </tr>
-                            <tr>
-                              <td style={labelStyle}>{t.email}:</td>
-                              <td style={valueStyle}>
-                                {restaurant.emailContact}
-                              </td>
-                            </tr>
+                            {restaurant.emailContact && (
+                              <tr>
+                                <td style={labelStyle}>{t.email}:</td>
+                                <td style={valueStyle}>
+                                  {restaurant.emailContact}
+                                </td>
+                              </tr>
+                            )}
                             {restaurant.phoneContact && (
                               <tr>
                                 <td style={labelStyle}>{t.phone}:</td>

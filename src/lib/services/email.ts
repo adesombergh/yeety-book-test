@@ -77,7 +77,7 @@ export class EmailService {
           restaurant: {
             name: restaurant.name,
             slug: restaurant.slug,
-            emailContact: restaurant.emailContact,
+            emailContact: restaurant.emailContact || null,
             phoneContact: restaurant.phoneContact,
           },
           locale,
@@ -153,7 +153,7 @@ export class EmailService {
           },
           restaurant: {
             name: restaurant.name,
-            emailContact: restaurant.emailContact,
+            emailContact: restaurant.emailContact || null,
             phoneContact: restaurant.phoneContact,
           },
           locale,

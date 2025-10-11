@@ -71,7 +71,7 @@ export function RestaurantSettingsForm({
       slug: initialData.slug,
       logo: null,
       removeLogo: false,
-      emailContact: initialData.emailContact,
+      emailContact: initialData.emailContact ?? '',
       phoneContact: initialData.phoneContact || '',
       openingHours: initialData.openingHours,
       slotInterval: initialData.slotInterval.toString(),
@@ -93,7 +93,7 @@ export function RestaurantSettingsForm({
       // Append all form fields
       formData.append('name', data.name)
       formData.append('slug', data.slug)
-      formData.append('emailContact', data.emailContact)
+      formData.append('emailContact', data.emailContact ?? '')
       formData.append('phoneContact', data.phoneContact || '')
       formData.append('openingHours', JSON.stringify(data.openingHours))
       formData.append('slotInterval', data.slotInterval)
