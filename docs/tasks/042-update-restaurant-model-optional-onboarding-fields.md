@@ -22,8 +22,8 @@ Modify the Restaurant database model to make most fields optional with sensible 
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

@@ -1,17 +1,18 @@
-# 046 – Create onboarding form component
+# 046 – Create restaurant creation form component
 
 ## Goal
 
-Build a minimal restaurant creation form that collects only the restaurant name and handles form submission.
+Build a restaurant creation form component that can be displayed on the dashboard page when a user has no restaurants.
 
 ## Deliverable
 
-- `src/app/(dashboard)/onboarding/page.tsx` created with restaurant creation form
+- `src/components/restaurant/create-form.tsx` created with restaurant creation form
 - Form uses React Hook Form with Zod validation
 - Single required field: restaurant name (text input)
 - Form submission calls server action
 - Loading state during submission
 - Error handling and display for validation failures
+- Clean, welcoming UI for first-time users
 
 ## Validation
 
@@ -21,6 +22,7 @@ Build a minimal restaurant creation form that collects only the restaurant name 
 - Form shows loading state during submission
 - Error messages display for validation failures
 - Form follows existing design system patterns
+- Component can be imported and used in dashboard page
 
 ## Accepted
 
