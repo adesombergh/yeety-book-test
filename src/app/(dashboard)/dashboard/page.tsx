@@ -3,6 +3,7 @@ import { currentUser } from '@clerk/nextjs/server'
 import { useTranslations } from 'next-intl'
 import { getUserRestaurants } from '@/lib/queries/user-restaurant'
 import { DashboardRestaurantCard } from '@/components/dashboard/restaurant-card'
+import { RestaurantCreateForm } from '@/components/restaurant/create-form'
 import { RestaurantWithTypedHours } from '@/lib/types/restaurant'
 
 export default async function DashboardPage() {
@@ -49,14 +50,7 @@ function DashboardContent({
             <p className="text-red-600 text-sm mt-1">{error}</p>
           </div>
         ) : restaurants.length === 0 ? (
-          <div className="p-6 border border-border rounded-lg bg-background text-center">
-            <h3 className="text-lg font-medium text-text-dark mb-2">
-              {t('noRestaurants')}
-            </h3>
-            <p className="text-text-secondary">
-              {t('noRestaurantsDescription')}
-            </p>
-          </div>
+          <RestaurantCreateForm />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {restaurants.map((restaurant) => (

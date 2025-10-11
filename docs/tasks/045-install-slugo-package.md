@@ -19,8 +19,8 @@ Install the `slugo` npm package for generating URL-safe restaurant slugs from na
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

@@ -25,8 +25,8 @@ Create server action that handles first restaurant creation, user-restaurant lin
 
 ## Accepted
 
-- [ ] Task requirements reviewed and approved
+- [x] Task requirements reviewed and approved
 
 ## Done
 
-- [ ] Task completed and validated
+- [x] Task completed and validated

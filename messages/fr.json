@@ -171,7 +171,15 @@
   "dashboard": {
     "home": {
       "title": "Tableau de Bord",
-      "subtitle": "Vue d'ensemble de la gestion de l'établissement"
+      "subtitle": "Vue d'ensemble de la gestion de l'établissement",
+      "createFirstRestaurant": {
+        "title": "Créez Votre Premier Etablissement",
+        "description": "Commencez par créer votre établissement pour gérer les réservations et configurer vos paramètres.",
+        "nameLabel": "Nom de l'Etablissement",
+        "namePlaceholder": "ex: Pizza Palace",
+        "createButton": "Créer l'Etablissement",
+        "creating": "Création..."
+      }
     },
     "calendar": {
       "title": "Calendrier",
