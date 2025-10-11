@@ -49,9 +49,7 @@ export default async function RootLayout({
           className={`${bricolageGrotesque.variable} antialiased min-h-screen flex flex-col`}
         >
           <NextIntlClientProvider messages={messages}>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            {children}
             <Toaster />
           </NextIntlClientProvider>
         </body>

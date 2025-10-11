@@ -2,7 +2,37 @@
 
 ## Current Task Focus
 
-### Calendar Enhancement: Date Restrictions & Closed Days ✅
+### Restaurant Creation Wizard Route ✅
+
+**Status**: COMPLETED
+**Goal**: Move restaurant creation onboarding from dashboard page to dedicated `/wizard` route
+
+**Implementation Details**:
+
+- Created dedicated `/wizard` route at `src/app/(dashboard)/wizard/page.tsx`
+- Added placeholder layout at `src/app/(dashboard)/wizard/layout.tsx` for future customization
+- Updated dashboard page to redirect users with 0 restaurants to `/wizard`
+- Modified dashboard content to remove inline form and add "Create New Restaurant" button
+- Added wizard translation keys to `messages/fr.json`
+
+**Files Created**:
+
+- `src/app/(dashboard)/wizard/page.tsx`: Main wizard page with restaurant creation form
+- `src/app/(dashboard)/wizard/layout.tsx`: Placeholder layout for future wizard UI enhancements
+
+**Files Modified**:
+
+- `src/app/(dashboard)/dashboard/page.tsx`: Updated redirect logic for 0 restaurants → `/wizard`
+- `src/components/dashboard/dashboard-content.tsx`: Removed inline form, added button to `/wizard`
+- `messages/fr.json`: Added `wizard.title` and `wizard.subtitle`, plus `dashboard.home.createNewRestaurant`
+
+**User Flow**:
+
+- Users with 0 restaurants: auto-redirect to `/wizard`
+- Users with 1 restaurant: auto-redirect to `/dashboard/{restaurantId}/calendar` (unchanged)
+- Users with 2+ restaurants: see restaurant list with "Create New Restaurant" button linking to `/wizard`
+
+### Previous: Calendar Enhancement: Date Restrictions & Closed Days ✅
 
 **Status**: COMPLETED
 **Goal**: Enhance reservation form calendar to prevent past date selection and clearly display closed days

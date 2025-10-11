@@ -15,7 +15,7 @@ import { useTranslations } from 'next-intl'
 
 interface DashboardCalendarProps {
   restaurantId: string
-  openingHours: OpeningHours
+  openingHours?: OpeningHours
   timeSlotInterval?: number // minutes, default 30
   currentWeek?: Date
 }
@@ -123,6 +123,7 @@ export function DashboardCalendar({
 
   // Generate week data
   const weekData = useMemo((): WeekDay[] => {
+    if (!openingHours) return []
     // Generate time slots for a given day
     const generateTimeSlots = (daySchedule: {
       open?: string

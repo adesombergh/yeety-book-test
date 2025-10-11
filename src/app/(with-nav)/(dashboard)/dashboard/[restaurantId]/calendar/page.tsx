@@ -50,11 +50,20 @@ export default async function CalendarPage({ params }: CalendarPageProps) {
       </div>
 
       <div className="mt-8">
-        <DashboardCalendar
-          restaurantId={restaurantId}
-          openingHours={restaurant.openingHours}
-          timeSlotInterval={restaurant.slotInterval}
-        />
+        {restaurant.openingHours ? (
+          <DashboardCalendar
+            restaurantId={restaurantId}
+            openingHours={restaurant.openingHours}
+            timeSlotInterval={restaurant.slotInterval}
+          />
+        ) : (
+          <p>
+            Ce restaurant n'est pas encore configuré.
+            <br />
+            Veuillez déterminer les heures d'ouverure dans l'onglet
+            configuration
+          </p>
+        )}
       </div>
     </div>
   )

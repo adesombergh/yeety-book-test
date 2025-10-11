@@ -2,9 +2,9 @@
 
 ## Current Status Overview
 
-**Project Phase**: User Onboarding System - READY TO START
+**Project Phase**: User Onboarding System - IN PROGRESS
 **Overall Progress**: ~99% of MVP completed
-**Current Task**: User onboarding flow implementation
+**Current Task**: Wizard route for restaurant creation ✅ COMPLETED
 **Next Major Milestone**: Complete first-time user restaurant creation experience
 
 **🎉 MAJOR MILESTONE ACHIEVED**: All foundation, dashboard, and email system tasks (1-41) are COMPLETE!
@@ -80,11 +80,19 @@
 
 ### Immediate Next Steps (User Onboarding System Implementation)
 
-**Phase 1: Database & Infrastructure**
+**Phase 1: Route Structure ✅ COMPLETED**
 
-1. **Task 042**: Update Restaurant model for optional onboarding fields
-2. **Task 043**: Create onboarding route structure and layout
-3. **Task 044**: Enhance middleware for onboarding redirect logic
+- ✅ Created `/wizard` route for restaurant creation
+- ✅ Added wizard layout placeholder for future customization
+- ✅ Updated dashboard redirect logic (0 restaurants → `/wizard`)
+- ✅ Added "Create New Restaurant" button for existing users
+- ✅ Updated French translations for wizard page
+
+**Phase 2: Future Enhancements (Optional)**
+
+1. **Multi-step wizard**: Convert to multi-step form with progress indicator
+2. **Enhanced layout**: Add stepper UI, progress bar to wizard layout
+3. **Additional fields**: Expand wizard to collect more restaurant details upfront
 
 **Phase 2: Core Implementation**
 4. **Task 045**: Create restaurant slug generation utility

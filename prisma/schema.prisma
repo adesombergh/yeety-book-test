@@ -37,7 +37,7 @@ model Restaurant {
   minGuestsPerReservation     Int       @default(1) @map("min_guests_per_reservation")
   maxGuestsPerReservation     Int       @default(6) @map("max_guests_per_reservation")
   maxReservationsPerSlot      Int       @default(1) @map("max_reservations_per_slot")
-  reservationLeadTimeMinHours Int       @default(60) @map("reservation_lead_time_min_hours")
+  reservationLeadTimeMinHours Int       @default(1) @map("reservation_lead_time_min_hours")
   reservationLeadTimeMaxHours Int       @default(129600) @map("reservation_lead_time_max_hours")
   subscriptionStatus          String    @default("active") @map("subscription_status")
   createdAt                   DateTime  @default(now()) @map("created_at")

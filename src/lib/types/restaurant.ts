@@ -34,7 +34,7 @@ export interface DaySchedule {
 // Typed restaurant with proper opening hours
 export interface RestaurantWithTypedHours
   extends Omit<Restaurant, 'openingHours'> {
-  openingHours: OpeningHours
+  openingHours: OpeningHours | undefined
   logoUrl: string | null
 }
 

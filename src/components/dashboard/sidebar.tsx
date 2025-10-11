@@ -26,17 +26,18 @@ export function DashboardSidebar({
   const navigationItems = currentRestaurantId
     ? [
         {
-          name: 'Calendar',
+          // TODO: move this into translation keys
+          name: 'Calendrier',
           href: `/dashboard/${currentRestaurantId}/calendar`,
           icon: <Calendar className="h-5 w-5" />,
         },
         {
-          name: 'Settings',
+          name: 'Configuration',
           href: `/dashboard/${currentRestaurantId}/settings`,
           icon: <Settings className="h-5 w-5" />,
         },
         {
-          name: 'Billing',
+          name: 'Facturation',
           href: `/dashboard/${currentRestaurantId}/billing`,
           icon: <CreditCard className="h-5 w-5" />,
         },

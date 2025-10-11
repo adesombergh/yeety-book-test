@@ -38,11 +38,11 @@
   --secondary: #464646; /* Our secondary text */
   --secondary-foreground: #f8f2eb;
   --muted: #f8f2eb;
-  --muted-foreground: #464646;
+  --muted-foreground: #909090;
   --accent: #46b865; /* Our fresh green */
   --accent-foreground: #f8f2eb;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #464646;
+  --border: #909090;
   --input: #f8f2eb;
   --ring: #fe6c3b; /* Our primary orange for focus rings */
   --chart-1: #fe6c3b;
@@ -56,7 +56,7 @@
   --sidebar-primary-foreground: #f8f2eb;
   --sidebar-accent: #46b865;
   --sidebar-accent-foreground: #f8f2eb;
-  --sidebar-border: #464646;
+  --sidebar-border: #909090;
   --sidebar-ring: #fe6c3b;
 }
 

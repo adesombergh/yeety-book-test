@@ -61,7 +61,6 @@ export default async function ReservationPage({
   const openingHours = formatOpeningHours(restaurant.openingHours)
   const isOpen = isRestaurantOpen(restaurant.openingHours)
   const leadTimeMin = formatTimeRange(restaurant.reservationLeadTimeMinHours)
-  const leadTimeMax = formatTimeRange(restaurant.reservationLeadTimeMaxHours)
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,18 +118,22 @@ export default async function ReservationPage({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ReservationForm
-                restaurantId={restaurant.id}
-                restaurantSlug={restaurant.slug}
-                minGuests={restaurant.minGuestsPerReservation}
-                maxGuests={restaurant.maxGuestsPerReservation}
-                openingHours={restaurant.openingHours}
-                leadTimeMinHours={restaurant.reservationLeadTimeMinHours}
-                leadTimeMaxHours={restaurant.reservationLeadTimeMaxHours}
-                turnstileSiteKey={
-                  process.env.NEXT_PUBLIC_TURNSTYLE_SITE_KEY || ''
-                }
-              />
+              {restaurant.openingHours ? (
+                <ReservationForm
+                  restaurantId={restaurant.id}
+                  restaurantSlug={restaurant.slug}
+                  minGuests={restaurant.minGuestsPerReservation}
+                  maxGuests={restaurant.maxGuestsPerReservation}
+                  openingHours={restaurant.openingHours}
+                  leadTimeMinHours={restaurant.reservationLeadTimeMinHours}
+                  leadTimeMaxHours={restaurant.reservationLeadTimeMaxHours}
+                  turnstileSiteKey={
+                    process.env.NEXT_PUBLIC_TURNSTYLE_SITE_KEY || ''
+                  }
+                />
+              ) : (
+                <p>Ce restaurant n'est pas encore configuré</p>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -147,33 +150,38 @@ export default async function ReservationPage({
               <CardContent>
                 <div className="space-y-6">
                   {/* Contact Information */}
-                  <div>
-                    <h3 className="font-medium text-text-dark mb-2">
-                      {tUi('contact')}
-                    </h3>
-                    <div className="space-y-1 text-sm text-text-secondary">
-                      <p>
-                        {tUi('email')}:{' '}
-                        <a
-                          href={`mailto:${restaurant.emailContact}`}
-                          className="underline hover:text-primary/80"
-                        >
-                          {restaurant.emailContact}
-                        </a>
-                      </p>
-                      {restaurant.phoneContact && (
-                        <p>
-                          {tUi('phone')}:{' '}
-                          <a
-                            href={`tel:${restaurant.phoneContact}`}
-                            className="underline hover:text-primary/80"
-                          >
-                            {restaurant.phoneContact}
-                          </a>
-                        </p>
-                      )}
-                    </div>
-                  </div>
+                  {restaurant.emailContact ||
+                    (restaurant.phoneContact && (
+                      <div>
+                        <h3 className="font-medium text-text-dark mb-2">
+                          {tUi('contact')}
+                        </h3>
+                        <div className="space-y-1 text-sm text-text-secondary">
+                          {restaurant.emailContact && (
+                            <p>
+                              {tUi('email')}:{' '}
+                              <a
+                                href={`mailto:${restaurant.emailContact}`}
+                                className="underline hover:text-primary/80"
+                              >
+                                {restaurant.emailContact}
+                              </a>
+                            </p>
+                          )}
+                          {restaurant.phoneContact && (
+                            <p>
+                              {tUi('phone')}:{' '}
+                              <a
+                                href={`tel:${restaurant.phoneContact}`}
+                                className="underline hover:text-primary/80"
+                              >
+                                {restaurant.phoneContact}
+                              </a>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
 
                   {/* Reservation Settings */}
                   <div>
@@ -195,23 +203,24 @@ export default async function ReservationPage({
                       <p>
                         {t('restaurant.advanceBooking', {
                           min: leadTimeMin,
-                          max: leadTimeMax,
                         })}
                       </p>
                     </div>
                   </div>
 
                   {/* Opening Hours */}
-                  <div>
-                    <h3 className="font-medium text-text-dark mb-2">
-                      {tUi('openingHours')}
-                    </h3>
-                    <div className="space-y-1 text-sm text-text-secondary">
-                      {openingHours.map((hours, index) => (
-                        <p key={index}>{hours}</p>
-                      ))}
+                  {restaurant.openingHours && (
+                    <div>
+                      <h3 className="font-medium text-text-dark mb-2">
+                        {tUi('openingHours')}
+                      </h3>
+                      <div className="space-y-1 text-sm text-text-secondary">
+                        {openingHours.map((hours, index) => (
+                          <p key={index}>{hours}</p>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

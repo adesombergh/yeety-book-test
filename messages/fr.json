@@ -168,15 +168,20 @@
       }
     }
   },
+  "wizard": {
+    "title": "Créez votre établissement",
+    "subtitle": "Commencez par créer votre établissement pour gérer les réservations et configurer vos paramètres."
+  },
   "dashboard": {
     "home": {
       "title": "Tableau de Bord",
       "subtitle": "Vue d'ensemble de la gestion de l'établissement",
+      "createNewRestaurant": "Créer un Nouvel Etablissement",
       "createFirstRestaurant": {
         "title": "Créez Votre Premier Etablissement",
         "description": "Commencez par créer votre établissement pour gérer les réservations et configurer vos paramètres.",
         "nameLabel": "Nom de l'Etablissement",
-        "namePlaceholder": "ex: Pizza Palace",
+        "namePlaceholder": "Entrez le nom de votre établissement",
         "createButton": "Créer l'Etablissement",
         "creating": "Création..."
       }
@@ -265,7 +270,7 @@
       "restaurantLogo": "Logo de l'Etablissement",
       "logoUploadDescription": "Téléchargez le logo de votre établissement (max 10 Mo). Formats acceptés : JPEG, PNG, WebP, GIF.",
       "urlSlug": "Identifiant URL",
-      "urlSlugDescription": "Ceci sera utilisé dans votre URL de réservation : yoursite.com/restaurant-slug",
+      "urlSlugDescription": "Votre URL de réservation : {url}",
       "contactEmail": "Email de Contact",
       "contactPhone": "Téléphone de Contact",
       "openingHours": "Heures d'Ouverture",
@@ -280,8 +285,8 @@
       "maximumGuests": "Convives Maximum",
       "maxReservationsPerSlot": "Réservations Maximum par Créneau",
       "timeSlotInterval": "Intervalle des Créneaux",
-      "minimumLeadTimeHours": "Délai Minimum (heures)",
-      "minimumLeadTimeDescription": "À quelle distance à l'avance les clients doivent réserver",
+      "minimumLeadTimeHours": "Délai d'avance (heures)",
+      "minimumLeadTimeDescription": "Combien de temps à l'avance les clients doivent réserver",
       "maximumLeadTimeDays": "Délai Maximum (jours)",
       "maximumLeadTimeDescription": "À quelle distance à l'avance les clients peuvent réserver",
       "days": {
@@ -302,7 +307,7 @@
     },
     "partySize": "Taille du groupe : {min}-{max} convives",
     "timeSlots": "Créneaux : Toutes les {interval} minutes",
-    "advanceBooking": "Réservation à l'avance : {min} - {max}",
+    "advanceBooking": "Réservation à l'avance : {min}",
     "reservationNumber": "Réservation #{id}",
     "switchRestaurant": "Changer d'établissement (bientôt disponible)"
   },

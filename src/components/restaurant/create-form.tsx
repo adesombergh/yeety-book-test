@@ -1,13 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -16,7 +9,14 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { createRestaurant } from '@/lib/actions/restaurant'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 const createRestaurantSchema = z.object({
   name: z.string().min(1, 'Restaurant name is required').max(100),
@@ -25,6 +25,9 @@ const createRestaurantSchema = z.object({
 export function RestaurantCreateForm() {
   const router = useRouter()
   const t = useTranslations('dashboard.home')
+
+  const tWizard = useTranslations('wizard')
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -49,49 +52,55 @@ export function RestaurantCreateForm() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="p-8 border border-border rounded-xl bg-background">
-        <h2 className="text-2xl font-bold text-text-dark mb-2">
-          {t('createFirstRestaurant.title')}
-        </h2>
-        <p className="text-text-secondary mb-6">
-          {t('createFirstRestaurant.description')}
-        </p>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-24 justify-center items-center text-center  flex-1 h-full"
+      >
+        <div className="text-center">
+          <h1 className="text-5xl font-bold text-text-dark">
+            {tWizard('title')}
+          </h1>
+          <p className="text-text-secondary mt-2">{tWizard('subtitle')}</p>
+        </div>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('createFirstRestaurant.nameLabel')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t('createFirstRestaurant.namePlaceholder')}
-                      {...field}
-                      disabled={isSubmitting}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {error && (
-              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-800 text-sm">{error}</p>
-              </div>
+        <div className="max-w-md w-full ">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('createFirstRestaurant.nameLabel')}</FormLabel>
+                <FormControl>
+                  <Input
+                    className="h-12"
+                    placeholder={t('createFirstRestaurant.namePlaceholder')}
+                    {...field}
+                    disabled={isSubmitting}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
+          />
 
-            <Button type="submit" disabled={isSubmitting} className="w-full">
-              {isSubmitting
-                ? t('createFirstRestaurant.creating')
-                : t('createFirstRestaurant.createButton')}
-            </Button>
-          </form>
-        </Form>
-      </div>
-    </div>
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-800 text-sm">{error}</p>
+            </div>
+          )}
+        </div>
+
+        <Button
+          className="h-12 px-8 mx-auto"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting
+            ? t('createFirstRestaurant.creating')
+            : t('createFirstRestaurant.createButton')}
+        </Button>
+      </form>
+    </Form>
   )
 }

@@ -64,7 +64,7 @@ export function RestaurantSettingsForm({
     { value: '60', label: t('slotIntervals.60') },
   ]
 
-  const form = useForm<RestaurantSettingsFormData>({
+  const form = useForm({
     resolver: zodResolver(restaurantSettingsSchema),
     defaultValues: {
       name: initialData.name,
@@ -79,7 +79,7 @@ export function RestaurantSettingsForm({
       maxGuestsPerReservation: initialData.maxGuestsPerReservation,
       maxReservationsPerSlot: initialData.maxReservationsPerSlot,
       reservationLeadTimeMinHours: initialData.reservationLeadTimeMinHours,
-      reservationLeadTimeMaxHours: initialData.reservationLeadTimeMaxHours,
+      // reservationLeadTimeMaxHours: initialData.reservationLeadTimeMaxHours,
     },
   })
 
@@ -113,10 +113,10 @@ export function RestaurantSettingsForm({
         'reservationLeadTimeMinHours',
         data.reservationLeadTimeMinHours.toString()
       )
-      formData.append(
-        'reservationLeadTimeMaxHours',
-        data.reservationLeadTimeMaxHours.toString()
-      )
+      // formData.append(
+      //   'reservationLeadTimeMaxHours',
+      //   data.reservationLeadTimeMaxHours.toString()
+      // )
 
       // Append logo file if present
       if (data.logo) {
@@ -165,7 +165,7 @@ export function RestaurantSettingsForm({
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
               <FormField
                 control={form.control}
                 name="name"
@@ -195,7 +195,11 @@ export function RestaurantSettingsForm({
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>{t('urlSlugDescription')}</FormDescription>
+                    <FormDescription>
+                      {t('urlSlugDescription', {
+                        url: `https://book.yeety.be/${field.value.trim()}`,
+                      })}
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -439,7 +443,7 @@ export function RestaurantSettingsForm({
                 )}
               />
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="reservationLeadTimeMaxHours"
                 render={({ field }) => (
@@ -461,7 +465,7 @@ export function RestaurantSettingsForm({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
           </div>
         </Card>

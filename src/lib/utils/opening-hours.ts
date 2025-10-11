@@ -21,7 +21,7 @@ const DAY_NAMES = {
   sunday: 'Dimanche',
 } as const
 
-export function formatOpeningHours(openingHours: OpeningHours): string[] {
+export function formatOpeningHours(openingHours?: OpeningHours): string[] {
   if (!openingHours) {
     return []
   }
@@ -100,9 +100,10 @@ export function getServicePeriodsForDate(
 }
 
 export function isRestaurantOpen(
-  openingHours: OpeningHours,
+  openingHours?: OpeningHours,
   date: Date = new Date()
-): boolean {
+): boolean | null {
+  if (!openingHours) return false
   const periods = getServicePeriodsForDate(openingHours, date)
 
   if (periods.length === 0) {
