@@ -172,7 +172,8 @@
   },
   "wizard": {
     "title": "Créez votre établissement",
-    "subtitle": "Commencez par créer votre établissement pour gérer les réservations et configurer vos paramètres."
+    "subtitle": "Commencez par créer votre établissement pour gérer les réservations et configurer vos paramètres.",
+    "legalDisclaimer": "En appuyant sur ce bouton, vous démarrez votre période d'essai gratuite de 30 jours. Vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité."
   },
   "dashboard": {
     "home": {

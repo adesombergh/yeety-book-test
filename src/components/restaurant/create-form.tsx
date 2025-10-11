@@ -91,15 +91,16 @@ export function RestaurantCreateForm() {
           )}
         </div>
 
-        <Button
-          className="h-12 px-8 mx-auto"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          {isSubmitting
-            ? t('createFirstRestaurant.creating')
-            : t('createFirstRestaurant.createButton')}
-        </Button>
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-sm text-text-secondary text-center max-w-md">
+            {tWizard('legalDisclaimer')}
+          </p>
+          <Button className="h-12 px-8" type="submit" disabled={isSubmitting}>
+            {isSubmitting
+              ? t('createFirstRestaurant.creating')
+              : t('createFirstRestaurant.createButton')}
+          </Button>
+        </div>
       </form>
     </Form>
   )
