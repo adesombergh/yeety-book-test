@@ -64,10 +64,11 @@ function generateSlotsForPeriod(
  */
 export function generateTimeSlotsForDay(
   date: Date,
-  openingHours: OpeningHours,
+  openingHours: OpeningHours | undefined,
   slotInterval: number,
   leadTimeMin: number
 ): TimeSlot[] {
+  if (!openingHours) return []
   // Get day of week
   const dayNames: DaysOfWeek[] = [
     'sunday',
@@ -128,9 +129,10 @@ export function getDayOfWeek(date: Date): DaysOfWeek {
  * Checks if a restaurant is open on a specific day
  */
 export function isRestaurantOpenOnDay(
-  openingHours: OpeningHours,
+  openingHours: OpeningHours | undefined,
   date: Date
 ): boolean {
+  if (!openingHours) return false
   const dayOfWeek = getDayOfWeek(date)
   const schedule = openingHours[dayOfWeek]
   return !schedule.closed && schedule.periods.length > 0

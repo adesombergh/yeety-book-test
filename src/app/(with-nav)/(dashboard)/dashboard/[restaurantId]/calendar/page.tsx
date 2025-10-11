@@ -12,7 +12,7 @@ interface CalendarPageProps {
 }
 
 export default async function CalendarPage({ params }: CalendarPageProps) {
-  const t = await getTranslations('dashboard.calendar')
+  const t = await getTranslations()
   const { userId } = await auth()
   const { restaurantId } = await params
 
@@ -29,8 +29,12 @@ export default async function CalendarPage({ params }: CalendarPageProps) {
   if (error || !restaurant) {
     return (
       <div>
-        <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
-        <p className="text-text-secondary mt-2">{t('subtitle')}</p>
+        <h1 className="text-3xl font-bold text-text-dark">
+          {t('dashboard.calendar.title')}
+        </h1>
+        <p className="text-text-secondary mt-2">
+          {t('dashboard.calendar.subtitle')}
+        </p>
 
         <div className="mt-8 p-6 border border-border rounded-lg bg-background">
           <p className="text-red-600">{error || 'Restaurant not found'}</p>
@@ -43,8 +47,12 @@ export default async function CalendarPage({ params }: CalendarPageProps) {
     <div>
       <div className="flex items-center justify-between mb-2">
         <div>
-          <h1 className="text-3xl font-bold text-text-dark">{t('title')}</h1>
-          <p className="text-text-secondary mt-2">{t('subtitle')}</p>
+          <h1 className="text-3xl font-bold text-text-dark">
+            {t('dashboard.calendar.title')}
+          </h1>
+          <p className="text-text-secondary mt-2">
+            {t('dashboard.calendar.subtitle')}
+          </p>
         </div>
         <CalendarActions restaurantSlug={restaurant.slug} />
       </div>
@@ -58,10 +66,9 @@ export default async function CalendarPage({ params }: CalendarPageProps) {
           />
         ) : (
           <p>
-            Ce restaurant n'est pas encore configuré.
+            {t('reservation.restaurantNotConfiguredShort')}
             <br />
-            Veuillez déterminer les heures d'ouverure dans l'onglet
-            configuration
+            {t('reservation.restaurantNotConfiguredShort2')}
           </p>
         )}
       </div>

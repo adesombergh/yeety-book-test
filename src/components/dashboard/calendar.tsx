@@ -15,7 +15,7 @@ import { useTranslations } from 'next-intl'
 
 interface DashboardCalendarProps {
   restaurantId: string
-  openingHours?: OpeningHours
+  openingHours: OpeningHours
   timeSlotInterval?: number // minutes, default 30
   currentWeek?: Date
 }

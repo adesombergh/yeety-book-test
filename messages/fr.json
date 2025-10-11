@@ -166,7 +166,9 @@
         "linkText": "Annuler la Réservation",
         "linkNote": "Besoin d'annuler ? Cliquez sur le lien ci-dessous :"
       }
-    }
+    },
+    "restaurantNotConfiguredShort": "Ce restaurant n'est pas encore configuré",
+    "restaurantNotConfiguredShort2": "Veuillez configurer les heures d'ouverure dans l'onglet configuration"
   },
   "wizard": {
     "title": "Créez votre établissement",
@@ -222,6 +224,7 @@
     "errorLoadingRestaurants": "Erreur lors du chargement des établissements",
     "noRestaurants": "Aucun Etablissement",
     "noRestaurantsDescription": "Vous n'avez pas encore d'établissements configurés.",
+    "restaurantNotConfiguredLong": "Ce restaurant n'est pas encore configuré",
     "thisPageWillContain": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures.",
     "dayViewDescription": "Cette page affichera la gestion détaillée des réservations pour une date spécifique.",
     "reservationDetailDescription": "Cette page affichera des informations détaillées et des options de gestion pour une réservation spécifique."

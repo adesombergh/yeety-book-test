@@ -21,7 +21,6 @@ export default async function ReservationPage({
   params,
 }: ReservationPageProps) {
   const { restaurantSlug } = await params
-  const tUi = await getTranslations('ui')
   const t = await getTranslations()
 
   // Fetch restaurant data
@@ -33,12 +32,12 @@ export default async function ReservationPage({
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-dark mb-2">
-            {tUi('restaurantNotFound')}
+            {t('ui.restaurantNotFound')}
           </h1>
           <p className="text-text-secondary">
             {error === 'Restaurant not found'
-              ? tUi('restaurantNotFoundMessage', { restaurantSlug })
-              : tUi('errorLoadingRestaurant')}
+              ? t('ui.restaurantNotFoundMessage', { restaurantSlug })
+              : t('ui.errorLoadingRestaurant')}
           </p>
         </div>
       </div>
@@ -50,9 +49,9 @@ export default async function ReservationPage({
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-text-dark mb-2">
-            {tUi('loading')}
+            {t('ui.loading')}
           </h1>
-          <p className="text-text-secondary">{tUi('loadingRestaurantInfo')}</p>
+          <p className="text-text-secondary">{t('ui.loadingRestaurantInfo')}</p>
         </div>
       </div>
     )
@@ -87,7 +86,7 @@ export default async function ReservationPage({
           </h1>
         </div>
         <p className="text-text-secondary">
-          {tUi('makeReservation', { restaurantName: restaurant.name })}
+          {t('ui.makeReservation', { restaurantName: restaurant.name })}
         </p>
         <div className="mt-2">
           <span
@@ -95,11 +94,11 @@ export default async function ReservationPage({
               isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
             }`}
           >
-            {isOpen ? tUi('openNow') : tUi('closed')}
+            {isOpen ? t('ui.openNow') : t('ui.closed')}
           </span>
           {restaurant.subscriptionStatus !== 'active' && (
             <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-              {tUi('limitedService')}
+              {t('ui.limitedService')}
             </span>
           )}
         </div>
@@ -113,7 +112,7 @@ export default async function ReservationPage({
             <CardHeader>
               <CardTitle className="text-xl">
                 <h2>
-                  {tUi('makeReservation', { restaurantName: restaurant.name })}
+                  {t('ui.makeReservation', { restaurantName: restaurant.name })}
                 </h2>
               </CardTitle>
             </CardHeader>
@@ -132,7 +131,7 @@ export default async function ReservationPage({
                   }
                 />
               ) : (
-                <p>Ce restaurant n'est pas encore configuré</p>
+                <p>{t('reservation.restaurantNotConfiguredShort')}</p>
               )}
             </CardContent>
           </Card>
@@ -144,7 +143,7 @@ export default async function ReservationPage({
             <Card>
               <CardHeader>
                 <CardTitle className="text-xl">
-                  <h2>{tUi('restaurantInformation')}</h2>
+                  <h2>{t('ui.restaurantInformation')}</h2>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -154,12 +153,12 @@ export default async function ReservationPage({
                     (restaurant.phoneContact && (
                       <div>
                         <h3 className="font-medium text-text-dark mb-2">
-                          {tUi('contact')}
+                          {t('ui.contact')}
                         </h3>
                         <div className="space-y-1 text-sm text-text-secondary">
                           {restaurant.emailContact && (
                             <p>
-                              {tUi('email')}:{' '}
+                              {t('ui.email')}:{' '}
                               <a
                                 href={`mailto:${restaurant.emailContact}`}
                                 className="underline hover:text-primary/80"
@@ -170,7 +169,7 @@ export default async function ReservationPage({
                           )}
                           {restaurant.phoneContact && (
                             <p>
-                              {tUi('phone')}:{' '}
+                              {t('ui.phone')}:{' '}
                               <a
                                 href={`tel:${restaurant.phoneContact}`}
                                 className="underline hover:text-primary/80"
@@ -186,7 +185,7 @@ export default async function ReservationPage({
                   {/* Reservation Settings */}
                   <div>
                     <h3 className="font-medium text-text-dark mb-2">
-                      {tUi('reservationDetails')}
+                      {t('ui.reservationDetails')}
                     </h3>
                     <div className="space-y-1 text-sm text-text-secondary">
                       <p>
@@ -212,7 +211,7 @@ export default async function ReservationPage({
                   {restaurant.openingHours && (
                     <div>
                       <h3 className="font-medium text-text-dark mb-2">
-                        {tUi('openingHours')}
+                        {t('ui.openingHours')}
                       </h3>
                       <div className="space-y-1 text-sm text-text-secondary">
                         {openingHours.map((hours, index) => (

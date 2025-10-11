@@ -1,14 +1,12 @@
+import { Toaster } from '@/components/ui/sonner'
+import { frFR } from '@clerk/localizations'
+import { ClerkProvider } from '@clerk/nextjs'
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
-import { Bricolage_Grotesque } from 'next/font/google'
-import './globals.css'
-import { Header } from '@/components/ui/header'
-import { Footer } from '@/components/ui/footer'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
-import { ClerkProvider } from '@clerk/nextjs'
-import { frFR } from '@clerk/localizations'
-import { Toaster } from '@/components/ui/sonner'
-import { Analytics } from '@vercel/analytics/next'
+import { Bricolage_Grotesque } from 'next/font/google'
+import './globals.css'
 const bricolageGrotesque = Bricolage_Grotesque({
   variable: '--font-bricolage-grotesque',
   subsets: ['latin'],
