@@ -4,7 +4,7 @@ import { currentUser } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
 import slugo from 'slugo'
 
-export async function createRestaurant(name: string) {
+export async function createRestaurant(name: string, vatNumber: string) {
   try {
     // Authenticate user
     const user = await currentUser()
@@ -21,6 +21,32 @@ export async function createRestaurant(name: string) {
       return {
         success: false,
         error: 'Restaurant name must be less than 100 characters',
+      }
+    }
+
+    // Validate VAT number
+    if (!vatNumber || vatNumber.trim().length === 0) {
+      return { success: false, error: 'VAT number is required' }
+    }
+
+    const vatRegex = /^[A-Z]{2}[0-9A-Z]{2,12}$/
+    if (!vatRegex.test(vatNumber.trim())) {
+      return {
+        success: false,
+        error: 'Numéro de TVA invalide (ex: BE0123456789)',
+      }
+    }
+
+    // Check for duplicate VAT number
+    const existingRestaurant = await prisma.restaurant.findUnique({
+      where: { vatNumber: vatNumber.trim() },
+    })
+
+    if (existingRestaurant) {
+      return {
+        success: false,
+        error:
+          'Un compte existe déjà pour ce numéro de TVA. Essayez de vous connecter ou contactez le support.',
       }
     }
 
@@ -47,6 +73,7 @@ export async function createRestaurant(name: string) {
     const restaurant = await prisma.restaurant.create({
       data: {
         name: name.trim(),
+        vatNumber: vatNumber.trim(),
         slug,
         owners: {
           connect: { id: dbUser.id },
@@ -72,6 +99,23 @@ export async function createRestaurant(name: string) {
     }
   } catch (error) {
     console.error('Failed to create restaurant:', error)
+
+    // Handle Prisma unique constraint violation
+    if (error && typeof error === 'object' && 'code' in error) {
+      if (error.code === 'P2002') {
+        // Unique constraint violation
+        const prismaError = error as { meta?: { target?: string[] } }
+        const target = prismaError.meta?.target
+        if (target && target.includes('vat_number')) {
+          return {
+            success: false,
+            error:
+              'Un compte existe déjà pour ce numéro de TVA. Essayez de vous connecter ou contactez le support.',
+          }
+        }
+      }
+    }
+
     return {
       success: false,
       error: 'Failed to create restaurant. Please try again.',

@@ -281,6 +281,7 @@ async function main() {
       {
         slug: 'bella-vista',
         name: 'Bella Vista',
+        vatNumber: 'BE0123456789',
         emailContact: 'reservations@bellavista.com',
         phoneContact: '+1-555-0123',
         openingHours: {
@@ -327,6 +328,7 @@ async function main() {
       {
         slug: 'le-petit-bistro',
         name: 'Le Petit Bistro',
+        vatNumber: 'FR12345678901',
         emailContact: 'contact@lepetitbistro.fr',
         phoneContact: '+33-1-42-86-87-88',
         openingHours: {
@@ -382,6 +384,7 @@ async function main() {
       {
         slug: 'sakura-sushi',
         name: 'Sakura Sushi',
+        vatNumber: 'JP123456789012',
         emailContact: 'info@sakurasushi.jp',
         phoneContact: '+81-3-1234-5678',
         openingHours: {
@@ -422,6 +425,7 @@ async function main() {
       {
         slug: 'mountain-grill',
         name: 'Mountain Grill',
+        vatNumber: 'BE9876543210',
         emailContact: 'bookings@mountaingrill.com',
         phoneContact: null, // Testing optional phone contact
         openingHours: {

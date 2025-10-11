@@ -183,6 +183,20 @@ export function RestaurantSettingsForm({
                 )}
               />
 
+              <div className="space-y-2">
+                <FormLabel>{t('vatNumber')}</FormLabel>
+                <Input
+                  value={initialData.vatNumber}
+                  disabled
+                  className="bg-muted cursor-not-allowed"
+                />
+                <p className="text-xs text-text-secondary">
+                  {t('vatNumberDescription')}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
               <FormField
                 control={form.control}
                 name="slug"

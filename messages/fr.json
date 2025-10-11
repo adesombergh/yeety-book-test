@@ -173,7 +173,10 @@
   "wizard": {
     "title": "Créez votre établissement",
     "subtitle": "Commencez par créer votre établissement pour gérer les réservations et configurer vos paramètres.",
-    "legalDisclaimer": "En appuyant sur ce bouton, vous démarrez votre période d'essai gratuite de 30 jours. Vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité."
+    "legalDisclaimer": "En appuyant sur ce bouton, vous démarrez votre période d'essai gratuite de 30 jours. Vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.",
+    "vatNumberLabel": "Numéro de TVA",
+    "vatNumberPlaceholder": "BE0123456789",
+    "vatNumberHelp": "Format: 2 lettres (pays) + 2-12 caractères alphanumériques"
   },
   "dashboard": {
     "home": {
@@ -271,6 +274,8 @@
     "settings": {
       "basicInformation": "Informations de Base",
       "restaurantName": "Nom de l'Etablissement",
+      "vatNumber": "Numéro de TVA",
+      "vatNumberDescription": "Le numéro de TVA ne peut pas être modifié après la création",
       "restaurantLogo": "Logo de l'Etablissement",
       "logoUploadDescription": "Téléchargez le logo de votre établissement (max 10 Mo). Formats acceptés : JPEG, PNG, WebP, GIF.",
       "urlSlug": "Identifiant URL",
@@ -396,6 +401,11 @@
         "timeFormat": "L'heure doit être au format HH:MM",
         "periodsRequired": "Au moins une période de service est requise quand l'établissement n'est pas fermé",
         "overlappingPeriods": "Les périodes de service ne peuvent pas se chevaucher"
+      },
+      "vatNumber": {
+        "required": "Le numéro de TVA est requis",
+        "invalid": "Numéro de TVA invalide (ex: BE0123456789)",
+        "duplicate": "Un compte existe déjà pour ce numéro de TVA. Essayez de vous connecter ou contactez le support."
       }
     }
   }

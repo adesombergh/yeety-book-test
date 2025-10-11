@@ -20,6 +20,13 @@ import { z } from 'zod'
 
 const createRestaurantSchema = z.object({
   name: z.string().min(1, 'Restaurant name is required').max(100),
+  vatNumber: z
+    .string()
+    .min(1, 'VAT number is required')
+    .regex(
+      /^[A-Z]{2}[0-9A-Z]{2,12}$/,
+      'Numéro de TVA invalide (ex: BE0123456789)'
+    ),
 })
 
 export function RestaurantCreateForm() {
@@ -33,14 +40,14 @@ export function RestaurantCreateForm() {
 
   const form = useForm<z.infer<typeof createRestaurantSchema>>({
     resolver: zodResolver(createRestaurantSchema),
-    defaultValues: { name: '' },
+    defaultValues: { name: '', vatNumber: '' },
   })
 
   async function onSubmit(values: z.infer<typeof createRestaurantSchema>) {
     setIsSubmitting(true)
     setError(null)
 
-    const result = await createRestaurant(values.name)
+    const result = await createRestaurant(values.name, values.vatNumber)
 
     if (result.success && result.restaurantId) {
       // Redirect to settings page on success
@@ -64,7 +71,7 @@ export function RestaurantCreateForm() {
           <p className="text-text-secondary mt-2">{tWizard('subtitle')}</p>
         </div>
 
-        <div className="max-w-md w-full ">
+        <div className="max-w-md w-full space-y-4">
           <FormField
             control={form.control}
             name="name"
@@ -79,6 +86,28 @@ export function RestaurantCreateForm() {
                     disabled={isSubmitting}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="vatNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{tWizard('vatNumberLabel')}</FormLabel>
+                <FormControl>
+                  <Input
+                    className="h-12"
+                    placeholder={tWizard('vatNumberPlaceholder')}
+                    {...field}
+                    disabled={isSubmitting}
+                  />
+                </FormControl>
+                <p className="text-xs text-text-secondary">
+                  {tWizard('vatNumberHelp')}
+                </p>
                 <FormMessage />
               </FormItem>
             )}
