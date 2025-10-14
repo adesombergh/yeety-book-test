@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Restaurant } from '@prisma/client'
 import Image from 'next/image'
+import { RestaurantProgress } from './restaurant-progress'
 
 interface DashboardSidebarProps {
   isOpen?: boolean
@@ -88,7 +89,7 @@ export function DashboardSidebar({
         )}
 
         {/* Navigation */}
-        <nav className="flex-1 space-y-1 px-4 py-6">
+        <nav className="space-y-1 px-4 py-6">
           {navigationItems.map((item) => {
             const isActive = pathname === item.href
             return (
@@ -108,6 +109,13 @@ export function DashboardSidebar({
             )
           })}
         </nav>
+
+        {/* Progress Indicator */}
+        {currentRestaurant && (
+          <div className="px-4 pb-6">
+            <RestaurantProgress restaurant={currentRestaurant} />
+          </div>
+        )}
       </div>
     </>
   )

@@ -15,15 +15,15 @@ export default async function DashboardPage() {
   const { restaurants, error } = await getUserRestaurants(user.id)
 
   // Handle auto-redirects based on restaurant count
-  if (!error) {
-    if (restaurants.length === 0) {
-      // Redirect to wizard for first-time setup
-      redirect('/wizard')
-    } else if (restaurants.length === 1) {
-      // Auto-redirect for single restaurant users
-      redirect(`/dashboard/${restaurants[0].id}/calendar`)
-    }
-  }
+  // if (!error) {
+  //   if (restaurants.length === 0) {
+  //     // Redirect to wizard for first-time setup
+  //     redirect('/wizard')
+  //   } else if (restaurants.length === 1) {
+  //     // Auto-redirect for single restaurant users
+  //     redirect(`/dashboard/${restaurants[0].id}/calendar`)
+  //   }
+  // }
 
   return <DashboardListContent restaurants={restaurants} error={error} />
 }

@@ -71,10 +71,10 @@ export async function PATCH(
       formData.get('reservationLeadTimeMinHours') as string,
       10
     )
-    const reservationLeadTimeMaxHours = parseInt(
-      formData.get('reservationLeadTimeMaxHours') as string,
-      10
-    )
+    // const reservationLeadTimeMaxHours = parseInt(
+    //   formData.get('reservationLeadTimeMaxHours') as string,
+    //   10
+    // )
     const logoFile = formData.get('logo') as File | null
     const removeLogo = formData.get('removeLogo') === 'true'
 
@@ -162,7 +162,7 @@ export async function PATCH(
         maxGuestsPerReservation,
         maxReservationsPerSlot,
         reservationLeadTimeMinHours,
-        reservationLeadTimeMaxHours,
+        // reservationLeadTimeMaxHours,
         updatedAt: new Date(),
       },
     })

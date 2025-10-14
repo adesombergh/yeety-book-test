@@ -105,9 +105,9 @@ export function RestaurantCreateForm() {
                     disabled={isSubmitting}
                   />
                 </FormControl>
-                <p className="text-xs text-text-secondary">
+                {/* <p className="text-xs text-text-secondary">
                   {tWizard('vatNumberHelp')}
-                </p>
+                </p> */}
                 <FormMessage />
               </FormItem>
             )}

@@ -176,9 +176,20 @@
     "legalDisclaimer": "En appuyant sur ce bouton, vous démarrez votre période d'essai gratuite de 30 jours. Vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.",
     "vatNumberLabel": "Numéro de TVA",
     "vatNumberPlaceholder": "BE0123456789",
-    "vatNumberHelp": "Format: 2 lettres (pays) + 2-12 caractères alphanumériques"
+    "vatNumberHelp": "utilisé pour la facturation et pour éviter les doublons"
   },
   "dashboard": {
+    "progress": {
+      "title": "Progression du profil",
+      "completedOf": "{completed} sur {total} complétés",
+      "milestones": {
+        "created": "Creér établissement",
+        "addedLogo": "Ajouter logo",
+        "setOpeningHours": "Heures d'ouverture",
+        "addedContactInfo": "Infos de contact",
+        "billingInfo": "Facturation"
+      }
+    },
     "home": {
       "title": "Tableau de Bord",
       "subtitle": "Vue d'ensemble de la gestion de l'établissement",

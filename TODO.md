@@ -1,1 +1,1 @@
-- remove max-lead-thing, add default max to 6 months in.
+- Fix settings form
