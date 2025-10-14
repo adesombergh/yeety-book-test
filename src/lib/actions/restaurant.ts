@@ -2,6 +2,7 @@
 
 import { currentUser } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
+import { stripe } from '@/lib/stripe'
 import slugo from 'slugo'
 
 export async function createRestaurant(name: string, vatNumber: string) {
@@ -69,12 +70,23 @@ export async function createRestaurant(name: string, vatNumber: string) {
       slug = `${slugo(name)}-${slugSuffix}`
     }
 
+    // Create Stripe customer
+    const customer = await stripe.customers.create({
+      email: user.emailAddresses[0]?.emailAddress || dbUser.email,
+      metadata: {
+        restaurantName: name.trim(),
+        userId: dbUser.id.toString(),
+      },
+      tax_id_data: [{ type: 'eu_vat', value: vatNumber.trim() }],
+    })
+
     // Create restaurant with default values from Task 042 schema
     const restaurant = await prisma.restaurant.create({
       data: {
         name: name.trim(),
         vatNumber: vatNumber.trim(),
         slug,
+        stripeCustomerId: customer.id,
         owners: {
           connect: { id: dbUser.id },
         },
@@ -88,7 +100,7 @@ export async function createRestaurant(name: string, vatNumber: string) {
         // - maxReservationsPerSlot: 1
         // - reservationLeadTimeMinHours: 60
         // - reservationLeadTimeMaxHours: 129600
-        // - subscriptionStatus: "active"
+        // - subscriptionStatus: null (no subscription yet)
       },
     })
 

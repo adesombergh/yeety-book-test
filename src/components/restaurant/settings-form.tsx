@@ -64,7 +64,7 @@ export function RestaurantSettingsForm({
     { value: '60', label: t('slotIntervals.60') },
   ]
 
-  const form = useForm({
+  const form = useForm<RestaurantSettingsFormData>({
     resolver: zodResolver(restaurantSettingsSchema),
     defaultValues: {
       name: initialData.name,
@@ -73,7 +73,46 @@ export function RestaurantSettingsForm({
       removeLogo: false,
       emailContact: initialData.emailContact ?? '',
       phoneContact: initialData.phoneContact || '',
-      openingHours: initialData.openingHours,
+      openingHours: initialData.openingHours
+        ? {
+            monday: {
+              closed: initialData.openingHours.monday.periods.length === 0,
+              periods: initialData.openingHours.monday.periods,
+            },
+            tuesday: {
+              closed: initialData.openingHours.tuesday.periods.length === 0,
+              periods: initialData.openingHours.tuesday.periods,
+            },
+            wednesday: {
+              closed: initialData.openingHours.wednesday.periods.length === 0,
+              periods: initialData.openingHours.wednesday.periods,
+            },
+            thursday: {
+              closed: initialData.openingHours.thursday.periods.length === 0,
+              periods: initialData.openingHours.thursday.periods,
+            },
+            friday: {
+              closed: initialData.openingHours.friday.periods.length === 0,
+              periods: initialData.openingHours.friday.periods,
+            },
+            saturday: {
+              closed: initialData.openingHours.saturday.periods.length === 0,
+              periods: initialData.openingHours.saturday.periods,
+            },
+            sunday: {
+              closed: initialData.openingHours.sunday.periods.length === 0,
+              periods: initialData.openingHours.sunday.periods,
+            },
+          }
+        : {
+            monday: { closed: true, periods: [] },
+            tuesday: { closed: true, periods: [] },
+            wednesday: { closed: true, periods: [] },
+            thursday: { closed: true, periods: [] },
+            friday: { closed: true, periods: [] },
+            saturday: { closed: true, periods: [] },
+            sunday: { closed: true, periods: [] },
+          },
       slotInterval: initialData.slotInterval.toString(),
       minGuestsPerReservation: initialData.minGuestsPerReservation,
       maxGuestsPerReservation: initialData.maxGuestsPerReservation,
@@ -527,6 +566,11 @@ function DayScheduleField({
     if (checked) {
       // Clear all periods when marking as closed
       form.setValue(`openingHours.${dayKey}.periods`, [])
+    } else {
+      // Add a default period when unchecking closed
+      if (fields.length === 0) {
+        append({ open: '09:00', close: '17:00' })
+      }
     }
   }
 

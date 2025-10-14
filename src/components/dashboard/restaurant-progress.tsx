@@ -5,6 +5,7 @@ import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Restaurant } from '@prisma/client'
 import { useTranslations } from 'next-intl'
+import { daysOfWeek, type OpeningHours } from '@/lib/types/restaurant'
 
 interface RestaurantProgressProps {
   restaurant: Restaurant | null
@@ -29,8 +30,21 @@ export function RestaurantProgress({ restaurant }: RestaurantProgressProps) {
   const completedSteps: Record<MilestoneKey, boolean> = {
     created: true, // Always true if restaurant exists
     addedLogo: !!restaurant.logoUrl,
-    setOpeningHours: !!restaurant.openingHours,
-    addedContactInfo: !!(restaurant.emailContact && restaurant.phoneContact),
+    setOpeningHours: (() => {
+      if (!restaurant.openingHours) return false
+
+      const hours = restaurant.openingHours as unknown as OpeningHours
+      // Check if at least one day has periods (not all days closed)
+      return daysOfWeek.some((day) => {
+        const daySchedule = hours[day]
+        return (
+          daySchedule &&
+          Array.isArray(daySchedule.periods) &&
+          daySchedule.periods.length > 0
+        )
+      })
+    })(),
+    addedContactInfo: !!(restaurant.emailContact || restaurant.phoneContact),
     billingInfo: true, // Future: check Stripe subscription
   }
 

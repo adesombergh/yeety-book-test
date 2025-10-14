@@ -110,7 +110,11 @@ export async function createRestaurantSettingsSchema() {
         .min(1, t('required'))
         .max(50, t('restaurant.slug.max'))
         .regex(/^[a-z0-9-]+$/, t('restaurant.slug.format')),
-      emailContact: z.string().email(t('restaurant.email.invalid')).optional(),
+      emailContact: z
+        .string()
+        .email(t('restaurant.email.invalid'))
+        .or(z.literal(''))
+        .optional(),
       phoneContact: z.string().optional(),
       openingHours: openingHoursSchema,
       slotInterval: z
@@ -267,6 +271,7 @@ export const restaurantSettingsSchema = z
     emailContact: z
       .string()
       .email('Please enter a valid email address')
+      .or(z.literal(''))
       .optional(),
     phoneContact: z.string().optional(),
     openingHours: defaultOpeningHoursSchema,

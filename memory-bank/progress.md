@@ -2,10 +2,10 @@
 
 ## Current Status Overview
 
-**Project Phase**: User Onboarding System - IN PROGRESS
+**Project Phase**: Stripe Subscription Integration - IN PROGRESS
 **Overall Progress**: ~99% of MVP completed
-**Current Task**: Wizard route for restaurant creation ✅ COMPLETED
-**Next Major Milestone**: Complete first-time user restaurant creation experience
+**Current Task**: Database schema updates for Stripe ✅ COMPLETED
+**Next Major Milestone**: Implement Stripe subscription creation with trial period and Customer Portal
 
 **🎉 MAJOR MILESTONE ACHIEVED**: All foundation, dashboard, and email system tasks (1-41) are COMPLETE!
 

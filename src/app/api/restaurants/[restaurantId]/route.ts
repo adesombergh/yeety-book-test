@@ -82,7 +82,7 @@ export async function PATCH(
     const openingHours = JSON.parse(openingHoursStr)
 
     // Basic validation
-    if (!name || !slug || !emailContact || !openingHours || !slotInterval) {
+    if (!name || !slug || !openingHours || !slotInterval) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -154,7 +154,7 @@ export async function PATCH(
         name,
         slug,
         logoUrl: newLogoUrl,
-        emailContact,
+        emailContact: emailContact || null,
         phoneContact: phoneContact || null,
         openingHours,
         slotInterval: parseInt(slotInterval, 10),

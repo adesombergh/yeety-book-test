@@ -2,7 +2,37 @@
 
 ## Current Task Focus
 
-### Restaurant Creation Wizard Route ✅
+### Stripe Subscription Integration 🎯
+
+**Status**: IN PROGRESS - Phase 1
+**Goal**: Integrate Stripe monthly subscriptions with 30-day trial period and Customer Portal management
+
+**Current Phase**: Database Schema Updates ✅
+
+- Added Stripe-related fields to Restaurant model:
+  - `stripeCustomerId` (String?, unique) - Links restaurant to Stripe Customer
+  - `stripeSubscriptionId` (String?, nullable) - Links to Stripe Subscription
+  - `subscriptionStatus` (String?, nullable) - Tracks subscription state
+- Migration applied successfully
+- Prisma client regenerated with new types
+
+**Next Steps**:
+
+1. Create Stripe subscription service (`src/lib/services/stripe-subscription.ts`)
+2. Implement subscription creation with 30-day trial
+3. Create Customer Portal session endpoint
+4. Add billing page to dashboard
+5. Implement webhook handlers
+6. Update middleware for subscription checks
+
+**Integration Strategy**:
+
+- Using Stripe Customer Portal for subscription management (no custom billing UI needed)
+- 30-day trial period for new restaurants
+- Automatic subscription creation during restaurant onboarding
+- Webhook-driven subscription status updates
+
+### Previous: Restaurant Creation Wizard Route ✅
 
 **Status**: COMPLETED
 **Goal**: Move restaurant creation onboarding from dashboard page to dedicated `/wizard` route
