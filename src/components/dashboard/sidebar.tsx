@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { Restaurant } from '@prisma/client'
 import Image from 'next/image'
 import { RestaurantProgress } from './restaurant-progress'
+import { useState } from 'react'
 
 interface DashboardSidebarProps {
   isOpen?: boolean
@@ -22,6 +23,33 @@ export function DashboardSidebar({
   currentRestaurant,
 }: DashboardSidebarProps) {
   const pathname = usePathname()
+  const [isLoadingBilling, setIsLoadingBilling] = useState(false)
+
+  // Handle billing portal redirect
+  const handleBillingClick = async () => {
+    if (!currentRestaurantId) return
+
+    setIsLoadingBilling(true)
+    try {
+      const response = await fetch('/api/stripe/portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ restaurantId: currentRestaurantId }),
+      })
+
+      const data = await response.json()
+
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        console.error('No portal URL returned')
+        setIsLoadingBilling(false)
+      }
+    } catch (error) {
+      console.error('Failed to open billing portal:', error)
+      setIsLoadingBilling(false)
+    }
+  }
 
   // Create navigation items dynamically based on current restaurant
   const navigationItems = currentRestaurantId
@@ -41,6 +69,7 @@ export function DashboardSidebar({
           name: 'Facturation',
           href: `/dashboard/${currentRestaurantId}/billing`,
           icon: <CreditCard className="h-5 w-5" />,
+          isBillingPortal: true,
         },
       ]
     : []
@@ -92,6 +121,27 @@ export function DashboardSidebar({
         <nav className="space-y-1 px-4 py-6">
           {navigationItems.map((item) => {
             const isActive = pathname === item.href
+
+            // Handle billing portal as button
+            if (item.isBillingPortal) {
+              return (
+                <button
+                  key={item.name}
+                  onClick={handleBillingClick}
+                  disabled={isLoadingBilling}
+                  className={cn(
+                    'flex cursor-pointer w-full items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                    'text-text-secondary hover:bg-accent-pink/20 hover:text-text-dark',
+                    isLoadingBilling && 'opacity-50 cursor-not-allowed'
+                  )}
+                >
+                  {item.icon}
+                  <span>{isLoadingBilling ? 'Chargement...' : item.name}</span>
+                </button>
+              )
+            }
+
+            // Regular navigation link
             return (
               <Link
                 key={item.name}
