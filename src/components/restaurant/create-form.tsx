@@ -13,7 +13,6 @@ import { Input } from '@/components/ui/input'
 import { createRestaurant } from '@/lib/actions/restaurant'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -30,7 +29,6 @@ const createRestaurantSchema = z.object({
 })
 
 export function RestaurantCreateForm() {
-  const router = useRouter()
   const t = useTranslations('dashboard.home')
 
   const tWizard = useTranslations('wizard')
@@ -50,8 +48,6 @@ export function RestaurantCreateForm() {
     const result = await createRestaurant(values.name, values.vatNumber)
     if (result.checkoutUrl && result.restaurantId) {
       window.location.href = result.checkoutUrl
-      // Redirect to settings page on success
-      // router.push(`/dashboard/${result.restaurantId}/settings`)
     } else {
       setError(result.error || 'Failed to create restaurant')
       setIsSubmitting(false)
