@@ -48,10 +48,10 @@ export function RestaurantCreateForm() {
     setError(null)
 
     const result = await createRestaurant(values.name, values.vatNumber)
-
-    if (result.success && result.restaurantId) {
+    if (result.checkoutUrl && result.restaurantId) {
+      window.location.href = result.checkoutUrl
       // Redirect to settings page on success
-      router.push(`/dashboard/${result.restaurantId}/settings`)
+      // router.push(`/dashboard/${result.restaurantId}/settings`)
     } else {
       setError(result.error || 'Failed to create restaurant')
       setIsSubmitting(false)

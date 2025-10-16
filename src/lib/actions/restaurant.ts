@@ -104,10 +104,40 @@ export async function createRestaurant(name: string, vatNumber: string) {
       },
     })
 
-    // Return success with restaurant ID for client-side redirect
+    // Create Stripe Checkout Session with 30-day trial
+    let checkoutUrl: string | null = null
+    const success_url = `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/${restaurant.id}/settings`
+    console.log({ success_url })
+    try {
+      const session = await stripe.checkout.sessions.create({
+        mode: 'subscription',
+        customer: customer.id,
+        line_items: [
+          {
+            price: process.env.STRIPE_PRICE_ID!,
+            quantity: 1,
+          },
+        ],
+        subscription_data: {
+          trial_period_days: 30,
+          metadata: {
+            restaurantId: restaurant.id.toString(),
+          },
+        },
+        success_url,
+        cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/${restaurant.id}/settings`,
+      })
+      checkoutUrl = session.url
+    } catch (checkoutError) {
+      // Log error but don't fail the restaurant creation
+      console.error('Failed to create Stripe checkout session:', checkoutError)
+    }
+
+    // Return success with restaurant ID and checkout URL for client-side redirect
     return {
       success: true,
       restaurantId: restaurant.id,
+      checkoutUrl,
     }
   } catch (error) {
     console.error('Failed to create restaurant:', error)
