@@ -234,7 +234,27 @@
       "title": "Facturation",
       "subtitle": "Gestion des abonnements et paiements",
       "billingFor": "Facturation pour l'établissement :",
-      "description": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures."
+      "description": "Cette page contiendra la gestion des abonnements, les méthodes de paiement, l'historique de facturation et les téléchargements de factures.",
+      "subscriptionStatus": "Statut de l'Abonnement",
+      "status": {
+        "active": "Actif",
+        "trialing": "Essai Gratuit",
+        "past_due": "Paiement en Retard",
+        "canceled": "Annulé",
+        "incomplete": "Incomplet",
+        "incomplete_expired": "Expiré",
+        "unpaid": "Non Payé",
+        "paused": "En Pause",
+        "unknown": "Inconnu"
+      },
+      "trialEndsOn": "La période d'essai se termine le {date}",
+      "manageSubscription": "Gérer l'Abonnement",
+      "manageSubscriptionDescription": "Mettez à jour votre mode de paiement, consultez l'historique de facturation et gérez votre abonnement via le portail Stripe.",
+      "openPortal": "Ouvrir le Portail de Facturation",
+      "loadingPortal": "Ouverture...",
+      "noSubscription": "Aucun Abonnement",
+      "noSubscriptionDescription": "Vous n'avez pas encore d'abonnement actif.",
+      "subscriptionDetails": "Détails de l'Abonnement"
     },
     "errorLoadingRestaurants": "Erreur lors du chargement des établissements",
     "noRestaurants": "Aucun Etablissement",
