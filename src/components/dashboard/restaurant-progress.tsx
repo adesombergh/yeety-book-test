@@ -9,6 +9,7 @@ import { daysOfWeek, type OpeningHours } from '@/lib/types/restaurant'
 
 interface RestaurantProgressProps {
   restaurant: Restaurant | null
+  billingInfoComplete?: boolean
 }
 
 const milestoneKeys = [
@@ -21,7 +22,10 @@ const milestoneKeys = [
 
 type MilestoneKey = (typeof milestoneKeys)[number]
 
-export function RestaurantProgress({ restaurant }: RestaurantProgressProps) {
+export function RestaurantProgress({
+  restaurant,
+  billingInfoComplete = false,
+}: RestaurantProgressProps) {
   const t = useTranslations('dashboard.progress')
 
   if (!restaurant) return null
@@ -45,7 +49,7 @@ export function RestaurantProgress({ restaurant }: RestaurantProgressProps) {
       })
     })(),
     addedContactInfo: !!(restaurant.emailContact || restaurant.phoneContact),
-    billingInfo: true, // Future: check Stripe subscription
+    billingInfo: billingInfoComplete,
   }
 
   const milestones = milestoneKeys.map((key) => ({

@@ -12,6 +12,7 @@ interface DashboardSidebarProps {
   onToggle?: () => void
   currentRestaurantId?: string | null
   currentRestaurant?: Restaurant | null
+  billingInfoComplete?: boolean
 }
 
 export function DashboardSidebar({
@@ -19,6 +20,7 @@ export function DashboardSidebar({
   onToggle,
   currentRestaurantId,
   currentRestaurant,
+  billingInfoComplete = false,
 }: DashboardSidebarProps) {
   const pathname = usePathname()
 
@@ -113,7 +115,10 @@ export function DashboardSidebar({
         {/* Progress Indicator */}
         {currentRestaurant && (
           <div className="px-4 pb-6">
-            <RestaurantProgress restaurant={currentRestaurant} />
+            <RestaurantProgress
+              restaurant={currentRestaurant}
+              billingInfoComplete={billingInfoComplete}
+            />
           </div>
         )}
       </div>

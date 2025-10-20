@@ -10,11 +10,13 @@ import { useTranslations } from 'next-intl'
 interface DashboardLayoutProps {
   children: ReactNode
   currentRestaurant?: Restaurant | null
+  billingInfoComplete?: boolean
 }
 
 export const DashboardLayout = ({
   children,
   currentRestaurant,
+  billingInfoComplete = false,
 }: DashboardLayoutProps): ReactNode | Promise<ReactNode> => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const t = useTranslations()
@@ -27,6 +29,7 @@ export const DashboardLayout = ({
           onToggle={() => setSidebarOpen(!sidebarOpen)}
           currentRestaurantId={currentRestaurant?.id.toString() || null}
           currentRestaurant={currentRestaurant}
+          billingInfoComplete={billingInfoComplete}
         />
       </div>
 

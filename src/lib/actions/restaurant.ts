@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import slugo from 'slugo'
 
-export async function createRestaurant(name: string, vatNumber: string) {
+export async function createRestaurant(name: string, vatNumber?: string) {
   try {
     // Authenticate user
     const user = await currentUser()
@@ -22,32 +22,6 @@ export async function createRestaurant(name: string, vatNumber: string) {
       return {
         success: false,
         error: 'Restaurant name must be less than 100 characters',
-      }
-    }
-
-    // Validate VAT number
-    if (!vatNumber || vatNumber.trim().length === 0) {
-      return { success: false, error: 'VAT number is required' }
-    }
-
-    const vatRegex = /^[A-Z]{2}[0-9A-Z]{2,12}$/
-    if (!vatRegex.test(vatNumber.trim())) {
-      return {
-        success: false,
-        error: 'Numéro de TVA invalide (ex: BE0123456789)',
-      }
-    }
-
-    // Check for duplicate VAT number
-    const existingRestaurant = await prisma.restaurant.findUnique({
-      where: { vatNumber: vatNumber.trim() },
-    })
-
-    if (existingRestaurant) {
-      return {
-        success: false,
-        error:
-          'Un compte existe déjà pour ce numéro de TVA. Essayez de vous connecter ou contactez le support.',
       }
     }
 
@@ -70,21 +44,20 @@ export async function createRestaurant(name: string, vatNumber: string) {
       slug = `${slugo(name)}-${slugSuffix}`
     }
 
-    // Create Stripe customer
+    // Create Stripe customer (without VAT initially, can be added later in billing page)
     const customer = await stripe.customers.create({
       email: user.emailAddresses[0]?.emailAddress || dbUser.email,
       metadata: {
         restaurantName: name.trim(),
         userId: dbUser.id.toString(),
       },
-      tax_id_data: [{ type: 'eu_vat', value: vatNumber.trim() }],
     })
 
     // Create restaurant with default values from Task 042 schema
     const restaurant = await prisma.restaurant.create({
       data: {
         name: name.trim(),
-        vatNumber: vatNumber.trim(),
+        vatNumber: vatNumber?.trim() || null,
         slug,
         stripeCustomerId: customer.id,
         owners: {

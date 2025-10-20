@@ -3,6 +3,7 @@ import { notFound, forbidden } from 'next/navigation'
 import { verifyRestaurantAccess } from '@/lib/auth/restaurant-access'
 import { ReactNode } from 'react'
 import { DashboardLayout } from '@/layouts/dashboard-layout'
+import { checkBillingInfoComplete } from '@/lib/queries/stripe-billing'
 
 interface RestaurantLayoutProps {
   children: ReactNode
@@ -34,8 +35,16 @@ export default async function RestaurantLayout({
     }
   }
 
+  // Fetch billing completion status from Stripe
+  const billingInfoComplete = await checkBillingInfoComplete(
+    accessResult.restaurant?.stripeCustomerId || null
+  )
+
   return (
-    <DashboardLayout currentRestaurant={accessResult.restaurant}>
+    <DashboardLayout
+      currentRestaurant={accessResult.restaurant}
+      billingInfoComplete={billingInfoComplete}
+    >
       {children}
     </DashboardLayout>
   )

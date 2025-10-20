@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { BillingPortalButton } from '@/components/billing/portal-button'
+// import { BillingInfoForm } from '@/components/billing/billing-info-form'
 
 interface BillingPageProps {
   params: Promise<{
@@ -54,6 +55,18 @@ export default async function BillingPage({ params }: BillingPageProps) {
       <p className="text-text-secondary mt-2">{t('subtitle')}</p>
 
       <div className="mt-8 space-y-6">
+        {/* Billing Information Card */}
+        {/* <Card className="p-6">
+          <h2 className="text-xl font-semibold text-text-dark mb-2">
+            {t('billingInfo')}
+          </h2>
+          <p className="text-text-secondary mb-6">
+            {t('billingInfoDescription')}
+          </p>
+
+          <BillingInfoForm restaurantId={restaurantId} />
+        </Card> */}
+
         {/* Subscription Status Card */}
         <Card className="p-6">
           <h2 className="text-xl font-semibold text-text-dark mb-4">

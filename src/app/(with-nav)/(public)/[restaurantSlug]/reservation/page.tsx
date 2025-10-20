@@ -149,38 +149,37 @@ export default async function ReservationPage({
               <CardContent>
                 <div className="space-y-6">
                   {/* Contact Information */}
-                  {restaurant.emailContact ||
-                    (restaurant.phoneContact && (
-                      <div>
-                        <h3 className="font-medium text-text-dark mb-2">
-                          {t('ui.contact')}
-                        </h3>
-                        <div className="space-y-1 text-sm text-text-secondary">
-                          {restaurant.emailContact && (
-                            <p>
-                              {t('ui.email')}:{' '}
-                              <a
-                                href={`mailto:${restaurant.emailContact}`}
-                                className="underline hover:text-primary/80"
-                              >
-                                {restaurant.emailContact}
-                              </a>
-                            </p>
-                          )}
-                          {restaurant.phoneContact && (
-                            <p>
-                              {t('ui.phone')}:{' '}
-                              <a
-                                href={`tel:${restaurant.phoneContact}`}
-                                className="underline hover:text-primary/80"
-                              >
-                                {restaurant.phoneContact}
-                              </a>
-                            </p>
-                          )}
-                        </div>
+                  {(restaurant.emailContact || restaurant.phoneContact) && (
+                    <div>
+                      <h3 className="font-medium text-text-dark mb-2">
+                        {t('ui.contact')}
+                      </h3>
+                      <div className="space-y-1 text-sm text-text-secondary">
+                        {restaurant.emailContact && (
+                          <p>
+                            {t('ui.email')}:{' '}
+                            <a
+                              href={`mailto:${restaurant.emailContact}`}
+                              className="underline hover:text-primary/80"
+                            >
+                              {restaurant.emailContact}
+                            </a>
+                          </p>
+                        )}
+                        {restaurant.phoneContact && (
+                          <p>
+                            {t('ui.phone')}:{' '}
+                            <a
+                              href={`tel:${restaurant.phoneContact}`}
+                              className="underline hover:text-primary/80"
+                            >
+                              {restaurant.phoneContact}
+                            </a>
+                          </p>
+                        )}
                       </div>
-                    ))}
+                    </div>
+                  )}
 
                   {/* Reservation Settings */}
                   <div>

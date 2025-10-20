@@ -225,7 +225,7 @@ export function RestaurantSettingsForm({
               <div className="space-y-2">
                 <FormLabel>{t('vatNumber')}</FormLabel>
                 <Input
-                  value={initialData.vatNumber}
+                  value={initialData.vatNumber || ''}
                   disabled
                   className="bg-muted cursor-not-allowed"
                 />

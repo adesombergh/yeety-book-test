@@ -1,5 +1,5 @@
 - Fix settings form
 - Check what is going on with calendar
-- Move stripe client portal link into billing info page
-- Create a billing info form that
-- Move Billing infos into billing info page
+- Changer prix: 32,99€ HTVA
+
+- Support client -> Intercom (with WhatsApp?)
